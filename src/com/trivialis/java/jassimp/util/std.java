@@ -8,5 +8,8 @@ public class std {
 	public static ai_real_float fabs(ai_real r) {
 		return new ai_real_float(Math.abs(r.getFloatValue()));
 	}
+	public static double sqrt(double value) {
+		return Math.sqrt(value);
+	}
 	
 }

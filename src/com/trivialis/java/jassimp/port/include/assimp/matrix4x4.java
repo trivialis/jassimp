@@ -4,7 +4,6 @@ import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaterniont;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real_float;
 
 public class matrix4x4 {
 

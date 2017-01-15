@@ -1,21 +1,20 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-
 public class defs {
 
 	public static interface ai_real {
 
-		ai_real opAdd(ai_real a);
+		<T extends ai_real> T opAdd(T a);
 		ai_real opSubtract(ai_real a);
 		ai_real opMultiply(ai_real a);
 		ai_real opDivide(ai_real a);
 		boolean opEquals(ai_real a);
 		boolean opSmaller(ai_real a);
+		boolean opBigger(ai_real a);
 		float getFloatValue();
 		int getIntValue();
 		double getDoubleValue();
-		<T extends ai_real> ai_real cast(T o);
+		<T extends ai_real> T cast(T o);
 		<T extends Number> ai_real forValue(T value);
 	}
 	
@@ -32,7 +31,7 @@ public class defs {
 		}
 		
 		@Override
-		public ai_real opAdd(ai_real a)
+		public <T extends ai_real> T opAdd(T a)
 		{
 			return new ai_real_float(value+a.getFloatValue());
 		}
@@ -86,13 +85,13 @@ public class defs {
 		}
 
 		@Override
-		public <T extends ai_real> ai_real cast(T o)
+		public <T extends ai_real> T cast(T o)
 		{
 			if(o instanceof ai_real_double) {
-				return new ai_real_double(value);
+				return (T) new ai_real_double(value);
 			}
 			if(o instanceof ai_real_float) {
-				return new ai_real_float(value);
+				return (T) new ai_real_float(value);
 			}
 			return null;
 		}
@@ -100,6 +99,12 @@ public class defs {
 		@Override
 		public <T extends Number> ai_real forValue(T value) {
 			return new ai_real_float((float) value);
+		}
+
+		@Override
+		public boolean opBigger(ai_real a)
+		{
+			return value > a.getFloatValue();
 		}
 		
 //		@Override
@@ -188,15 +193,21 @@ public class defs {
 		}
 		
 		@Override
-		public <T extends ai_real> ai_real cast(T o)
+		public <T extends ai_real> T cast(T o)
 		{
 			if(o instanceof ai_real_double) {
-				return new ai_real_double(value);
+				return (T) new ai_real_double(value);
 			}
 			if(o instanceof ai_real_float) {
-				return new ai_real_float((float) value);
+				return (T) new ai_real_float((float) value);
 			}
 			return null;
+		}
+
+		@Override
+		public boolean opBigger(ai_real a)
+		{
+			return value > a.getDoubleValue();
 		}
 		
 	}
