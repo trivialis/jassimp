@@ -1,10 +1,10 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
+import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaterniont;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.util.std;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 
 public class matrix4x4 {
 

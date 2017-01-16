@@ -1,7 +1,5 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-
 public class defs {
 	@SuppressWarnings("unchecked")	
 	private enum Types {

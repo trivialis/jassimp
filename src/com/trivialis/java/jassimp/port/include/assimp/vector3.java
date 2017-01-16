@@ -3,7 +3,6 @@ package com.trivialis.java.jassimp.port.include.assimp;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4t;
-import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.util.std;
 
 public class vector3 {
