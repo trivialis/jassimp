@@ -1,20 +1,19 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real_float;
 import com.trivialis.java.jassimp.util.std;
 
 public class color4 {
 
-	public abstract static class aiColor4t<T extends ai_real> {
-		public ai_real r;
-		public ai_real g;
-		public ai_real b;
-		public ai_real a;
+	public abstract static class aiColor4t<T extends Number> {
+		public ai_real<T> r;
+		public ai_real<T> g;
+		public ai_real<T> b;
+		public ai_real<T> a;
 		public aiColor4t() {
 			
 		}
-		public aiColor4t(T _r, T _b, T _g, T _a) {
+		public aiColor4t(ai_real<T> _r, ai_real<T> _b, ai_real<T> _g, ai_real<T> _a) {
 			r=_r;
 			g=_g;
 			b=_b;
@@ -42,10 +41,10 @@ public class color4 {
 			r=r.opDivide(o.r); g=g.opDivide(o.g); b=b.opDivide(o.b); a=a.opDivide(o.a);
 			return this;
 		}
-		public ai_real[] array() {
+		public ai_real<T>[] array() {
 			return new ai_real[]{r,g,b,a};
 		}
-		public ai_real get(int index) {
+		public ai_real<T> get(int index) {
 			return array()[index];
 		}
 		public boolean opEquals(aiColor4t<T> o) {
@@ -71,12 +70,12 @@ public class color4 {
 		}
 		//Todo static functions
 		public boolean IsBlack() {
-			return std.fabs(r).opSmaller(epsilon) && std.fabs(g).opSmaller(epsilon) && std.fabs(b).opSmaller(epsilon);
+			ai_real<T> epsilon = r.forValue( Math.pow(10, -3));
+			return r.forValue(std.abs(r.getValue().doubleValue())).opSmaller(epsilon) && g.forValue(std.abs(g.getValue().doubleValue())).opSmaller(epsilon) && b.forValue(std.abs(b.getValue().doubleValue())).opSmaller(epsilon);
 		}
-		private static final ai_real_float epsilon = new ai_real_float((float) Math.pow(10, -3));
 	}
 	
-	public static class aiColor4D<T extends ai_real> extends aiColor4t<ai_real> {
+	public static class aiColor4D<T extends Number> extends aiColor4t<T> {
 		
 	}
 	

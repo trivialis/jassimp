@@ -1,216 +1,314 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
+import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+
 public class defs {
+	@SuppressWarnings("unchecked")	
+	private enum Types {
+		DOUBLE(Double.class) {
+			@Override
+			<T extends Number> T opAdd(T a, T b)
+			{
+				return (T) Double.valueOf(a.doubleValue()+b.doubleValue());
+			}
 
-	public static interface ai_real {
+			@Override
+			<T, TOther extends Number> T forValue(TOther a)
+			{
+				return (T) Double.valueOf(a.doubleValue());
+			}
 
-		<T extends ai_real> T opAdd(T a);
-		ai_real opSubtract(ai_real a);
-		ai_real opMultiply(ai_real a);
-		ai_real opDivide(ai_real a);
-		boolean opEquals(ai_real a);
-		boolean opSmaller(ai_real a);
-		boolean opBigger(ai_real a);
-		float getFloatValue();
-		int getIntValue();
-		double getDoubleValue();
-		<T extends ai_real> T cast(T o);
-		<T extends Number> ai_real forValue(T value);
+			@Override
+			<T extends Number> T opMultiply(T a, T b)
+			{
+				return (T) Double.valueOf(a.doubleValue()*b.doubleValue());
+			}
+
+			@Override
+			<T extends Number> T opSubtract(T a, T b)
+			{
+				return (T) Double.valueOf(a.doubleValue()-b.doubleValue());
+			}
+
+			@Override
+			<T extends Number> T opDivide(T a, T b)
+			{
+				return (T) Double.valueOf(a.doubleValue()/b.doubleValue());
+			}
+
+			@Override
+			<T extends Number> boolean opBigger(T a, T b)
+			{
+				return a.doubleValue()>b.doubleValue();
+			}
+
+			@Override
+			<T extends Number> boolean opSmaller(T a, T b)
+			{
+				return a.doubleValue()<b.doubleValue();
+			}
+
+			@Override
+			<T extends Number> boolean opEquals(T a, T b)
+			{
+				return a.doubleValue()==b.doubleValue();
+			}
+
+			@Override
+			<T extends Number> T NaN()
+			{
+				 return (T) Double.valueOf(Double.NaN);
+			}
+		}, INTEGER(Integer.class) {
+			@Override
+			<T extends Number> T opAdd(T a, T b)
+			{
+				return (T) Integer.valueOf(a.intValue()+b.intValue());
+			}
+
+			@Override
+			<T, TOther extends Number> T forValue(TOther a)
+			{
+				return (T) Integer.valueOf(a.intValue());
+			}
+
+			@Override
+			<T extends Number> T opMultiply(T a, T b)
+			{
+				return (T) Integer.valueOf(a.intValue()*b.intValue());
+			}
+
+			@Override
+			<T extends Number> T opSubtract(T a, T b)
+			{
+				return (T) Integer.valueOf(a.intValue()-b.intValue());
+			}
+
+			@Override
+			<T extends Number> T opDivide(T a, T b)
+			{
+				return (T) Integer.valueOf(a.intValue()/b.intValue());
+			}
+
+			@Override
+			<T extends Number> boolean opBigger(T a, T b)
+			{
+				return a.intValue()>b.intValue();
+			}
+
+			@Override
+			<T extends Number> boolean opSmaller(T a, T b)
+			{
+				return a.intValue()<b.intValue();
+			}
+
+			@Override
+			<T extends Number> boolean opEquals(T a, T b)
+			{
+				return a.intValue()==b.intValue();
+			}
+
+			@Override
+			<T extends Number> T NaN()
+			{
+				return (T) Integer.valueOf(Integer.MAX_VALUE);
+			}
+		}, FLOAT(Float.class) {
+			@Override
+			<T extends Number> T opAdd(T a, T b)
+			{
+				return (T) Float.valueOf(a.floatValue()+b.floatValue());
+			}
+
+			@Override
+			<T, TOther extends Number> T forValue(TOther a)
+			{
+				return (T) Float.valueOf(a.floatValue());
+			}
+
+			@Override
+			<T extends Number> T opMultiply(T a, T b)
+			{
+				return (T) Float.valueOf(a.floatValue()*b.floatValue());
+			}
+
+			@Override
+			<T extends Number> T opSubtract(T a, T b)
+			{
+				return (T)Float.valueOf(a.floatValue()-b.floatValue());
+			}
+
+			@Override
+			<T extends Number> T opDivide(T a, T b)
+			{
+				return (T)Float.valueOf(a.floatValue()/b.floatValue());
+			}
+
+			@Override
+			<T extends Number> boolean opBigger(T a, T b)
+			{
+				return a.floatValue()>b.floatValue();
+			}
+
+			@Override
+			<T extends Number> boolean opSmaller(T a, T b)
+			{
+				return a.floatValue()<b.floatValue();
+			}
+
+			@Override
+			<T extends Number> boolean opEquals(T a, T b)
+			{
+				return a.floatValue()==b.floatValue();
+			}
+
+			@Override
+			<T extends Number> T NaN()
+			{
+				return (T) Float.valueOf(Float.NaN);
+			}
+		}, LONG(Long.class) {
+			@Override
+			<T extends Number> T opAdd(T a, T b)
+			{
+				return (T) Long.valueOf(a.longValue()+b.longValue());
+			}
+
+			@Override
+			<T, TOther extends Number> T forValue(TOther a)
+			{
+				return (T) Long.valueOf(a.longValue());			}
+
+			@Override
+			<T extends Number> T opMultiply(T a, T b)
+			{
+				return (T) Long.valueOf(a.longValue()*b.longValue());
+			}
+
+			@Override
+			<T extends Number> T opSubtract(T a, T b)
+			{
+				return (T) Long.valueOf(a.longValue()-b.longValue());
+			}
+
+			@Override
+			<T extends Number> T opDivide(T a, T b)
+			{
+				return (T) Long.valueOf(a.longValue()/b.longValue());
+			}
+
+			@Override
+			<T extends Number> boolean opBigger(T a, T b)
+			{
+				return a.longValue()>b.longValue();
+			}
+
+			@Override
+			<T extends Number> boolean opSmaller(T a, T b)
+			{
+				return a.longValue()<b.longValue();
+			}
+
+			@Override
+			<T extends Number> boolean opEquals(T a, T b)
+			{
+				return a.longValue()==b.longValue();
+			}
+
+			@Override
+			<T extends Number> T NaN()
+			{
+				return (T) Long.valueOf(Long.MAX_VALUE);
+			}
+		};
+		
+		private Class<? extends Number> type;
+		private Types(Class<? extends Number> t) {
+			type = t;
+		}
+		private static Types lookUp(Class<? extends Number> t) {
+			for(Types typ : Types.values()) {
+				if(typ.type==t) return typ;
+			}
+			throw new RuntimeException();
+		}
+		abstract <T extends Number> T opMultiply(T a, T b);
+		abstract <T extends Number> T opAdd(T a, T b);
+		abstract <T extends Number> T opSubtract(T a, T b);
+		abstract <T extends Number> T opDivide(T a, T b);
+		abstract <T extends Number> boolean opBigger(T a, T b);
+		abstract <T extends Number> boolean opSmaller(T a, T b);
+		abstract <T extends Number> boolean opEquals(T a, T b);
+		abstract <T, TOther extends Number> T forValue(TOther a);
+		abstract <T extends Number> T NaN();
+	}
+
+	public static class ai_real<T extends Number> {
+		
+		private T value;
+		public ai_real(T val) {
+			value=val;
+		}
+		@Override
+		public String toString() {
+			return value.toString();
+		}
+		public T getValue() {
+			return value;
+		}
+		public T opAdd(T a) {
+			return Types.lookUp(a.getClass()).opAdd(value, a);
+		}
+		public ai_real<T> opAdd(ai_real<T> a) {
+			return new ai_real<T>(Types.lookUp(value.getClass()).opAdd(value, a.value));
+		}
+		public ai_real<T> opSubtract(ai_real<T> a)
+		{
+			return new ai_real<T>(Types.lookUp(value.getClass()).opSubtract(value, a.value));
+		}
+		public ai_real<T> opMultiply(ai_real<T> a) {
+			return new ai_real<T>(Types.lookUp(value.getClass()).opMultiply(value, a.value));
+		}
+		public ai_real<T> opDivide(ai_real<T> a)
+		{
+			return new ai_real<T>(Types.lookUp(value.getClass()).opDivide(value, a.value));
+		}
+		public boolean opBigger(ai_real<T> a)
+		{
+			return Types.lookUp(value.getClass()).opBigger(value, a.value);
+		}
+		public <TOther extends Number> ai_real<T> forValue(TOther a) {
+			return new ai_real<T>(Types.lookUp(value.getClass()).forValue(a));
+		}
+		public <TOther extends Number> ai_real<TOther> cast(TOther a) {
+			return new ai_real<TOther>(Types.lookUp(a.getClass()).forValue(value));
+		}
+		public boolean opEquals(ai_real<T> a)
+		{
+			return Types.lookUp(value.getClass()).opEquals(value, a.value);
+		}
+		public ai_real<T> getNaN() {
+			return new ai_real<T>(Types.lookUp(value.getClass()).NaN());
+		}
+		public boolean opSmaller(ai_real<T> r)
+		{
+			return Types.lookUp(value.getClass()).opSmaller(value, r.value);
+		}
+		public boolean opSmallerOrEqual(ai_real<T> o)
+		{
+			return opSmaller(o)||opEquals(o);
+		}
+
+
+		
 	}
 	
-	public static class ai_real_float implements ai_real {
-
-		private float value;
-
-		public ai_real_float(float f) {
-			this.value = f;
-		}
-		
-		public float getValue() {
-			return value;
-		}
-		
-		@Override
-		public <T extends ai_real> T opAdd(T a)
-		{
-			return new ai_real_float(value+a.getFloatValue());
-		}
-
-		@Override
-		public ai_real opSubtract(ai_real a)
-		{
-			return new ai_real_float(value-a.getFloatValue());
-		}
-
-		@Override
-		public ai_real opMultiply(ai_real a)
-		{
-			return new ai_real_float(value*a.getFloatValue());
-		}
-
-		@Override
-		public ai_real opDivide(ai_real a)
-		{
-			return new ai_real_float(value/a.getFloatValue());
-		}
-
-		@Override
-		public boolean opEquals(ai_real a)
-		{
-			return value==a.getFloatValue();
-		}
-
-		@Override
-		public float getFloatValue()
-		{
-			return value;
-		}
-
-		@Override
-		public int getIntValue()
-		{
-			return (int) value;
-		}
-
-		@Override
-		public double getDoubleValue()
-		{
-			return value;
-		}
-
-		@Override
-		public boolean opSmaller(ai_real a)
-		{
-			return value < a.getFloatValue();
-		}
-
-		@Override
-		public <T extends ai_real> T cast(T o)
-		{
-			if(o instanceof ai_real_double) {
-				return (T) new ai_real_double(value);
-			}
-			if(o instanceof ai_real_float) {
-				return (T) new ai_real_float(value);
-			}
-			return null;
-		}
-		
-		@Override
-		public <T extends Number> ai_real forValue(T value) {
-			return new ai_real_float((float) value);
-		}
-
-		@Override
-		public boolean opBigger(ai_real a)
-		{
-			return value > a.getFloatValue();
-		}
-		
-//		@Override
-//		public <T extends ai_real> ai_real castNew(T value)
-//		{
-//			if(value instanceof Double) {
-//				return new ai_real_double(value);
-//			}
-//			if(value instanceof Float) {
-//				return new ai_real_float(value);
-//			}
-//			return null;
-//		}
-
-	}
 	
-	public static class ai_real_double implements ai_real {
-
-		private double value;
-
-		public ai_real_double(double f) {
-			this.value = f;
-		}
-		
-		public double getValue() {
-			return value;
-		}
-		
-		@Override
-		public ai_real opAdd(ai_real a)
-		{
-			return new ai_real_double(value+a.getDoubleValue());
-		}
-
-		@Override
-		public ai_real opSubtract(ai_real a)
-		{
-			return new ai_real_double(value-a.getDoubleValue());
-		}
-
-		@Override
-		public ai_real opMultiply(ai_real a)
-		{
-			return new ai_real_double(value*a.getDoubleValue());
-		}
-
-		@Override
-		public ai_real opDivide(ai_real a)
-		{
-			return new ai_real_double(value/a.getDoubleValue());
-		}
-
-		@Override
-		public boolean opEquals(ai_real a)
-		{
-			return value==a.getDoubleValue();
-		}
-
-		@Override
-		public float getFloatValue()
-		{
-			return (float) value;
-		}
-
-		@Override
-		public int getIntValue()
-		{
-			return (int) value;
-		}
-
-		@Override
-		public double getDoubleValue()
-		{
-			return value;
-		}
-
-		@Override
-		public boolean opSmaller(ai_real a)
-		{
-			return value < a.getDoubleValue();
-		}
-		
-		@Override
-		public <T extends Number> ai_real forValue(T value) {
-			return new ai_real_double((double) value);
-		}
-		
-		@Override
-		public <T extends ai_real> T cast(T o)
-		{
-			if(o instanceof ai_real_double) {
-				return (T) new ai_real_double(value);
-			}
-			if(o instanceof ai_real_float) {
-				return (T) new ai_real_float((float) value);
-			}
-			return null;
-		}
-
-		@Override
-		public boolean opBigger(ai_real a)
-		{
-			return value > a.getDoubleValue();
-		}
-		
+	public static void main(String[] args) {
+		ai_real<Double> a = new ai_real<Double>(1.0);
+		ai_real<Double> b = new ai_real<Double>(5.0);
+		System.out.println(a.opAdd(b.value));
+		System.out.println(a.opAdd(b));
 	}
-	
 	
 }

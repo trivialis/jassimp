@@ -118,6 +118,7 @@ public class Pointer<T> implements IPointer<T> {
 	}
 	
 	public static void main(String[] args) {
+		StringUtil.toCharacterArray("Hello world!".toCharArray());
 		System.out.println("");
 	}
 	

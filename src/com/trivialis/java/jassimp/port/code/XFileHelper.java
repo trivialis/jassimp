@@ -2,9 +2,14 @@ package com.trivialis.java.jassimp.port.code;
 
 import java.util.ArrayList;
 
+import com.trivialis.java.jassimp.port.include.assimp.anim.aiQuatKey;
+import com.trivialis.java.jassimp.port.include.assimp.anim.aiVectorKey;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
+import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
+import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 
 public class XFileHelper {
 
@@ -33,10 +38,10 @@ public class XFileHelper {
 	public static class Material {
 	    String mName;
 	    boolean mIsReference;
-	    aiColor4D<ai_real> mDiffuse;
-	    ai_real mSpecularExponent;
-	    aiColor3D<ai_real> mSpecular;
-	    aiColor3D<ai_real> mEmissive;
+	    aiColor4D<? extends Number> mDiffuse;
+	    ai_real<? extends Number> mSpecularExponent;
+	    aiColor3D<? extends Number> mSpecular;
+	    aiColor3D<? extends Number> mEmissive;
 	    ArrayList<TexEntry> mTextures;
 
 	    int sceneIndex; 
@@ -50,14 +55,98 @@ public class XFileHelper {
 	
 	public static class BoneWeight {
 		public int mVertex;
-		public ai_real mWeight;
+		public ai_real<? extends Number> mWeight;
 	}
 	
 	public static class Bone {
 		public String mName;
 		public ArrayList<BoneWeight> mWeights;
-		public aiMatrix4x4 mOffsetMatrix;
+		public aiMatrix4x4<? extends Number> mOffsetMatrix;
 	}
 	
+	public static class Mesh {
+		public String mName;
+		public ArrayList<aiVector3D<?extends Number>> mPositions;
+		public ArrayList<Face> mPosFaces;
+		public ArrayList<aiVector3D<? extends Number>> mNormals;
+		public ArrayList<Face> mNormFaces;
+		public int mNumTextures;
+		public ArrayList<aiVector2D<? extends Number>> mTexCoords;
+		public int mNumColorSets;
+		public ArrayList<aiColor4D<? extends Number>> mColors;
+		
+		public ArrayList<Integer> mFaceMaterials;
+		public ArrayList<Material> mMaterials;
+		
+		public ArrayList<Bone> mBones;
+		
+		public Mesh() {
+			mName = "";
+		}
+		
+		public Mesh(String pName) {
+			mName = pName;
+		}
+	}
+	
+	public static class Node {
+		public String mName;
+		public aiMatrix4x4<? extends Number> mTrafoMatrix;
+		public Node mParent;
+		public ArrayList<Node> mChildren;
+		public ArrayList<Mesh> mMeshes;
+		
+		public Node() {
+			mParent = null;
+		}
+		public Node(Node pParent) {
+			mParent = pParent;
+		}
+		public void destroy() {
+			mChildren.clear();
+			mMeshes.clear();
+		}
+	}
+	
+	public static class MatrixKey {
+		public double mTime;
+		public aiMatrix4x4<? extends Number> mMatrix;
+	}
+	
+	public static class AnimBone {
+		public String mBoneName;
+		public ArrayList<aiVectorKey> mPosKeys;
+		public ArrayList<aiQuatKey> mRotKeys;
+		public ArrayList<aiVectorKey> mScaleKeys;
+		public ArrayList<MatrixKey> mTrafoKeys;
+	}
+	
+	public static class Animation {
+		public String mName;
+		public ArrayList<AnimBone> mAnims;
+		public void destroy() {
+			mAnims.clear();
+		}
+	}
+	
+	public static class Scene {
+		public Node mRootNode;
+		
+		public ArrayList<Mesh> mGlobalMeshes;
+		public ArrayList<Material> mGlobalMaterials;
+	
+		public ArrayList<Animation> mAnims;
+		public int mAnimTicksPerSecond;
+		
+		public Scene() {
+			
+		}
+		
+		public void destroy(){
+			mRootNode=null;
+			mGlobalMeshes.clear();
+			mAnims.clear();
+		}
+	}
 	
 }

@@ -1,5 +1,6 @@
 package com.trivialis.java.jassimp.port.code;
 
+import com.trivialis.java.jassimp.port.code.XFileHelper.Scene;
 import com.trivialis.java.jassimp.util.IPointer;
 
 public class XFileParser {
