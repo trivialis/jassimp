@@ -1,7 +1,9 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
+import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+
 public class defs {
-	@SuppressWarnings("unchecked")	
+	@SuppressWarnings("unchecked")
 	private enum Types {
 		DOUBLE(Double.class) {
 			@Override
@@ -11,7 +13,7 @@ public class defs {
 			}
 
 			@Override
-			<T, TOther extends Number> T forValue(TOther a)
+			<T extends Number, TOther extends Number> T forValue(TOther a)
 			{
 				return (T) Double.valueOf(a.doubleValue());
 			}
@@ -65,7 +67,7 @@ public class defs {
 			}
 
 			@Override
-			<T, TOther extends Number> T forValue(TOther a)
+			<T extends Number, TOther extends Number> T forValue(TOther a)
 			{
 				return (T) Integer.valueOf(a.intValue());
 			}
@@ -119,7 +121,7 @@ public class defs {
 			}
 
 			@Override
-			<T, TOther extends Number> T forValue(TOther a)
+			<T extends Number, TOther extends Number> T forValue(TOther a)
 			{
 				return (T) Float.valueOf(a.floatValue());
 			}
@@ -173,7 +175,7 @@ public class defs {
 			}
 
 			@Override
-			<T, TOther extends Number> T forValue(TOther a)
+			<T extends Number, TOther extends Number> T forValue(TOther a)
 			{
 				return (T) Long.valueOf(a.longValue());			}
 
@@ -219,7 +221,7 @@ public class defs {
 				return (T) Long.valueOf(Long.MAX_VALUE);
 			}
 		};
-		
+
 		private Class<? extends Number> type;
 		private Types(Class<? extends Number> t) {
 			type = t;
@@ -237,12 +239,12 @@ public class defs {
 		abstract <T extends Number> boolean opBigger(T a, T b);
 		abstract <T extends Number> boolean opSmaller(T a, T b);
 		abstract <T extends Number> boolean opEquals(T a, T b);
-		abstract <T, TOther extends Number> T forValue(TOther a);
+		abstract <T extends Number, TOther extends Number> T forValue(TOther a);
 		abstract <T extends Number> T NaN();
 	}
 
 	public static class ai_real<T extends Number> {
-		
+
 		private T value;
 		public ai_real(T val) {
 			value=val;
@@ -257,6 +259,9 @@ public class defs {
 		public T opAdd(T a) {
 			return Types.lookUp(a.getClass()).opAdd(value, a);
 		}
+		public <TOther extends Number> ai_real<T> opAdd2(ai_real<TOther> a) {
+			return this.forValue(Types.lookUp(a.value.getClass()).opAdd(value, a.value));
+		}
 		public ai_real<T> opAdd(ai_real<T> a) {
 			return new ai_real<T>(Types.lookUp(value.getClass()).opAdd(value, a.value));
 		}
@@ -264,12 +269,19 @@ public class defs {
 		{
 			return new ai_real<T>(Types.lookUp(value.getClass()).opSubtract(value, a.value));
 		}
+		public ai_real<T> opMultiply2(ai_real<? extends Number> a) {
+			return this.forValue((Types.lookUp(value.getClass()).opMultiply(value, a.value)));
+		}
 		public ai_real<T> opMultiply(ai_real<T> a) {
 			return new ai_real<T>(Types.lookUp(value.getClass()).opMultiply(value, a.value));
 		}
 		public ai_real<T> opDivide(ai_real<T> a)
 		{
 			return new ai_real<T>(Types.lookUp(value.getClass()).opDivide(value, a.value));
+		}
+		public <TOther extends Number> boolean opBigger2(ai_real<TOther> a)
+		{
+			return Types.lookUp(value.getClass()).opBigger(value, a.value);
 		}
 		public boolean opBigger(ai_real<T> a)
 		{
@@ -296,17 +308,25 @@ public class defs {
 		{
 			return opSmaller(o)||opEquals(o);
 		}
+		public void setValue(ai_real<T> value)
+		{
+			this.value = value.value;
+		}
+		public void setValue(T value)
+		{
+			this.value = value;
+		}
 
 
-		
+
 	}
-	
-	
+
+
 	public static void main(String[] args) {
 		ai_real<Double> a = new ai_real<Double>(1.0);
 		ai_real<Double> b = new ai_real<Double>(5.0);
 		System.out.println(a.opAdd(b.value));
 		System.out.println(a.opAdd(b));
 	}
-	
+
 }

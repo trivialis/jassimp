@@ -3,26 +3,28 @@ package com.trivialis.java.jassimp.port.include.assimp;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4t;
+import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
+import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.util.std;
 
 public class vector3 {
 
 	public static class aiVector3t<T extends Number> {
-		
+
 		public ai_real<T> x;
 		public ai_real<T> y;
 		public ai_real<T> z;
 
 		public aiVector3t() {
-			
+
 		}
-		
+
 		public aiVector3t(ai_real<T> _x, ai_real<T> _y, ai_real<T> _z) {
 			x=_x;
 			y=_y;
 			z=_z;
 		}
-		
+
 		public aiVector3t(ai_real<T> _xyz) {
 			x=_xyz;
 			y=_xyz;
@@ -80,18 +82,32 @@ public class vector3 {
 		{
 			return x.opEquals(o.x) && y.opEquals(o.y) && z.opEquals(o.z);
 		}
-		
+		public aiVector3D<T> opSubtract(aiVector3D<T> a)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+		public aiVector3t<T> opMultiply(ai_real<T> d)
+		{
+			// TODO Auto-generated method stub
+			return null;
+		}
+
 	}
-	
+
 	public static class aiVector3D<T extends Number> extends aiVector3t<T> {
 
 
-		
+
+
+
+
+
 	}
-	
+
 	public static void main(String[] args) {
 		aiVector3t<Double> a = new aiVector3t<Double>(new ai_real<Double>(1.0D), new ai_real<Double>(1.0), new ai_real<Double>(1.0));
 		System.out.println(a.Length());
 	}
-	
+
 }

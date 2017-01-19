@@ -26,4 +26,8 @@ public interface IPointer<T> {
 
 	boolean canDec();
 
+	boolean opSmaller(IPointer<Character> end);
+
+	int getOffset();
+
 }
