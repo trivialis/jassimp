@@ -16,86 +16,86 @@ public class XFileHelper {
 	public static class Face {
 		public ArrayList<Integer> mIndices = new ArrayList<Integer>();
 	}
-	
+
 	public static class TexEntry {
 		public String mName;
 		public boolean mIsNormalMap;
-		
+
 		public TexEntry() {
 			mIsNormalMap = false;
 		}
-		
+
 		public TexEntry(String pName) {
 			this(pName, false);
 		}
-		
+
 		public TexEntry(String pName, boolean pIsNormalMap) {
 			mName = pName;
 			mIsNormalMap = pIsNormalMap;
 		}
 	}
-	
+
 	public static class Material {
 	    String mName;
 	    boolean mIsReference;
-	    aiColor4D<? extends Number> mDiffuse;
-	    ai_real<? extends Number> mSpecularExponent;
-	    aiColor3D<? extends Number> mSpecular;
-	    aiColor3D<? extends Number> mEmissive;
+	    aiColor4D mDiffuse;
+	    ai_real mSpecularExponent;
+	    aiColor3D mSpecular;
+	    aiColor3D mEmissive;
 	    ArrayList<TexEntry> mTextures;
 
-	    int sceneIndex; 
-	    
+	    int sceneIndex;
+
 	    public Material() {
 	    	mIsReference = false;
 	    	mSpecularExponent = null;
 	    	sceneIndex = Integer.MAX_VALUE;
 	    }
 	}
-	
+
 	public static class BoneWeight {
 		public int mVertex;
-		public ai_real<? extends Number> mWeight;
+		public ai_real mWeight;
 	}
-	
+
 	public static class Bone {
 		public String mName;
 		public ArrayList<BoneWeight> mWeights;
-		public aiMatrix4x4<? extends Number> mOffsetMatrix;
+		public aiMatrix4x4 mOffsetMatrix;
 	}
-	
+
 	public static class Mesh {
 		public String mName;
-		public ArrayList<aiVector3D<?extends Number>> mPositions;
+		public ArrayList<aiVector3D> mPositions;
 		public ArrayList<Face> mPosFaces;
-		public ArrayList<aiVector3D<? extends Number>> mNormals;
+		public ArrayList<aiVector3D> mNormals;
 		public ArrayList<Face> mNormFaces;
 		public int mNumTextures;
-		public ArrayList<aiVector2D<? extends Number>> mTexCoords;
+		public ArrayList<aiVector2D> mTexCoords;
 		public int mNumColorSets;
-		public ArrayList<aiColor4D<? extends Number>> mColors;
-		
+		public ArrayList<aiColor4D> mColors;
+
 		public ArrayList<Integer> mFaceMaterials;
 		public ArrayList<Material> mMaterials;
-		
+
 		public ArrayList<Bone> mBones;
-		
+
 		public Mesh() {
 			mName = "";
 		}
-		
+
 		public Mesh(String pName) {
 			mName = pName;
 		}
 	}
-	
+
 	public static class Node {
 		public String mName;
-		public aiMatrix4x4<? extends Number> mTrafoMatrix;
+		public aiMatrix4x4 mTrafoMatrix;
 		public Node mParent;
 		public ArrayList<Node> mChildren;
 		public ArrayList<Mesh> mMeshes;
-		
+
 		public Node() {
 			mParent = null;
 		}
@@ -107,12 +107,12 @@ public class XFileHelper {
 			mMeshes.clear();
 		}
 	}
-	
+
 	public static class MatrixKey {
 		public double mTime;
-		public aiMatrix4x4<? extends Number> mMatrix;
+		public aiMatrix4x4 mMatrix;
 	}
-	
+
 	public static class AnimBone {
 		public String mBoneName;
 		public ArrayList<aiVectorKey> mPosKeys;
@@ -120,7 +120,7 @@ public class XFileHelper {
 		public ArrayList<aiVectorKey> mScaleKeys;
 		public ArrayList<MatrixKey> mTrafoKeys;
 	}
-	
+
 	public static class Animation {
 		public String mName;
 		public ArrayList<AnimBone> mAnims;
@@ -128,25 +128,25 @@ public class XFileHelper {
 			mAnims.clear();
 		}
 	}
-	
+
 	public static class Scene {
 		public Node mRootNode;
-		
+
 		public ArrayList<Mesh> mGlobalMeshes;
 		public ArrayList<Material> mGlobalMaterials;
-	
+
 		public ArrayList<Animation> mAnims;
 		public int mAnimTicksPerSecond;
-		
+
 		public Scene() {
-			
+
 		}
-		
+
 		public void destroy(){
 			mRootNode=null;
 			mGlobalMeshes.clear();
 			mAnims.clear();
 		}
 	}
-	
+
 }
