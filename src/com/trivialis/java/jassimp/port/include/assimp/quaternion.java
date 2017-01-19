@@ -6,42 +6,37 @@ import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaternion;
 
 public class quaternion {
 
-	public static class aiQuaterniont<T extends Number> {
+	public static class aiQuaterniont {
 
-		public aiMatrix3x3t<ai_real<T>> GetMatrix()
+		public aiMatrix3x3t<ai_real> GetMatrix()
 		{
 			// TODO Auto-generated method stub
 			return null;
 		}
 
 		//TODO
-		public boolean opEquals(aiQuaternion<T> mValue)
+		public boolean opEquals(aiQuaternion mValue)
 		{
 			// TODO Auto-generated method stub
 			return false;
 		}
 
-		public static aiQuaternion<Number> Interpolate(aiQuaternion a, aiQuaternion b, ai_real<?> d)
+		public static aiQuaternion Interpolate(aiQuaternion a, aiQuaternion b, ai_real<?> d)
 		{
 			// TODO Auto-generated method stub
 			return null;
 		}
 
-		public aiQuaternion<Number> opSubtract(aiQuaternion<Number> a)
+		public aiQuaternion opSubtract(aiQuaternion a)
 		{
 			// TODO Auto-generated method stub
 			return null;
 		}
+
 
 	}
 
-	public static class aiQuaternion<T extends Number> extends aiQuaterniont<T> {
-
-
-
-
-
-
+	public static class aiQuaternion extends aiQuaterniont {
 
 	}
 

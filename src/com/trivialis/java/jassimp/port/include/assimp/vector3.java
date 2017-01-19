@@ -9,41 +9,45 @@ import com.trivialis.java.jassimp.util.std;
 
 public class vector3 {
 
-	public static class aiVector3t<T extends Number> {
 
-		public ai_real<T> x;
-		public ai_real<T> y;
-		public ai_real<T> z;
+	public static class aiVector3t {
+
+		public ai_real x;
+		public ai_real y;
+		public ai_real z;
 
 		public aiVector3t() {
 
 		}
 
-		public aiVector3t(ai_real<T> _x, ai_real<T> _y, ai_real<T> _z) {
+
+
+		public aiVector3t(ai_real _x, ai_real _y, ai_real _z) {
 			x=_x;
 			y=_y;
 			z=_z;
 		}
 
-		public aiVector3t(ai_real<T> _xyz) {
+
+		public aiVector3t(ai_real _xyz) {
 			x=_xyz;
 			y=_xyz;
 			z=_xyz;
 		}
-		public aiVector3t(aiVector3t<T> o) {
+		public aiVector3t(aiVector3t o) {
 			x=o.x;
 			y=o.y;
 			z=o.z;
 		}
-		public aiVector3t<T> multiply(aiMatrix3x3t<ai_real<T>> pMatrix, aiVector3t<T> pVector) {
-			aiVector3t<T> res = new aiVector3t<T>();
+		public aiVector3t multiply(aiMatrix3x3t<ai_real> pMatrix, aiVector3t pVector) {
+			aiVector3t res = new aiVector3t();
 			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z));
 			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z));
 			res.z = (pMatrix.c1.opMultiply(pVector.x)).opAdd(pMatrix.c2.opMultiply(pVector.y)).opAdd(pMatrix.c3.opMultiply(pVector.z));
 			return res;
 		}
-		public aiVector3t<T> multiply(aiMatrix4x4t<T> pMatrix, aiVector3t<T> pVector) {
-			aiVector3t<T> res = new aiVector3t<T>();
+		public aiVector3t multiply(aiMatrix4x4t pMatrix, aiVector3t pVector) {
+			aiVector3t res = new aiVector3t();
 			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z)).opAdd(pMatrix.a4);
 			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z)).opAdd(pMatrix.b4);
 			res.z = (pMatrix.c1.opMultiply(pVector.x)).opAdd(pMatrix.c2.opMultiply(pVector.y)).opAdd(pMatrix.c3.opMultiply(pVector.z)).opAdd(pMatrix.c4);
@@ -52,28 +56,28 @@ public class vector3 {
 //		public <A extends ai_real> aiVector3t<A> cast(A o) {
 //			return new aiVector3t(x.cast(o.getValue()), y.cast(o.getValue()), z.cast(o.getValue()));
 //		}
-		public void Set(ai_real<T> pX, ai_real<T> pY, ai_real<T> pZ) {
+		public void Set(ai_real pX, ai_real pY, ai_real pZ) {
 			x=pX; y= pY; z=pZ;
 		}
-		public ai_real<T> SquareLength() {
+		public ai_real SquareLength() {
 			return (x.opMultiply(x)).opAdd(y.opMultiply(y)).opAdd(z.opMultiply(z));
 		}
-		public ai_real<T> Length() {
+		public ai_real Length() {
 			return x.forValue(std.sqrt((Double) SquareLength().getValue()));
 		}
-		public aiVector3t<T> Normalize() {
+		public aiVector3t Normalize() {
 			ai_real<T> length = Length();
 			x=x.opDivide(length); y=y.opDivide(length); z=z.opDivide(length);
 			return this;
 		}
-		public aiVector3t<T> NormalizeSafe() {
+		public aiVector3t NormalizeSafe() {
 			ai_real<T> len = Length();
 			if(len.opBigger(len.forValue(0))) {
 				return Normalize();
 			}
 			return this;
 		}
-		public aiVector3t<T> opAdd(aiVector3t<T> o) {
+		public aiVector3t opAdd(aiVector3t o) {
 			x=x.opAdd(o.x);y=y.opAdd(o.y);z=z.opAdd(o.z);
 			return this;
 		}
@@ -82,12 +86,12 @@ public class vector3 {
 		{
 			return x.opEquals(o.x) && y.opEquals(o.y) && z.opEquals(o.z);
 		}
-		public aiVector3D<T> opSubtract(aiVector3D<T> a)
+		public aiVector3D opSubtract(aiVector3D a)
 		{
 			// TODO Auto-generated method stub
 			return null;
 		}
-		public aiVector3t<T> opMultiply(ai_real<T> d)
+		public aiVector3t opMultiply(ai_real d)
 		{
 			// TODO Auto-generated method stub
 			return null;
@@ -95,7 +99,7 @@ public class vector3 {
 
 	}
 
-	public static class aiVector3D<T extends Number> extends aiVector3t<T> {
+	public static class aiVector3D extends aiVector3t {
 
 
 

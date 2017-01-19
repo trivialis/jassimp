@@ -10,12 +10,15 @@ public class anim {
 
 	public static class aiVectorKey {
 		public double mTime;
-		public aiVector3D<Number> mValue;
+
+		public aiVector3D mValue;
+
 
 		public aiVectorKey() {
 		}
 
-		public aiVectorKey(double time, aiVector3D<Number> value) {
+		public aiVectorKey(double time, aiVector3D value) {
+
 			mTime = time;
 			mValue = value;
 		}
@@ -39,12 +42,15 @@ public class anim {
 
 	public static class aiQuatKey {
 		public double mTime;
-		public aiQuaternion<Number> mValue;
+
+		public aiQuaternion mValue;
+
 
 		public aiQuatKey() {
 		}
 
-		public aiQuatKey(double time, aiQuaternion<Number> value) {
+
+		public aiQuatKey(double time, aiQuaternion value) {
 			mTime = time;
 			mValue = value;
 		}
