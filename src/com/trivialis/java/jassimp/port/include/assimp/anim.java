@@ -4,7 +4,6 @@ import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaternion;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
-import com.trivialis.java.jassimp.util.Pointer;
 
 public class anim {
 
@@ -178,33 +177,33 @@ public class anim {
 	}
 
 	public abstract static class Interpolator {
-		public Number cast(Number a , Number b, ai_real<Number> d) {
+		public Number cast(Number a , Number b, ai_real d) {
 			return d.forValue(a).opAdd(d.opMultiply(d.forValue(b.doubleValue()-a.doubleValue()))).getValue();
 		}
 
-		public aiQuaternion<Number> cast(aiQuaternion<Number> a, aiQuaternion<Number> b, ai_real<Number> d) {
+		public aiQuaternion cast(aiQuaternion a, aiQuaternion b, ai_real d) {
 			return aiQuaternion.Interpolate(a,b,d);
 		}
 
-		public int cast(int a, int b, ai_real<Number> d) {
-			return d.opBigger2(new ai_real<Float>(0.5F))?b:a;
+		public int cast(int a, int b, ai_real d) {
+			return d.opBigger(new ai_real(0.5F))?b:a;
 		}
 
-		public aiVector3D<Number> cast(aiVectorKey a, aiVectorKey b, ai_real<Number> d) {
+		public aiVector3D cast(aiVectorKey a, aiVectorKey b, ai_real d) {
 			return cast(a.mValue, b.mValue, d);
 		}
 
-		private aiVector3D<Number> cast(aiVector3D<Number> a, aiVector3D<Number> b, ai_real<Number> d)
+		private aiVector3D cast(aiVector3D a, aiVector3D b, ai_real d)
 		{
-			return (aiVector3D<Number>) a.opAdd((b.opSubtract(a)).opMultiply(d));
+			return (aiVector3D) a.opAdd((b.opSubtract(a)).opMultiply(d));
 		}
 
-		public aiQuaternion<Number> cast(aiQuatKey a, aiQuatKey b, ai_real<Number> d) {
+		public aiQuaternion cast(aiQuatKey a, aiQuatKey b, ai_real d) {
 			return cast(a.mValue, b.mValue, d);
 		}
 
-		public int cast(aiMeshKey a, aiMeshKey b, ai_real<Number> d) {
-			return (new ai_real<Integer>(a.mValue).opAdd2(d.opMultiply2(new ai_real<Double>((double) (b.mValue-a.mValue))))).getValue();
+		public int cast(aiMeshKey a, aiMeshKey b, ai_real d) {
+			return (new ai_real(a.mValue).opAdd(d.opMultiply(new ai_real(b.mValue-a.mValue)))).getValue().intValue();
 		}
 
 	}

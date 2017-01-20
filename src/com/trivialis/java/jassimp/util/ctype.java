@@ -10,4 +10,9 @@ public class ctype {
 		return (((char) c)+"").toLowerCase().toCharArray()[0];
 	}
 
+	public static boolean isdigit(int c)
+	{
+		return Character.isDigit(c);
+	}
+
 }

@@ -71,7 +71,7 @@ public class Pointer<T> implements IPointer<T> {
 	}
 
 	@Override
-	public IPointer<T> pointerPostInc()
+	public IPointer<T> postInc()
 	{
 		int temp = currentOffset++;
 		//if(temp>=size) throw new ArrayIndexOutOfBoundsException(temp);

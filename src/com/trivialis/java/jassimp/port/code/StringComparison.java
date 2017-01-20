@@ -17,8 +17,8 @@ public class StringComparison {
 	    do
 	    {
 	        if (p++ >= n)return 0;
-	        c1 = (char) ctype.tolower(s1.pointerPostInc().get());
-	        c2 = (char) ctype.tolower(s2.pointerPostInc().get());
+	        c1 = (char) ctype.tolower(s1.postInc().get());
+	        c2 = (char) ctype.tolower(s2.postInc().get());
 	    }
 	    while ( c1!=0 && s1.canInc() && (c1 == c2) );
 

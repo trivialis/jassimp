@@ -7,6 +7,7 @@ import com.trivialis.java.jassimp.port.include.assimp.anim.aiVectorKey;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
+import com.trivialis.java.jassimp.port.include.assimp.mesh;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
@@ -71,9 +72,9 @@ public class XFileHelper {
 		public ArrayList<aiVector3D> mNormals;
 		public ArrayList<Face> mNormFaces;
 		public int mNumTextures;
-		public ArrayList<aiVector2D> mTexCoords;
+		public ArrayList<aiVector2D>[] mTexCoords = new ArrayList[mesh.AI_MAX_NUMBER_OF_TEXTURECOORDS];
 		public int mNumColorSets;
-		public ArrayList<aiColor4D> mColors;
+		public ArrayList<aiColor4D>[] mColors = new ArrayList[mesh.AI_MAX_NUMBER_OF_COLOR_SETS];
 
 		public ArrayList<Integer> mFaceMaterials;
 		public ArrayList<Material> mMaterials;

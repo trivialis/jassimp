@@ -8,7 +8,7 @@ public interface IPointer<T> {
 
 	IPointer<T> pointerAdjust(int cnt);
 
-	IPointer<T> pointerPostInc();
+	IPointer<T> postInc();
 
 	IPointer<T> pointerPostDec();
 

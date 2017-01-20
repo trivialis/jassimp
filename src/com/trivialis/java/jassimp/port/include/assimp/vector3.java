@@ -3,8 +3,6 @@ package com.trivialis.java.jassimp.port.include.assimp;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4t;
-import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
-import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.util.std;
 
 public class vector3 {
@@ -66,12 +64,12 @@ public class vector3 {
 			return x.forValue(std.sqrt((Double) SquareLength().getValue()));
 		}
 		public aiVector3t Normalize() {
-			ai_real<T> length = Length();
+			ai_real length = Length();
 			x=x.opDivide(length); y=y.opDivide(length); z=z.opDivide(length);
 			return this;
 		}
 		public aiVector3t NormalizeSafe() {
-			ai_real<T> len = Length();
+			ai_real len = Length();
 			if(len.opBigger(len.forValue(0))) {
 				return Normalize();
 			}
@@ -82,7 +80,7 @@ public class vector3 {
 			return this;
 		}
 		//TODO
-		public boolean opEquals(aiVector3D<T> o)
+		public boolean opEquals(aiVector3D o)
 		{
 			return x.opEquals(o.x) && y.opEquals(o.y) && z.opEquals(o.z);
 		}
@@ -110,7 +108,7 @@ public class vector3 {
 	}
 
 	public static void main(String[] args) {
-		aiVector3t<Double> a = new aiVector3t<Double>(new ai_real<Double>(1.0D), new ai_real<Double>(1.0), new ai_real<Double>(1.0));
+		aiVector3t a = new aiVector3t(new ai_real(1.0D), new ai_real(1.0), new ai_real(1.0));
 		System.out.println(a.Length());
 	}
 

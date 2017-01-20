@@ -10,9 +10,9 @@ public class types {
 
 	public static class aiColor3D
 	{
-	    private ai_real r;
-		private ai_real g;
-		private ai_real b;
+	    public ai_real r;
+	    public ai_real g;
+		public ai_real b;
 		public aiColor3D () {
 
 	    }
@@ -34,58 +34,32 @@ public class types {
 	    	return !r.opEquals(o.r) || !g.opEquals(o.g) || !b.opEquals(o.b);
 	    }
 
-<<<<<<< HEAD
-	    public boolean opSmaller(aiColor3D<T> o) {
-=======
+
 	    public boolean opSmaller(aiColor3D o) {
->>>>>>> branch 'master' of https://github.com/trivialis/jassimp
 	    	return r.opSmaller(o.r) || ( r.opEquals(o.r) && (g.opSmaller(o.g) || (g.opEquals(o.g) && b.opSmaller(o.b))));
 	    }
 
-<<<<<<< HEAD
-	    public aiColor3D<T> add(aiColor3D<T> c) {
-	    	return new aiColor3D<T>(r.opAdd(c.r),g.opAdd(c.g),b.opAdd(c.b));
-	    }
-
-	    public aiColor3D<T> subtract(aiColor3D<T> c) {
-	    	return new aiColor3D<T>(r.opSubtract(c.r),g.opSubtract(c.g),b.opSubtract(c.b));
-=======
 	    public aiColor3D add(aiColor3D c) {
 	    	return new aiColor3D(r.opAdd(c.r),g.opAdd(c.g),b.opAdd(c.b));
->>>>>>> branch 'master' of https://github.com/trivialis/jassimp
 	    }
 
 	    public aiColor3D subtract(aiColor3D c) {
 	    	return new aiColor3D(r.opSubtract(c.r),g.opSubtract(c.g),b.opSubtract(c.b));
 	    }
 
-<<<<<<< HEAD
-	    public aiColor3D<T> multiply(ai_real<T> f) {
-	    	return new aiColor3D<T>(r.opMultiply(f),g.opMultiply(f),b.opMultiply(f));
-=======
 	    public aiColor3D multiply(aiColor3D c) {
 	    	return new aiColor3D(r.opMultiply(c.r),g.opMultiply(c.g),b.opMultiply(c.b));
->>>>>>> branch 'master' of https://github.com/trivialis/jassimp
 	    }
 
-<<<<<<< HEAD
-	    public ai_real<T>[] array() {
-	    	return (ai_real<T>[]) Arrays.asList(r,g,b).toArray();
-=======
 	    public aiColor3D multiply(ai_real f) {
 	    	return new aiColor3D(r.opMultiply(f),g.opMultiply(f),b.opMultiply(f));
->>>>>>> branch 'master' of https://github.com/trivialis/jassimp
 	    }
 
-<<<<<<< HEAD
-	    public ai_real<T> get(int i) {
-=======
 	    public ai_real[] array() {
 	    	return (ai_real[]) Arrays.asList(r,g,b).toArray();
 	    }
 
 	    public ai_real get(int i) {
->>>>>>> branch 'master' of https://github.com/trivialis/jassimp
 	    	return array()[i];
 	    }
 	    public boolean IsBlack() {
@@ -95,7 +69,6 @@ public class types {
 
 	}
 
-<<<<<<< HEAD
 	public static final int MAXLEN=1024;
 
 	public static class aiString {
@@ -245,6 +218,5 @@ public class types {
 
 
 
-=======
->>>>>>> branch 'master' of https://github.com/trivialis/jassimp
+
 }

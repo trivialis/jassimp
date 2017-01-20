@@ -6,8 +6,8 @@ public class string {
 		s2=s2.pointerCopy();
 		s1=s1.pointerCopy();
 	    while(s1.canInc() && (s1.get()==s2.get())) {
-	        s1.pointerPostInc();
-	        s2.pointerPostInc();
+	        s1.postInc();
+	        s2.postInc();
 	    }
 	    return s1.get()-s2.get();
 	}
@@ -16,7 +16,7 @@ public class string {
 		s2=s2.pointerCopy();
 		s1=s1.pointerCopy();
 	    while(n-->0){
-	        if(s1.pointerPostInc().get()!=s2.pointerPostInc().get())
+	        if(s1.postInc().get()!=s2.postInc().get())
 	            return (s1.get() - 1) - (s2.get() - 1);
 	    }
 	    return 0;
@@ -26,7 +26,7 @@ public class string {
 		IPointer<Character> ps2=Pointer.valueOf(StringUtil.toCharacterArray(s2.toCharArray()));
 		s1=s1.pointerCopy();
 	    while(n-->0){
-	        if(s1.pointerPostInc().get()!=ps2.pointerPostInc().get())
+	        if(s1.postInc().get()!=ps2.postInc().get())
 	            return (s1.get() - 1) - (ps2.get() - 1);
 	    }
 	    return 0;

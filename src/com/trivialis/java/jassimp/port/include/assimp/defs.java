@@ -1,9 +1,9 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-
 public class defs {
-	
+
+	public static boolean DOUBLE_PRECISION=false;
+
 	private enum Types {
 		DOUBLE(0, Double.class) {
 			@Override
@@ -59,6 +59,18 @@ public class defs {
 			{
 				 return Double.NaN;
 			}
+
+			@Override
+			Number getInfinity()
+			{
+				return Double.POSITIVE_INFINITY;
+			}
+
+			@Override
+			Number opNegate(Number a)
+			{
+				return -1*a.doubleValue();
+			}
 		}, INTEGER(3, Integer.class) {
 			@Override
 			Number opAdd(Number a, Number b)
@@ -112,6 +124,18 @@ public class defs {
 			Number NaN()
 			{
 				return Integer.MAX_VALUE;
+			}
+
+			@Override
+			Number getInfinity()
+			{
+				return Integer.MAX_VALUE;
+			}
+
+			@Override
+			Number opNegate(Number a)
+			{
+				return -1*a.intValue();
 			}
 		}, FLOAT(1, Float.class) {
 			@Override
@@ -167,6 +191,18 @@ public class defs {
 			{
 				return Float.NaN;
 			}
+
+			@Override
+			Number getInfinity()
+			{
+				return Float.POSITIVE_INFINITY;
+			}
+
+			@Override
+			Number opNegate(Number a)
+			{
+				return -1*a.floatValue();
+			}
 		}, LONG(2, Long.class) {
 			@Override
 			Number opAdd(Number a, Number b)
@@ -175,7 +211,7 @@ public class defs {
 			}
 
 			@Override
-			<T extends Number, TOther extends Number> T forValue(TOther a)
+			Number forValue(Number a)
 			{
 				return a.longValue();
 			}
@@ -221,6 +257,18 @@ public class defs {
 			{
 				return Long.MAX_VALUE;
 			}
+
+			@Override
+			Number getInfinity()
+			{
+				return Long.MAX_VALUE;
+			}
+
+			@Override
+			Number opNegate(Number a)
+			{
+				return -1*a.longValue();
+			}
 		};
 
 
@@ -260,6 +308,9 @@ public class defs {
 		abstract boolean opEquals(Number a, Number b);
 		abstract Number forValue(Number a);
 		abstract Number NaN();
+		abstract Number getInfinity();
+		abstract Number opNegate(Number a);
+
 	}
 
 	public static class ai_real {
@@ -267,25 +318,39 @@ public class defs {
 		private final Number value;
 		private final Types type;
 
-		public ai_real(Number val) {
+		private ai_real(Number val, Types t) {
 			value=val;
+			type=t;
+		}
+
+		private static Number enforce(Number val) {
+			if(DOUBLE_PRECISION) {
+				if(val instanceof Float)
+					return val.doubleValue();
+			} else {
+				if(val instanceof Double)
+					return val.floatValue();
+			}
+			return val;
+		}
+
+		public ai_real(Number val) {
+			value=enforce(val);
 			type=Types.lookUp(val.getClass());
 		}
 		public ai_real(Float val) {
-			value=val;
-			type=Types.FLOAT;
+			value=enforce(val);
+			type=Types.lookUp(val.getClass());
 		}
 		public ai_real(Double val) {
-			value=val;
-			type=Types.DOUBLE;
+			value=enforce(val);
+			type=Types.lookUp(val.getClass());
 		}
 		public ai_real(Integer val) {
-			value=val;
-			type=Types.INTEGER;
+			this(val, Types.INTEGER);
 		}
 		public ai_real(Long val) {
-			value=val;
-			type=Types.LONG;
+			this(val, Types.LONG);
 		}
 
 		@Override
@@ -304,9 +369,6 @@ public class defs {
 			}
 			return result;
 		}
-		public <TOther extends Number> ai_real<T> opAdd2(ai_real<TOther> a) {
-			return this.forValue(Types.lookUp(a.value.getClass()).opAdd(value, a.value));
-		}
 
 		public ai_real opAdd(ai_real a)
 		{
@@ -317,9 +379,6 @@ public class defs {
 		{
 			return new ai_real(highest(type, a.type).opSubtract(value, a.value));
 		}
-		public ai_real<T> opMultiply2(ai_real<? extends Number> a) {
-			return this.forValue((Types.lookUp(value.getClass()).opMultiply(value, a.value)));
-		}
 
 		public ai_real opMultiply(ai_real a)
 		{
@@ -329,10 +388,6 @@ public class defs {
 		public ai_real opDivide(ai_real a)
 		{
 			return new ai_real(highest(type, a.type).opDivide(value, a.value));
-		}
-		public <TOther extends Number> boolean opBigger2(ai_real<TOther> a)
-		{
-			return Types.lookUp(value.getClass()).opBigger(value, a.value);
 		}
 
 		public boolean opBigger(ai_real a)
@@ -369,13 +424,15 @@ public class defs {
 		{
 			return opSmaller(o) || opEquals(o);
 		}
-		public void setValue(ai_real<T> value)
+
+		public ai_real getInfinity()
 		{
-			this.value = value.value;
+			return new ai_real(type.getInfinity());
 		}
-		public void setValue(T value)
+
+		public ai_real opNegate()
 		{
-			this.value = value;
+			return new ai_real(type.opNegate(value));
 		}
 
 
