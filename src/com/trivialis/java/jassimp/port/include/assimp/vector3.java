@@ -37,7 +37,7 @@ public class vector3 {
 			y=o.y;
 			z=o.z;
 		}
-		public aiVector3t multiply(aiMatrix3x3t<ai_real> pMatrix, aiVector3t pVector) {
+		public aiVector3t multiply(aiMatrix3x3t pMatrix, aiVector3t pVector) {
 			aiVector3t res = new aiVector3t();
 			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z));
 			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z));

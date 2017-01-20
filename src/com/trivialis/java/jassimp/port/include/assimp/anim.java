@@ -2,8 +2,10 @@ package com.trivialis.java.jassimp.port.include.assimp;
 
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaternion;
+import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaterniont;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
+import com.trivialis.java.jassimp.util.IPointer;
 
 public class anim {
 
@@ -181,9 +183,13 @@ public class anim {
 			return d.forValue(a).opAdd(d.opMultiply(d.forValue(b.doubleValue()-a.doubleValue()))).getValue();
 		}
 
-		public aiQuaternion cast(aiQuaternion a, aiQuaternion b, ai_real d) {
-			return aiQuaternion.Interpolate(a,b,d);
+		public void cast(IPointer<aiQuaterniont> out, aiQuaterniont a, aiQuaterniont b, ai_real d) {
+			aiQuaterniont.Interpolate(out, a,b,d);
 		}
+
+//		public aiQuaternion cast(aiQuaternion a, aiQuaternion b, ai_real d) {
+//			return aiQuaternion.Interpolate(a,b,d);
+//		}
 
 		public int cast(int a, int b, ai_real d) {
 			return d.opBigger(new ai_real(0.5F))?b:a;
@@ -198,8 +204,8 @@ public class anim {
 			return (aiVector3D) a.opAdd((b.opSubtract(a)).opMultiply(d));
 		}
 
-		public aiQuaternion cast(aiQuatKey a, aiQuatKey b, ai_real d) {
-			return cast(a.mValue, b.mValue, d);
+		public void cast(IPointer<aiQuaterniont> out, aiQuatKey a, aiQuatKey b, ai_real d) {
+			cast(out, a.mValue, b.mValue, d);
 		}
 
 		public int cast(aiMeshKey a, aiMeshKey b, ai_real d) {

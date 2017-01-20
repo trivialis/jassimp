@@ -42,7 +42,7 @@ public class matrix4x4 {
 
 	    //Todo cast function.
 
-	    public aiMatrix4x4t(aiMatrix3x3t<ai_real> m) {
+	    public aiMatrix4x4t(aiMatrix3x3t m) {
 	    	a1=m.a1;a2=m.a2;a3=m.a3;a4=m.a3.forValue(0.0);
 	    	b1=m.b1;b2=m.b2;b3=m.b3;b4=m.b3.forValue(0.0);
 	    	c1=m.c1;c2=m.c2;c3=m.c3;c4=m.c3.forValue(0.0);
@@ -50,7 +50,7 @@ public class matrix4x4 {
 	    }
 
 	    public aiMatrix4x4t(aiVector3t scaling, aiQuaterniont rotation, aiVector3t position) {
-	    	aiMatrix3x3t<ai_real> m = rotation.GetMatrix();
+	    	aiMatrix3x3t m = rotation.GetMatrix();
 
 	    	a1 = m.a1.opMultiply(scaling.z);
 	    	a2 = m.a2.opMultiply(scaling.z);
