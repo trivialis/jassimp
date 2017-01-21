@@ -99,6 +99,11 @@ public class vector3 {
 
 	public static class aiVector3D extends aiVector3t {
 
+		public aiVector3D(ai_real x, ai_real y, ai_real z)
+		{
+			super(x, y, z);
+		}
+
 
 
 

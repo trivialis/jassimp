@@ -1473,6 +1473,12 @@ public class XFileParser {
 	}
 
 
+	public Scene GetImportedData()
+	{
+		return mScene;
+	}
+
+
 
 
 

@@ -40,14 +40,19 @@ public class string {
 		System.out.println(strncmp(p1, p2, 5));
 	}
 
-	public static void memcpy(char[] data, char[] data2, int length)
+	public static <T extends Object> void memcpy(T[] data, T[] data2, int length)
 	{
 		System.arraycopy(data2, 0, data, 0, length);
 	}
 
-	public static void memcpy(char[] data, int length, char[] app, int len)
+	public static <T extends Object> void memcpy(T[] data, int length, T[] app, int len)
 	{
 		System.arraycopy(app, 0, data, length, len);
+	}
+
+	public static void memcpy(char[] data, char[] data2, int length)
+	{
+		System.arraycopy(data2, 0, data, 0, length);
 	}
 
 	public static int strlen(char[] sz)
@@ -70,6 +75,8 @@ public class string {
 	    }
 	    return 0;
 	}
+
+
 
 
 

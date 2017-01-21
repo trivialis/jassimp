@@ -75,8 +75,8 @@ public class types {
 
 
 
-		private int length;
-		private char[] data;
+		public int length;
+		public char[] data;
 
 		public aiString() {
 			length = 0;

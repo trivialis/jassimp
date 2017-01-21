@@ -58,25 +58,25 @@ def fetch_declaration_line(method=""):
 def fetch_method_body(method=""):
     return method[method.index("{"):method.rindex("}")+1]
 
-def run():
-    import time
-    track=""
-    while True:
-        #time.sleep(0.5)
-        print("Waiting for input:")
-        data='\n'.join(iter(raw_input, ""))
-        dec=fetch_declaration_line(data)
-        body=fetch_method_body(data)
-        decr=clean_class_method_declaration(dec)
-        bodyr=clean_body(body)
-        pyperclip.copy(decr+bodyr)
-        print("done!")
-        #if pyperclip.paste()!=track:
-            #print("Processing...")
-            #track=pyperclip.paste()
-            #todo=track.split("\n")[0]
-            #remainder="\n".join(track.split("\n")[1:])
-            #result=clean_class_method_declaration(todo)
-            #pyperclip.copy(result+remainder)
-            #track=result+remainder
+#def run():
+import time
+track=""
+while True:
+    #time.sleep(0.5)
+    print("Waiting for input:")
+    data='\n'.join(iter(raw_input, ' '))
+    dec=fetch_declaration_line(data)
+    body=fetch_method_body(data)
+    decr=clean_class_method_declaration(dec)
+    bodyr=clean_body(body)
+    pyperclip.copy(decr+bodyr)
+    print("done!")
+    #if pyperclip.paste()!=track:
+        #print("Processing...")
+        #track=pyperclip.paste()
+        #todo=track.split("\n")[0]
+        #remainder="\n".join(track.split("\n")[1:])
+        #result=clean_class_method_declaration(todo)
+        #pyperclip.copy(result+remainder)
+        #track=result+remainder
             

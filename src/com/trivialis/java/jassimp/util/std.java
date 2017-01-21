@@ -1,6 +1,9 @@
 package com.trivialis.java.jassimp.util;
 
+import java.util.ArrayList;
+
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+import com.trivialis.java.jassimp.port.include.assimp.scene.aiBone;
 
 public class std {
 
@@ -59,6 +62,10 @@ public class std {
 	public static ai_real acos(ai_real a)
 	{
 		return new ai_real(acos((double) a.getValue()));
+	}
+	public static <T extends Object> void copy(ArrayList<T> newBones, T aiBone, T aiBone2, T[] mBones)
+	{
+		System.arraycopy(newBones.toArray(new Object[0]), newBones.indexOf(aiBone), mBones, 0, newBones.indexOf(aiBone2)-newBones.indexOf(aiBone));
 	}
 
 
