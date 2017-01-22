@@ -27,6 +27,17 @@ public class string {
 	    return s1.get()-s2.get();
 	}
 
+	public static int strncmp(String s1, String s2, int n)
+	{
+		int i1=0;
+		int i2=0;
+		while(n-->0) {
+			if(s1.charAt(i1++)!=s2.charAt(i2++))
+				return (s1.charAt(i1-1)-(s2.charAt(i2)-1));
+		}
+		return 0;
+	}
+
 	public static int strncmp(IPointer<Character> s1, IPointer<Character> s2, int n) {
 		s2=s2.pointerCopy();
 		s1=s1.pointerCopy();
@@ -160,6 +171,8 @@ public class string {
 	{
 		System.arraycopy(data, 0, data2, 0, data2.length);
 	}
+
+
 
 
 

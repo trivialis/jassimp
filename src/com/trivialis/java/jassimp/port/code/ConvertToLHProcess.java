@@ -1,11 +1,14 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.nio.charset.Charset;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiAnimation;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiNodeAnim;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
+import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterialProperty;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiBone;
@@ -13,6 +16,8 @@ import com.trivialis.java.jassimp.port.include.assimp.scene.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiNode;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
+import com.trivialis.java.jassimp.util.string;
+import com.trivialis.java.jassimp.util.serialization.Bytes;
 
 public class ConvertToLHProcess {
 
@@ -104,8 +109,42 @@ public class ConvertToLHProcess {
 		    }
 		}
 
+		public void ProcessMaterial( aiMaterial _mat)
+		{
+		    aiMaterial mat = (aiMaterial)_mat;
+		    for (int a = 0; a < mat.mNumProperties;++a)   {
+		        aiMaterialProperty prop = mat.mProperties[a];
 
+		        // Mapping axis for UV mappings?
+		        if (string.strcmp( prop.mKey.data, "$tex.mapaxis".getBytes(Charset.forName("UTF-8")))==0)    {
+		            assert( prop.mDataLength >= ai_real.getSize()*3); /* something is wrong with the validation if we end up here */
+		            aiVector3D pff = Bytes.deserializeTo_aiVector3D(prop.mData);
 
+		            pff.z = pff.z.opMultiply(new ai_real(-1.f));
+		        }
+		    }
+		}
+
+		public void ProcessAnimation( aiNodeAnim pAnim)
+		{
+		    // position keys
+		    for( int a = 0; a < pAnim.mNumPositionKeys; a++)
+		        pAnim.mPositionKeys[a].mValue.z = pAnim.mPositionKeys[a].mValue.z.opMultiply(new ai_real(-1.0f));
+
+		    // rotation keys
+		    for( int a = 0; a < pAnim.mNumRotationKeys; a++)
+		    {
+		        /* That's the safe version, but the float errors add up. So we try the short version instead
+		        aiMatrix3x3 rotmat = pAnim.mRotationKeys[a].mValue.GetMatrix();
+		        rotmat.a3 = -rotmat.a3; rotmat.b3 = -rotmat.b3;
+		        rotmat.c1 = -rotmat.c1; rotmat.c2 = -rotmat.c2;
+		        aiQuaternion rotquat( rotmat);
+		        pAnim.mRotationKeys[a].mValue = rotquat;
+		        */
+		        pAnim.mRotationKeys[a].mValue.x =pAnim.mRotationKeys[a].mValue.x.opMultiply(new ai_real(-1.0f));
+		        pAnim.mRotationKeys[a].mValue.y =pAnim.mRotationKeys[a].mValue.y.opMultiply(new ai_real(-1.0f));;
+		    }
+		}
 
 	}
 

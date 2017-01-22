@@ -327,6 +327,10 @@ public class defs {
 			type=t;
 		}
 
+		public static int getSize() {
+			return defs.DOUBLE_PRECISION?8:4;
+		}
+
 		private static Number enforce(Number val) {
 			if(DOUBLE_PRECISION) {
 				if(val instanceof Float)

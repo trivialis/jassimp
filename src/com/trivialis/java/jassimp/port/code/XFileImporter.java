@@ -61,9 +61,9 @@ public class XFileImporter extends BaseImporter {
 	}
 
 	@Override
-	public void InternReadFile(String pFile, ScopeGuard<aiScene> pScene, IPointer<FileSystemFilter> pIOHandler)
+	public void InternReadFile(IPointer<StringBuilder> pFile, ScopeGuard<aiScene> pScene, IPointer<FileSystemFilter> pIOHandler)
 	{
-		IPointer<IOStream> file = Pointer.valueOf(pIOHandler.get().open(pFile));
+		IPointer<IOStream> file = Pointer.valueOf(pIOHandler.get().Open(pFile));
 		if(file.get() == null)
 			throw new Exceptional.DeadlyImportError("Failed to open file " + pFile + ".");
 

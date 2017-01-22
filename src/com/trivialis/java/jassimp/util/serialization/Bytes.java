@@ -5,6 +5,7 @@ import java.nio.ByteBuffer;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
+import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 
 public class Bytes {
 
@@ -78,6 +79,17 @@ public class Bytes {
 		ByteBuffer mediator = ByteBuffer.allocate(floats.length*4);
 		for(float f : floats) mediator.putFloat(f);
 		return mediator.array();
+	}
+
+	public static aiVector3D deserializeTo_aiVector3D(byte[] mData)
+	{
+		ByteBuffer mediator = ByteBuffer.wrap(mData);
+		if(mData.length==12) {
+			return new aiVector3D(new ai_real(mediator.getFloat()), new ai_real(mediator.getFloat()), new ai_real(mediator.getFloat()));
+		} else if(mData.length==24) {
+			return new aiVector3D(new ai_real(mediator.getDouble()), new ai_real(mediator.getDouble()), new ai_real(mediator.getDouble()));
+		}
+		throw new RuntimeException();
 	}
 
 }

@@ -167,4 +167,26 @@ public static long strtoul10_64(IPointer<Character> in, IPointer<IPointer<Charac
     return value;
 }
 
+public static byte HexOctetToDecimal(char[] in)
+{
+
+	return (byte) (((byte)HexDigitToDecimal(in[0])<<4)+(byte)HexDigitToDecimal(in[1]));
+}
+
+private static int HexDigitToDecimal(char in)
+{
+    int out = Integer.MAX_VALUE;
+    if (in >= '0' && in <= '9')
+        out = in - '0';
+
+    else if (in >= 'a' && in <= 'f')
+        out = 10 + in - 'a';
+
+    else if (in >= 'A' && in <= 'F')
+        out = 10 + in - 'A';
+
+    // return value is UINT_MAX if the input is not a hex digit
+    return out;
+}
+
 }
