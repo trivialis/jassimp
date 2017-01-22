@@ -3,7 +3,6 @@ package com.trivialis.java.jassimp.util;
 import java.util.ArrayList;
 
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiBone;
 
 public class std {
 

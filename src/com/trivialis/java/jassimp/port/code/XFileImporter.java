@@ -14,33 +14,34 @@ import com.trivialis.java.jassimp.port.code.XFileHelper.Material;
 import com.trivialis.java.jassimp.port.code.XFileHelper.Mesh;
 import com.trivialis.java.jassimp.port.code.XFileHelper.Node;
 import com.trivialis.java.jassimp.port.code.XFileHelper.Scene;
+import com.trivialis.java.jassimp.port.code.XFileHelper.TexEntry;
 import com.trivialis.java.jassimp.port.include.assimp.IOStream;
-import com.trivialis.java.jassimp.port.include.assimp.anim;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiAnimation;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiNodeAnim;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiQuatKey;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiVectorKey;
+import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.material;
+import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
-import com.trivialis.java.jassimp.port.include.assimp.scene;
 import com.trivialis.java.jassimp.port.include.assimp.mesh;
 import com.trivialis.java.jassimp.port.include.assimp.mesh.aiVertexWeight;
 import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaternion;
+import com.trivialis.java.jassimp.port.include.assimp.scene;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiBone;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiFace;
-import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiNode;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
-import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
+import com.trivialis.java.jassimp.util.ctype;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
 
@@ -538,38 +539,38 @@ public class XFileImporter extends BaseImporter {
 	    }
 
 	        aiMaterial mat = new aiMaterial();
-	        aiString name;
+	        aiString name = new aiString();
 	        name.Set( oldMat.mName);
 	        mat.AddProperty(name, material.AI_MATKEY_NAME.x, material.AI_MATKEY_NAME.y, material.AI_MATKEY_NAME.z);
 
 	        // Shading model: hardcoded to PHONG, there is no such information in an XFile
 	        // FIX (aramis): If the specular exponent is 0, use gouraud shading. This is a bugfix
 	        // for some models in the SDK (e.g. good old tiny.x)
-	        int shadeMode = (int)oldMat.mSpecularExponent == 0.0f
-	            ? aiShadingMode_Gouraud : aiShadingMode_Phong;
+	        int shadeMode = oldMat.mSpecularExponent.cast(new ai_real(0)).opEquals(new ai_real(0.0f))
+	            ? material.aiShadingMode.aiShadingMode_Gouraud.value : material.aiShadingMode.aiShadingMode_Phong.value;
 
-	        mat.AddProperty<int>( &shadeMode, 1, AI_MATKEY_SHADING_MODEL);
+	        mat.AddProperty(new int[]{shadeMode}, 1, material.AI_MATKEY_SHADING_MODEL.x, material.AI_MATKEY_SHADING_MODEL.y, material.AI_MATKEY_SHADING_MODEL.z);
 	        // material colours
 	    // Unclear: there's no ambient colour, but emissive. What to put for ambient?
 	    // Probably nothing at all, let the user select a suitable default.
-	        mat.AddProperty( &oldMat.mEmissive, 1, AI_MATKEY_COLOR_EMISSIVE);
-	        mat.AddProperty( &oldMat.mDiffuse, 1, AI_MATKEY_COLOR_DIFFUSE);
-	        mat.AddProperty( &oldMat.mSpecular, 1, AI_MATKEY_COLOR_SPECULAR);
-	        mat.AddProperty( &oldMat.mSpecularExponent, 1, AI_MATKEY_SHININESS);
+	        mat.AddProperty(new aiColor3D[]{oldMat.mEmissive}, 1, material.AI_MATKEY_COLOR_EMISSIVE.x, material.AI_MATKEY_COLOR_EMISSIVE.y, material.AI_MATKEY_COLOR_EMISSIVE.z);
+	        mat.AddProperty(new aiColor4D[]{oldMat.mDiffuse}, 1, material.AI_MATKEY_COLOR_DIFFUSE.x, material.AI_MATKEY_COLOR_DIFFUSE.y, material.AI_MATKEY_COLOR_DIFFUSE.z);
+	        mat.AddProperty(new aiColor3D[]{oldMat.mSpecular}, 1, material.AI_MATKEY_COLOR_SPECULAR.x, material.AI_MATKEY_COLOR_SPECULAR.y, material.AI_MATKEY_COLOR_SPECULAR.z);
+	        mat.AddProperty(new ai_real[]{oldMat.mSpecularExponent}, 1, material.AI_MATKEY_SHININESS.x, material.AI_MATKEY_SHININESS.y, material.AI_MATKEY_SHININESS.z);
 
 
 	        // texture, if there is one
 	        if (1 == oldMat.mTextures.size())
 	        {
-	            XFile.TexEntry& otex = oldMat.mTextures.back();
-	            if (otex.mName.length())
+	            TexEntry otex = oldMat.mTextures.get(oldMat.mTextures.size()-1);
+	            if (otex.mName.length()!=0)
 	            {
 	                // if there is only one texture assume it contains the diffuse color
-	                aiString tex( otex.mName);
+	                aiString tex = new aiString( otex.mName);
 	                if( otex.mIsNormalMap)
-	                    mat.AddProperty( &tex, AI_MATKEY_TEXTURE_NORMALS(0));
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_NORMALS(0).x, material.AI_MATKEY_TEXTURE_NORMALS(0).y, material.AI_MATKEY_TEXTURE_NORMALS(0).z);
 	                else
-	                    mat.AddProperty( &tex, AI_MATKEY_TEXTURE_DIFFUSE(0));
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_DIFFUSE(0).x, material.AI_MATKEY_TEXTURE_DIFFUSE(0).y, material.AI_MATKEY_TEXTURE_DIFFUSE(0).z);
 	            }
 	        }
 	        else
@@ -579,56 +580,56 @@ public class XFileImporter extends BaseImporter {
 	            int iHM = 0,iNM = 0,iDM = 0,iSM = 0,iAM = 0,iEM = 0;
 	            for( int b = 0; b < oldMat.mTextures.size(); b++)
 	            {
-	                XFile.TexEntry& otex = oldMat.mTextures[b];
-	                std.string sz = otex.mName;
-	                if (!sz.length())continue;
+	                TexEntry otex = oldMat.mTextures.get(b);
+	                String sz = otex.mName;
+	                if (sz.length()==0)continue;
 
 
 	                // find the file name
 	                //size_t iLen = sz.length();
-	                std.string.size_type s = sz.find_last_of("\\/");
+	                int s = sz.lastIndexOf("\\/");
 	                if (std.string.npos == s)
 	                    s = 0;
 
 	                // cut off the file extension
-	                std.string.size_type sExt = sz.find_last_of('.');
+	                int sExt = sz.lastIndexOf('.');
 	                if (std.string.npos != sExt){
-	                    sz[sExt] = '\0';
+	                    sz = sz.substring(0, sExt);
 	                }
 
 	                // convert to lower case for easier comparison
 	                for( int c = 0; c < sz.length(); c++)
-	                    if( isalpha( sz[c]))
-	                        sz[c] = tolower( sz[c]);
-
+	                    if( ctype.isalpha(sz.charAt(c))) continue; //useless code
+	                        //sz[c] = tolower( sz[c]);
+	                sz=sz.toLowerCase();
 
 	                // Place texture filename property under the corresponding name
-	                aiString tex = new aiString( oldMat.mTextures[b].mName);
+	                aiString tex = new aiString( oldMat.mTextures.get(b).mName);
 
 	                // bump map
-	                if (std.string.npos != sz.find("bump", s) || std.string.npos != sz.find("height", s))
+	                if (std.string.npos != sz.indexOf("bump", s) || std.string.npos != sz.indexOf("height", s))
 	                {
-	                    mat.AddProperty( &tex, AI_MATKEY_TEXTURE_HEIGHT(iHM++));
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_HEIGHT(iHM++));
 	                } else
-	                if (otex.mIsNormalMap || std.string.npos != sz.find( "normal", s) || std.string.npos != sz.find("nm", s))
+	                if (otex.mIsNormalMap || std.string.npos != sz.indexOf( "normal", s) || std.string.npos != sz.indexOf("nm", s))
 	                {
-	                    mat.AddProperty( &tex, AI_MATKEY_TEXTURE_NORMALS(iNM++));
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_NORMALS(iNM++));
 	                } else
-	                if (std.string.npos != sz.find( "spec", s) || std.string.npos != sz.find( "glanz", s))
+	                if (std.string.npos != sz.indexOf( "spec", s) || std.string.npos != sz.indexOf( "glanz", s))
 	                {
-	                    mat.AddProperty( &tex, AI_MATKEY_TEXTURE_SPECULAR(iSM++));
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_SPECULAR(iSM++));
 	                } else
-	                if (std.string.npos != sz.find( "ambi", s) || std.string.npos != sz.find( "env", s))
+	                if (std.string.npos != sz.indexOf( "ambi", s) || std.string.npos != sz.indexOf( "env", s))
 	                {
-	                    mat.AddProperty( &tex, AI_MATKEY_TEXTURE_AMBIENT(iAM++));
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_AMBIENT(iAM++));
 	                } else
-	                if (std.string.npos != sz.find( "emissive", s) || std.string.npos != sz.find( "self", s))
+	                if (std.string.npos != sz.indexOf( "emissive", s) || std.string.npos != sz.indexOf( "self", s))
 	                {
-	                    mat.AddProperty( &tex, AI_MATKEY_TEXTURE_EMISSIVE(iEM++));
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_EMISSIVE(iEM++));
 	                } else
 	                {
 	                    // Assume it is a diffuse texture
-	                    mat.AddProperty( &tex, AI_MATKEY_TEXTURE_DIFFUSE(iDM++));
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_DIFFUSE(iDM++));
 	                }
 	            }
 	        }

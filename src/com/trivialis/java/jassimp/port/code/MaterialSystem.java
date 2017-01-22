@@ -1,19 +1,17 @@
 package com.trivialis.java.jassimp.port.code;
 
-import java.nio.CharBuffer;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
 import com.trivialis.java.jassimp.port.include.assimp.material;
-import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterialProperty;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
+import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterialProperty;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiReturn;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
 import com.trivialis.java.jassimp.util.StringUtil;
-import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
 
 public class MaterialSystem {

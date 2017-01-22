@@ -71,73 +71,75 @@ public class defs {
 			{
 				return -1*a.doubleValue();
 			}
-		}, INTEGER(3, Integer.class) {
-			@Override
-			Number opAdd(Number a, Number b)
-			{
-				return a.intValue()+b.intValue();
-			}
-
-			@Override
-			Number forValue(Number a)
-			{
-				return a.intValue();
-			}
-
-			@Override
-			Number opMultiply(Number a, Number b)
-			{
-				return a.intValue()*b.intValue();
-			}
-
-			@Override
-			Number opSubtract(Number a, Number b)
-			{
-				return a.intValue()-b.intValue();
-			}
-
-			@Override
-			Number opDivide(Number a, Number b)
-			{
-				return a.intValue()/b.intValue();
-			}
-
-			@Override
-			boolean opBigger(Number a, Number b)
-			{
-				return a.intValue()>b.intValue();
-			}
-
-			@Override
-			boolean opSmaller(Number a, Number b)
-			{
-				return a.intValue()<b.intValue();
-			}
-
-			@Override
-			boolean opEquals(Number a, Number b)
-			{
-				return a.intValue()==b.intValue();
-			}
-
-			@Override
-			Number NaN()
-			{
-				return Integer.MAX_VALUE;
-			}
-
-			@Override
-			Number getInfinity()
-			{
-				return Integer.MAX_VALUE;
-			}
-
-			@Override
-			Number opNegate(Number a)
-			{
-				return -1*a.intValue();
-			}
-		}, FLOAT(1, Float.class) {
+		},
+//		INTEGER(3, Integer.class) {
+//			@Override
+//			Number opAdd(Number a, Number b)
+//			{
+//				return a.intValue()+b.intValue();
+//			}
+//
+//			@Override
+//			Number forValue(Number a)
+//			{
+//				return a.intValue();
+//			}
+//
+//			@Override
+//			Number opMultiply(Number a, Number b)
+//			{
+//				return a.intValue()*b.intValue();
+//			}
+//
+//			@Override
+//			Number opSubtract(Number a, Number b)
+//			{
+//				return a.intValue()-b.intValue();
+//			}
+//
+//			@Override
+//			Number opDivide(Number a, Number b)
+//			{
+//				return a.intValue()/b.intValue();
+//			}
+//
+//			@Override
+//			boolean opBigger(Number a, Number b)
+//			{
+//				return a.intValue()>b.intValue();
+//			}
+//
+//			@Override
+//			boolean opSmaller(Number a, Number b)
+//			{
+//				return a.intValue()<b.intValue();
+//			}
+//
+//			@Override
+//			boolean opEquals(Number a, Number b)
+//			{
+//				return a.intValue()==b.intValue();
+//			}
+//
+//			@Override
+//			Number NaN()
+//			{
+//				return Integer.MAX_VALUE;
+//			}
+//
+//			@Override
+//			Number getInfinity()
+//			{
+//				return Integer.MAX_VALUE;
+//			}
+//
+//			@Override
+//			Number opNegate(Number a)
+//			{
+//				return -1*a.intValue();
+//			}
+//		},
+		FLOAT(1, Float.class) {
 			@Override
 			Number opAdd(Number a, Number b)
 			{
@@ -203,73 +205,75 @@ public class defs {
 			{
 				return -1*a.floatValue();
 			}
-		}, LONG(2, Long.class) {
-			@Override
-			Number opAdd(Number a, Number b)
-			{
-				return a.longValue()+b.longValue();
-			}
-
-			@Override
-			Number forValue(Number a)
-			{
-				return a.longValue();
-			}
-
-			@Override
-			Number opMultiply(Number a, Number b)
-			{
-				return a.longValue()*b.longValue();
-			}
-
-			@Override
-			Number opSubtract(Number a, Number b)
-			{
-				return a.longValue()-b.longValue();
-			}
-
-			@Override
-			Number opDivide(Number a, Number b)
-			{
-				return a.longValue()/b.longValue();
-			}
-
-			@Override
-			boolean opBigger(Number a, Number b)
-			{
-				return a.longValue()>b.longValue();
-			}
-
-			@Override
-			boolean opSmaller(Number a, Number b)
-			{
-				return a.longValue()<b.longValue();
-			}
-
-			@Override
-			boolean opEquals(Number a, Number b)
-			{
-				return a.longValue()==b.longValue();
-			}
-
-			@Override
-			Number NaN()
-			{
-				return Long.MAX_VALUE;
-			}
-
-			@Override
-			Number getInfinity()
-			{
-				return Long.MAX_VALUE;
-			}
-
-			@Override
-			Number opNegate(Number a)
-			{
-				return -1*a.longValue();
-			}
-		};
+		},
+//		LONG(2, Long.class) {
+//			@Override
+//			Number opAdd(Number a, Number b)
+//			{
+//				return a.longValue()+b.longValue();
+//			}
+//
+//			@Override
+//			Number forValue(Number a)
+//			{
+//				return a.longValue();
+//			}
+//
+//			@Override
+//			Number opMultiply(Number a, Number b)
+//			{
+//				return a.longValue()*b.longValue();
+//			}
+//
+//			@Override
+//			Number opSubtract(Number a, Number b)
+//			{
+//				return a.longValue()-b.longValue();
+//			}
+//
+//			@Override
+//			Number opDivide(Number a, Number b)
+//			{
+//				return a.longValue()/b.longValue();
+//			}
+//
+//			@Override
+//			boolean opBigger(Number a, Number b)
+//			{
+//				return a.longValue()>b.longValue();
+//			}
+//
+//			@Override
+//			boolean opSmaller(Number a, Number b)
+//			{
+//				return a.longValue()<b.longValue();
+//			}
+//
+//			@Override
+//			boolean opEquals(Number a, Number b)
+//			{
+//				return a.longValue()==b.longValue();
+//			}
+//
+//			@Override
+//			Number NaN()
+//			{
+//				return Long.MAX_VALUE;
+//			}
+//
+//			@Override
+//			Number getInfinity()
+//			{
+//				return Long.MAX_VALUE;
+//			}
+//
+//			@Override
+//			Number opNegate(Number a)
+//			{
+//				return -1*a.longValue();
+//			}
+//		}
+		;
 
 
 		//private static final Class<? extends Number>[] HIERARCHY = new Class[]{Double.class, Float.class, Long.class, Integer.class};
@@ -346,12 +350,12 @@ public class defs {
 			value=enforce(val);
 			type=Types.lookUp(val.getClass());
 		}
-		public ai_real(Integer val) {
-			this(val, Types.INTEGER);
-		}
-		public ai_real(Long val) {
-			this(val, Types.LONG);
-		}
+//		public ai_real(Integer val) {
+//			this(val, Types.INTEGER);
+//		}
+//		public ai_real(Long val) {
+//			this(val, Types.LONG);
+//		}
 
 		@Override
 		public String toString() {

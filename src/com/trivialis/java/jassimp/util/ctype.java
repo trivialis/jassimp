@@ -15,4 +15,9 @@ public class ctype {
 		return Character.isDigit(c);
 	}
 
+	public static boolean isalpha(char charAt)
+	{
+		return Character.isAlphabetic(charAt);
+	}
+
 }

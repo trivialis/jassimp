@@ -50,7 +50,7 @@ public class matrix4x4 {
 	    }
 
 	    public aiMatrix4x4t(aiVector3t scaling, aiQuaterniont rotation, aiVector3t position) {
-	    	aiMatrix3x3t m = rotation.GetMatrix();
+	    	aiMatrix3x3t m = new aiMatrix3x3t();rotation.GetMatrix(m);
 
 	    	a1 = m.a1.opMultiply(scaling.z);
 	    	a2 = m.a2.opMultiply(scaling.z);

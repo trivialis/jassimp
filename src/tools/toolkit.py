@@ -4,6 +4,8 @@ import re
 CLASSMETHOD=re.compile("\s*([A-Za-z<>]+::)")
 OPERATORMETHOD=re.compile("(operator\s*([()=!<>*/+\-]{1,2}))\s*")
 
+ENUMMETHOD=re.compile("([a-zA-Z0-9_]+)\s*=\s*([0-9]*x*[0-9]+)")
+
 def op_name(op):
     if "*" in op:
         return "opMultiply"
@@ -20,6 +22,32 @@ def op_name(op):
     if "!=" in op:
         return "opNotEquals"
     return ""
+
+
+ENUMNAME=re.compile("[a-zA-Z0-9]+")
+
+def convert_enum(enum=""):
+    enumdeclaration=enum[:enum.index("{")]
+    enumname=[result for result in re.findall(ENUMNAME, enumdeclaration) if "enum" not in result]
+    enumname=enumname[0]
+    enumbody=enum[enum.index("{"):enum.rindex("}")]
+
+    finaldecl="public "+enumdeclaration
+
+    found=re.findall(ENUMMETHOD, enumbody)
+    finalbody="{\n"
+    finalbody+=",\n".join(name+"("+value+")" for name, value in found)
+    finalbody+=";"
+    finalbody+="public int value;\n\n private "+enumname+"(int val)\n{ value=val;\n}\n}"
+        
+    return finaldecl + finalbody
+
+def enumloop():
+    while True:
+        print("waiting for enum...")
+        data='\n'.join(iter(raw_input, ' '))
+        pyperclip.copy(convert_enum(data))
+        print("done!")
 
 def clean_class_method_declaration(declarationline=""):
     result = "public "
