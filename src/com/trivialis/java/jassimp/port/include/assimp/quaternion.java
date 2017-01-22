@@ -1,6 +1,7 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.util.IPointer;
@@ -80,9 +81,9 @@ public class quaternion {
 		    w = (fCosRoll.opMultiply(fCosPitchCosYaw)).opAdd(fSinRoll.opMultiply(fSinPitchSinYaw));
 		}
 
-		public aiMatrix3x3t GetMatrix()
+		public <Matrix extends aiMatrix3x3t> Matrix GetMatrix(Matrix resMatrix)
 		{
-		    aiMatrix3x3t resMatrix = new aiMatrix3x3t();
+
 		    resMatrix.a1 = new ai_real(1.0).opSubtract((new ai_real(2.0).opMultiply((y.opMultiply(y).opAdd(z.opMultiply(z))))));
 		    resMatrix.a2 = new ai_real(2.0).opMultiply((x.opMultiply(y)).opSubtract((z.opMultiply(w))));
 		    resMatrix.a3 = new ai_real(2.0).opMultiply((x.opMultiply(z)).opAdd((y.opMultiply(w))));
@@ -225,6 +226,11 @@ public class quaternion {
 	}
 
 	public static class aiQuaternion extends aiQuaterniont {
+
+		public aiQuaternion(aiMatrix3x3 m)
+		{
+			super(m);
+		}
 
 
 

@@ -104,6 +104,11 @@ public class vector3 {
 			super(x, y, z);
 		}
 
+		public aiVector3D()
+		{
+			// TODO Auto-generated constructor stub
+		}
+
 
 
 

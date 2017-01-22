@@ -1,6 +1,21 @@
 package com.trivialis.java.jassimp.util;
 
+import java.nio.ByteBuffer;
+
+import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
+
 public class string {
+
+	public static int strcmp(char[] data, char[] data2)
+	{
+		int s1=0;
+		int s2=0;
+		while(s1< data.length && (data[s1]==data2[s2])){
+			s1++;
+			s2++;
+		}
+		return data[s1]-data[s2];
+	}
 
 	public static int strcmp(IPointer<Character> s1, IPointer<Character> s2) {
 		s2=s2.pointerCopy();
@@ -55,6 +70,11 @@ public class string {
 		System.arraycopy(data2, 0, data, 0, length);
 	}
 
+	public static int strlen(byte[] sz)
+	{
+		return sz.length;
+	}
+
 	public static int strlen(char[] sz)
 	{
 		return sz.length;
@@ -75,6 +95,76 @@ public class string {
 	    }
 	    return 0;
 	}
+
+	public static int memcmp(byte[] data, byte[] data2, int length)
+	{
+	    for(int i = 0; i < length; i++){
+	        if(data[i] != data2[i]){
+	            if((data[i] >= 0 && data2[i] >= 0)||(data[i] < 0 && data2[i] < 0))
+	                return data[i] - data2[i];
+	            if(data[i] < 0 && data2[i] >= 0)
+	                return 1;
+	            if(data2[i] < 0 && data[i] >=0)
+	                return -1;
+	        }
+	    }
+	    return 0;
+	}
+
+
+	public static void memcpy(byte[] data, int length, byte[] app, int len)
+	{
+		System.arraycopy(app, 0, data, length, len);
+	}
+
+	public static int strcmp(aiString name, String mName)
+	{
+		return strcmp(Pointer.valueOf(StringUtil.toCharacterArray(name.data)), Pointer.valueOf(StringUtil.toCharacterArray(mName.toCharArray())));
+	}
+
+	public static void strcpy(char[] data, char[] data2)
+	{
+		System.arraycopy(data, 0, data2, 0, data2.length);
+	}
+
+	public static void memcpy(byte[] data, int[] data2, int pSizeInBytes)
+	{
+		ByteBuffer mediator = ByteBuffer.wrap(data);
+		for(int i = 0; i<data.length&&i<data2.length; i++)
+		{
+			mediator.putInt(data2[i]);
+		}
+	}
+
+	public static void memcpy(byte[] data, byte[] data2, int length)
+	{
+		for(int i = 0; i<length&i<length; i++)
+		{
+			data[i]=data2[i];
+		}
+
+	}
+
+	public static int strcmp(byte[] data, byte[] data2)
+	{
+		int s1=0;
+		int s2=0;
+		while(s1< data.length && (data[s1]==data2[s2])){
+			s1++;
+			s2++;
+		}
+		return data[s1]-data[s2];
+	}
+
+	public static void strcpy(byte[] data, byte[] data2)
+	{
+		System.arraycopy(data, 0, data2, 0, data2.length);
+	}
+
+
+
+
+
 
 
 

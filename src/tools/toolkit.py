@@ -43,6 +43,8 @@ def clean_class_method_declaration(declarationline=""):
     declarationline=declarationline.replace("<TReal>","")
     declarationline=declarationline.replace("TReal","ai_real")
     declarationline=declarationline.replace("bool ","boolean ")
+    declarationline=declarationline.replace("unsigned ","")
+    #declarationline=declarationline.replace("*","")
     return result + declarationline
 
 def clean_body(body=""):
@@ -50,6 +52,10 @@ def clean_body(body=""):
     body=body.replace("TReal ","ai_real ")
     body=body.replace("<TReal>","")
     body=body.replace("const ","")
+    #body=body.replace("*","")
+    body=body.replace("std::vector<","ArrayList<")
+    body=body.replace("unsigned ","")
+    body=body.replace("NULL","null")
     return body.replace("->",".").replace("::",".")
 
 def fetch_declaration_line(method=""):

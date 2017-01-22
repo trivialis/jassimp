@@ -1,15 +1,19 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
+import com.trivialis.java.jassimp.port.code.MaterialSystem;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
+import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterialProperty;
+import com.trivialis.java.jassimp.port.include.assimp.anim.aiAnimation;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.mesh.aiVertexWeight;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiBone;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiFace;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiMaterial;
+import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiNode;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
+import com.trivialis.java.jassimp.port.include.assimp.types.aiReturn;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.util.IPointer;
 
@@ -69,6 +73,8 @@ public class scene {
 		public aiMaterial[] mMaterials;
 		public aiMesh[] mMeshes;
 		public int mNumMeshes;
+		public int mNumAnimations;
+		public aiAnimation[] mAnimations;
 
 	}
 
@@ -84,25 +90,6 @@ public class scene {
 
 	}
 
-	public static class aiMaterial {
 
-		public void AddProperty(IPointer<Object> valueOf, int i, String aI_MATKEY_SHADING_MODEL)
-		{
-
-		}
-
-//		private void AddProperty(IPointer<Integer> valueOf, int i, String aI_MATKEY_SHADING_MODEL)
-//		{
-//			// TODO Auto-generated method stub
-//
-//		}
-//
-//		public void AddProperty(IPointer<aiColor3D> valueOf, int i, String aI_MATKEY_COLOR_EMISSIVE)
-//		{
-//			// TODO Auto-generated method stub
-//
-//		}
-
-	}
 
 }

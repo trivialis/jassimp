@@ -67,6 +67,10 @@ public class std {
 	{
 		System.arraycopy(newBones.toArray(new Object[0]), newBones.indexOf(aiBone), mBones, 0, newBones.indexOf(aiBone2)-newBones.indexOf(aiBone));
 	}
+	public static double max(double mDuration, double mTime)
+	{
+		return Math.max(mDuration, mTime);
+	}
 
 
 

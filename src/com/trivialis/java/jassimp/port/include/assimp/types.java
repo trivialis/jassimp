@@ -1,5 +1,6 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
+import java.nio.charset.StandardCharsets;
 import java.util.Arrays;
 
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
@@ -76,7 +77,7 @@ public class types {
 
 
 		public int length;
-		public char[] data;
+		public byte[] data;
 
 		public aiString() {
 			length = 0;
@@ -93,7 +94,7 @@ public class types {
 		public aiString(String pString) {
 			length=pString.length();
 			length=length>=MAXLEN?MAXLEN-1:length;
-			string.memcpy(data, pString.toCharArray(), length);
+			string.memcpy(data, pString.getBytes(StandardCharsets.UTF_8), length);
 			data[length]='\0';
 		}
 
@@ -102,10 +103,10 @@ public class types {
 				return;
 			}
 			length=pString.length();
-			string.memcpy(data, pString.toCharArray(), length);
+			string.memcpy(data, pString.getBytes(StandardCharsets.UTF_8), length);
 		}
 
-		public void Set(char[] sz) {
+		public void Set(byte[] sz) {
 			int len = string.strlen(sz);
 			if(len>MAXLEN-1) {
 				return;
@@ -115,7 +116,7 @@ public class types {
 			data[len]=0;
 		}
 
-		public aiString opIs(char[] sz) {
+		public aiString opIs(byte[] sz) {
 			Set(sz);
 			return this;
 		}
@@ -133,7 +134,7 @@ public class types {
 			return (length!=other.length || 0 != string.memcmp(data, other.data, length));
 		}
 
-		public void Append(char[] app) {
+		public void Append(byte[] app) {
 			int len = string.strlen(app);
 			if(len==0) {
 				return;
@@ -151,15 +152,15 @@ public class types {
 			data[0] = '\0';
 		}
 
-		public char[] C_Str() {
+		public byte[] C_Str() {
 			return data;
 		}
 	}
 
 	public enum aiReturn {
-		aiReturn_SUCCESS(0x0),
-		aiReturn_FAILURE(-0x1),
-		aiReturn_OUTOFMEMORY(-0x3);
+		SUCCESS(0x0),
+		FAILURE(-0x1),
+		OUTOFMEMORY(-0x3);
 
 		public int value;
 

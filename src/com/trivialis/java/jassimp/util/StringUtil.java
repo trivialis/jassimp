@@ -15,4 +15,13 @@ public class StringUtil {
 		return result;
 	}
 
+	public static Character[] toCharacterArray(byte[] data)
+	{
+		Character[] result = new Character[data.length];
+		for(int i =0; i<result.length;i++) {
+			result[i]=(char) data[i];
+		}
+		return result;
+	}
+
 }

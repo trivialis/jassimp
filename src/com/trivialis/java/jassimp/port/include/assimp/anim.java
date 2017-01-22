@@ -119,19 +119,19 @@ public class anim {
 		public aiString mNodeName;
 
 		public int mNumPositionKeys;
-		public aiVectorKey mPositionKeys;
+		public aiVectorKey[] mPositionKeys;
 		public int mNumRotationKeys;
-		public aiQuatKey mRotationKeys;
+		public aiQuatKey[] mRotationKeys;
 		public int mNumScalingKeys;
-		public aiVectorKey mScalingKeys;
+		public aiVectorKey[] mScalingKeys;
 		public aiAnimBehaviour mPreState;
 		public aiAnimBehaviour mPostState;
 
 		public aiNodeAnim() {
 			mNodeName = new aiString(); //I guess necessary in Java
-			mPositionKeys = new aiVectorKey();
-			mRotationKeys = new aiQuatKey();
-			mScalingKeys = new aiVectorKey();
+			mPositionKeys = new aiVectorKey[0];
+			mRotationKeys = new aiQuatKey[0];
+			mScalingKeys = new aiVectorKey[0];
 			mPreState=aiAnimBehaviour.aiAnimBehaviour_DEFAULT;
 			mPostState=aiAnimBehaviour.aiAnimBehaviour_DEFAULT;
 		}
