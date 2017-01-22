@@ -39,6 +39,8 @@ public class scene {
 		public aiColor4D[][] mColors;
 		public int mNumBones;
 		public aiBone[] mBones;
+		public aiVector3D[] mTangents;
+		public aiVector3D[] mBitangents;
 		public boolean HasNormals()
 		{
 			// TODO Auto-generated method stub
@@ -50,6 +52,11 @@ public class scene {
 			return false;
 		}
 		public boolean HasVertexColors(int e)
+		{
+			// TODO Auto-generated method stub
+			return false;
+		}
+		public boolean HasTangentsAndBitangents()
 		{
 			// TODO Auto-generated method stub
 			return false;

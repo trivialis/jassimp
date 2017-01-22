@@ -1,6 +1,7 @@
 package com.trivialis.java.jassimp.util;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 
@@ -70,6 +71,11 @@ public class std {
 	{
 		return Math.max(mDuration, mTime);
 	}
+//	public static <T extends Object> void copy(ArrayList<T> src, int i, int j, ArrayList<T> dest)
+//	{
+//		List<T> temp = src.subList(i, j);
+//
+//	}
 
 
 

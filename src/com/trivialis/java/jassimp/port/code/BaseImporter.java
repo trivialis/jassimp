@@ -1,14 +1,24 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
+import java.nio.IntBuffer;
+import java.nio.charset.Charset;
+import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.sun.xml.internal.bind.api.impl.NameConverter.Standard;
+import com.trivialis.java.jassimp.port.contrib.ConvertUTF.ConvertUTF;
+import com.trivialis.java.jassimp.port.contrib.ConvertUTF.ConvertUTF.ConversionResult;
 import com.trivialis.java.jassimp.port.include.assimp.IOSystem;
 import com.trivialis.java.jassimp.port.include.assimp.ProgressHandler;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
+import com.trivialis.java.jassimp.util.std;
 
 public abstract class BaseImporter {
 
@@ -96,15 +106,89 @@ public abstract class BaseImporter {
 
 	public void SetupProperties(Importer pImp)
 	{
-		// TODO Auto-generated method stub
 
 	}
 
 	public abstract void InternReadFile(String pFile, ScopeGuard<aiScene> sc, IPointer<FileSystemFilter> valueOf);
 
-	public void ConvertToUTF8(ArrayList<Character> mBuffer)
+	public void ConvertToUTF8(IPointer<byte[]> data)
 	{
-		// TODO Auto-generated method stub
+		 if(data.get().length < 8) {
+		        throw new Exceptional.DeadlyImportError("File is too small");
+		    }
+
+		    // UTF 8 with BOM
+		    if((byte)data.get()[0] == 0xEF && (byte)data.get()[1] == 0xBB && (byte)data.get()[2] == 0xBF) {
+		        Logger.getLogger("default").log(Level.FINEST,"Found UTF-8 BOM ...");
+		        data.set(new String(data.get(), Charset.forName("UTF-8")).getBytes(Charset.forName("UTF-8")));
+		        return;
+		    }
+
+		    // UTF 32 BE with BOM
+		    if(((ByteBuffer) ByteBuffer.wrap(Arrays.copyOfRange(data.get(), 0, 4))).getInt() == 0xFFFE0000) {
+
+//		    	ByteBuffer temp = ByteBuffer.allocate(data.get().length);
+//		        // swap the endianness ..
+//		    	IntBuffer ib = ByteBuffer.wrap(data.get()).order(ByteOrder.LITTLE_ENDIAN).asIntBuffer();
+//		    	for(int i : ib.array()) {
+//		    		temp.putInt(i);
+//		    	}
+//		    	data.set(temp.array());
+		    	data.set(new String(data.get(), Charset.forName("UTF-32BE")).getBytes(Charset.forName("UTF-8"))); return;
+		    }
+
+		    // UTF 32 LE with BOM
+		    if(((ByteBuffer) ByteBuffer.wrap(Arrays.copyOfRange(data.get(), 0, 4))).getInt()== 0x0000FFFE) {
+		    	Logger.getLogger("default").log(Level.FINEST,"Found UTF-32 BOM ...");
+		    	data.set(new String(data.get(), Charset.forName("UTF-32LE")).getBytes(Charset.forName("UTF-8"))); return;
+//		        int sstart = (uint32_t*)&data.front()+1, *send = (uint32_t*)&data.back()+1;
+//		        char* dstart,*dend;
+//		        std::vector<char> output;
+//		        do {
+//		            output.resize(output.size()?output.size()*3/2:data.size()/2);
+//		            dstart = &output.front(),dend = &output.back()+1;
+//
+//		            result = ConvertUTF32toUTF8((const UTF32**)&sstart,(const UTF32*)send,(UTF8**)&dstart,(UTF8*)dend,lenientConversion);
+//		        } while(result == targetExhausted);
+//
+//		        ReportResult(result);
+//
+//		        // copy to output buffer.
+//		        const size_t outlen = (size_t)(dstart-&output.front());
+//		        data.assign(output.begin(),output.begin()+outlen);
+//		        return;
+		    }
+
+		    // UTF 16 BE with BOM
+		    if(ByteBuffer.wrap(Arrays.copyOfRange(data.get(), 0, 2)).getShort() == 0xFFFE) {
+		    	data.set(new String(data.get(), Charset.forName("UTF-16BE")).getBytes(Charset.forName("UTF-8"))); return;
+//		        // swap the endianness ..
+//		        for(uint16_t* p = (uint16_t*)&data.front(), *end = (uint16_t*)&data.back(); p <= end; ++p) {
+//		            ByteSwap::Swap2(p);
+//		        }
+		    }
+
+		    // UTF 16 LE with BOM
+		    if(ByteBuffer.wrap(Arrays.copyOfRange(data.get(), 0, 2)).getShort() == 0xFEFF) {
+		    	Logger.getLogger("default").log(Level.FINEST,"Found UTF-16 BOM ...");
+		    	data.set(new String(data.get(), Charset.forName("UTF-16LE")).getBytes(Charset.forName("UTF-8"))); return;
+//		        const uint16_t* sstart = (uint16_t*)&data.front()+1, *send = (uint16_t*)(&data.back()+1);
+//		        char* dstart,*dend;
+//		        std::vector<char> output;
+//		        do {
+//		            output.resize(output.size()?output.size()*3/2:data.size()*3/4);
+//		            dstart = &output.front(),dend = &output.back()+1;
+//
+//		            result = ConvertUTF16toUTF8((const UTF16**)&sstart,(const UTF16*)send,(UTF8**)&dstart,(UTF8*)dend,lenientConversion);
+//		        } while(result == targetExhausted);
+//
+//		        ReportResult(result);
+//
+//		        // copy to output buffer.
+//		        const size_t outlen = (size_t)(dstart-&output.front());
+//		        data.assign(output.begin(),output.begin()+outlen);
+//		        return;
+		    }
 
 	}
 

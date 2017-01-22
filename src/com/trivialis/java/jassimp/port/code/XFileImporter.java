@@ -41,14 +41,15 @@ import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
+import com.trivialis.java.jassimp.util.StringUtil;
 import com.trivialis.java.jassimp.util.ctype;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
 
 public class XFileImporter extends BaseImporter {
 
-	public ArrayList<Character> mBuffer
-	= new ArrayList<Character>()
+	public IPointer<byte[]> mBuffer
+	= Pointer.valueOf(new byte[0]);
 	;
 
 	public XFileImporter() {
@@ -70,11 +71,11 @@ public class XFileImporter extends BaseImporter {
 		if(fileSize < 16)
 			throw new Exceptional.DeadlyImportError("XFile is too small.");
 
-		mBuffer.ensureCapacity(fileSize + 1);
-		file.get().Read(mBuffer, 1, fileSize);
+		mBuffer.set(new byte[fileSize + 1]);
+		file.get().Read(mBuffer.get(), 1, fileSize);
 		ConvertToUTF8(mBuffer);
 
-		XFileParser parser = new XFileParser(mBuffer.toArray(new Character[0]));
+		XFileParser parser = new XFileParser(StringUtil.toCharacterArray(mBuffer.get()));
 
 		CreateDataRepresentationFromImport(pScene.get(), parser.GetImportedData()); //I ignore scopeguard for now.
 

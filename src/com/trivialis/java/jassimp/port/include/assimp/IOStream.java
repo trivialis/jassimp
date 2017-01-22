@@ -2,18 +2,10 @@ package com.trivialis.java.jassimp.port.include.assimp;
 
 import java.util.ArrayList;
 
-public class IOStream {
+public abstract class IOStream {
 
-	public int FileSize()
-	{
-		// TODO Auto-generated method stub
-		return 0;
-	}
+	public abstract int FileSize();
 
-	public void Read(ArrayList<Character> mBuffer, int i, int fileSize)
-	{
-		// TODO Auto-generated method stub
-
-	}
+	public abstract int Read(byte[] bs, int i, int fileSize);
 
 }
