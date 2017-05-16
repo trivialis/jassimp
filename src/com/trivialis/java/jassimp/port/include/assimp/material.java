@@ -215,7 +215,7 @@ public class material {
 	    	value =val;
 	    }
 
-	};
+	}
 
 
 
@@ -391,6 +391,16 @@ public class material {
 			        aiPropertyTypeInfo.aiPTI_String);
 			}
 
+		public aiReturn Get(String pKey, int type, int idx, aiColor4D c)
+		{
+			return MaterialSystem.aiGetMaterialColor(this, pKey, type, idx, c);
+		}
+
+		public aiReturn Get(String x, Integer y, Integer z, ai_real o)
+		{
+			return MaterialSystem.aiGetMaterialFloat(this, x, y, z, o);
+		}
+
 
 
 
@@ -426,6 +436,15 @@ public class material {
 	public static Tuple<String, Integer, Integer> AI_MATKEY_TEXTURE_EMISSIVE(int N) {
 		return AI_MATKEY_TEXTURE(aiTextureType.aiTextureType_EMISSIVE.value, N);
 	}
+	
+	public static Tuple<String, Integer, Integer> AI_MATKEY_TEXTURE_SHININESS(int N) {
+		return AI_MATKEY_TEXTURE(aiTextureType.aiTextureType_SHININESS.value, N);
+	}
+	
+	public static Tuple<String, Integer, Integer> AI_MATKEY_TEXTURE_OPACITY(int N) {
+		return AI_MATKEY_TEXTURE(aiTextureType.aiTextureType_OPACITY.value, N);
+	}
+
 
 
 }

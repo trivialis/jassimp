@@ -73,6 +73,11 @@ public class matrix4x4 {
 	    	d4 = a1.forValue(1.0);
 
 	    }
+	    
+	    public aiMatrix4x4t opMultiply(ai_real m) { //*this does no exist in Java. pointer?
+
+	    	return new aiMatrix4x4t(a1.opMultiply(m), a2.opMultiply(m), a3.opMultiply(m), a4.opMultiply(m), b1.opMultiply(m), b2.opMultiply(m), b3.opMultiply(m), b4.opMultiply(m), c1.opMultiply(m), c2.opMultiply(m), c3.opMultiply(m), c4.opMultiply(m), d1.opMultiply(m), d2.opMultiply(m), d3.opMultiply(m), d4.opMultiply(m));
+	    }
 
 	    public aiMatrix4x4t opMultiply(aiMatrix4x4t m) { //*this does no exist in Java. pointer?
 

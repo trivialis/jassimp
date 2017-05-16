@@ -257,6 +257,9 @@ public class XFileParser {
 		{
 			ReadUntilEndOfLine();
 		}
+		
+		System.out.println(mLineNumber);
+		System.out.println((int) P.get().charValue());
 
 		mScene = new Scene();
 		ParseFile();
@@ -279,34 +282,79 @@ public class XFileParser {
 
 	private void ParseFile()
 	{
+//		System.out.println(new String(new StringBuilder(new CharSequence() {
+//			
+//			@Override
+//			public CharSequence subSequence(int start, int end)
+//			{
+//				return new CharSequence() {
+//					
+//					@Override
+//					public CharSequence subSequence(int start, int end)
+//					{
+//						return null;
+//					}
+//					
+//					@Override
+//					public int length()
+//					{
+//						return end-start;
+//					}
+//					
+//					@Override
+//					public char charAt(int index)
+//					{
+//						return P.deep()[start+index];
+//					}
+//				};
+//			}
+//			
+//			@Override
+//			public int length()
+//			{
+//				// TODO Auto-generated method stub
+//				return P.deep().length;
+//			}
+//			
+//			@Override
+//			public char charAt(int index)
+//			{
+//				return P.deep()[index];
+//			}
+//		})));
+		
+		
 		boolean running = true;
 		while (running)
 		{
-
+			System.out.println("Getting next token");
 			String objectName = GetNextToken();
+			System.out.println(objectName);
+			
 			if (objectName.length() == 0)
 				break;
+			
+			//System.out.println(objectName);
 
-
-			if (objectName == "template")
-				ParseDataObjectTemplate();
-			else if (objectName == "Frame")
+			if (objectName.equals("template")){
+				ParseDataObjectTemplate();}
+			else if (objectName.equals("Frame"))
 				ParseDataObjectFrame(null);
-			else if (objectName == "Mesh")
+			else if (objectName.equals("Mesh"))
 			{
 				Mesh mesh = new Mesh();
 				ParseDataObjectMesh(mesh);
 				mScene.mGlobalMeshes.add(mesh);
-			} else if (objectName == "AnimTicksPerSecond")
+			} else if (objectName.equals("AnimTicksPerSecond"))
 				ParseDataObjectAnimTicksPerSecond();
-			else if (objectName == "AnimationSet")
+			else if (objectName.equals("AnimationSet"))
 				ParseDataObjectAnimationSet();
-			else if (objectName == "Material")
+			else if (objectName.equals("Material"))
 			{
 				Material material = new Material();
 				ParseDataObjectMaterial(material);
 				mScene.mGlobalMaterials.add(material);
-			} else if (objectName == "}")
+			} else if (objectName.equals("}"))
 			{
 				Logger.getLogger("default").warning("} found in dataObject");
 			} else
@@ -332,14 +380,17 @@ public class XFileParser {
 	{
 		IPointer<String> name = Pointer.valueOf("");
 		readHeadOfDataObject(name);
+		
+		System.out.println(name.get());
 
 		String guid = GetNextToken();
+		System.out.println(guid);
 
 		boolean running = true;
 		while (running)
 		{
 			String s = GetNextToken();
-
+			System.out.println("dat object template, next token: " + s);
 			if (s == "}")
 				break;
 
@@ -1040,13 +1091,14 @@ public class XFileParser {
 	private void readHeadOfDataObject(IPointer<String> poName)
 	{
 		String nameOrBrace = GetNextToken();
+		System.out.println(nameOrBrace);
 		if (nameOrBrace != "{")
 		{
 			if (poName != null)
 				poName.set(nameOrBrace);
-
-			if (GetNextToken() != "{")
-				ThrowException("Opening brace expected");
+			String a = GetNextToken();// System.out.println((int) a.charAt(1));
+			if (!a.equals("{"))
+				ThrowException("Opening brace expected:" + a);
 		}
 	}
 
@@ -1156,12 +1208,14 @@ public class XFileParser {
 
 		} else
 		{
+			//System.out.println("Getting token...");
 			FindNextNoneWhiteSpace();
 			if (P.getOffset() >= End.getOffset())
 				return s;
-
+			System.out.println(s);
 			while ((P.getOffset() < End.getOffset()) && !ctype.isspace(P.get()))
 			{
+				
 				if (P.get() == ';' || P.get() == '}' || P.get() == '{' || P.get() == ',')
 				{
 					if (s == null || s.length() == 0)
@@ -1171,9 +1225,12 @@ public class XFileParser {
 				}
 				s = s + P.get();
 				P.postInc();
+				System.out.println(s);
 			}
+			System.out.println(ctype.isspace(P.get()));
 		}
-		return s;
+		//System.out.println("Got token: " + s);
+		return s.replaceAll("\n|\r", "");
 	}
 
 
@@ -1191,7 +1248,7 @@ public class XFileParser {
 					mLineNumber++;
 				P.postInc();
 			}
-
+			
 			if (P.getOffset() >= End.getOffset())
 				return;
 

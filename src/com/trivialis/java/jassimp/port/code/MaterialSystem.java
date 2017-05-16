@@ -1,9 +1,12 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.nio.ByteBuffer;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
+import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
+import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.material;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterialProperty;
@@ -76,5 +79,55 @@ public class MaterialSystem {
 		    }
 		    return aiReturn.SUCCESS;
 		}
+
+
+	public static aiReturn aiGetMaterialColor(aiMaterial pMat, String pKey, int type, int index, aiColor4D pOut)
+	{
+
+		int iMax = 4;
+		IPointer<aiMaterialProperty> pPropOut = Pointer.valueOf(null);
+		aiGetMaterialProperty(pMat, pKey, type, index, pPropOut);
+		aiMaterialProperty prop = pPropOut.get();
+		
+		aiReturn eRet = aiReturn.SUCCESS;
+		if(prop==null) eRet = aiReturn.FAILURE;
+		
+		int iWrite = Math.min(iMax, prop.mDataLength/4);
+		iMax=iWrite;
+		
+		ByteBuffer bb = ByteBuffer.wrap(prop.mData);
+		
+		for(int a = 0; a<iWrite;a++) {
+			if(a==0) pOut.r=new ai_real(bb.getFloat());
+			if(a==1) pOut.g=new ai_real(bb.getFloat());
+			if(a==2) pOut.b=new ai_real(bb.getFloat());
+			if(a==3) pOut.a=new ai_real(bb.getFloat());
+		}
+		
+		
+
+		// if no alpha channel is defined: set it to 1.0
+		if (3 == iMax) {
+			pOut.a = new ai_real(1.0F);
+		}
+
+		return eRet;
+			
+	}
+
+
+	public static aiReturn aiGetMaterialFloat(aiMaterial pMat, String pKey, Integer type, Integer index, ai_real pOut)
+	{
+		IPointer<aiMaterialProperty> pPropOut = Pointer.valueOf(null);
+		aiGetMaterialProperty(pMat, pKey, type, index, pPropOut);
+		aiMaterialProperty prop = pPropOut.get();
+		
+		aiReturn eRet = aiReturn.SUCCESS;
+		if(prop==null) eRet = aiReturn.FAILURE;
+		
+		pOut.setValue(new ai_real(ByteBuffer.wrap(prop.mData).getFloat()));
+		
+		return eRet;
+	}
 
 }

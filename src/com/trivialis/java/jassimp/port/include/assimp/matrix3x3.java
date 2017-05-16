@@ -1,6 +1,8 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
+import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4t;
 
 public class matrix3x3 {
 
@@ -19,6 +21,12 @@ public class matrix3x3 {
 			b1=new ai_real(0.0f);b2=new ai_real(1.0f); b3=new ai_real(0.0f);
 			c1=new ai_real(0.0f);c2=new ai_real(0.0f); c3=new ai_real(1.0f);
 		}
+		
+		public aiMatrix3x3t(aiMatrix4x4t pMatrix) {
+		    a1 = pMatrix.a1; a2 = pMatrix.a2; a3 = pMatrix.a3;
+		    b1 = pMatrix.b1; b2 = pMatrix.b2; b3 = pMatrix.b3;
+		c1 = pMatrix.c1; c2 = pMatrix.c2; c3 = pMatrix.c3;
+		}
 
 	}
 
@@ -27,6 +35,10 @@ public class matrix3x3 {
 		public aiMatrix3x3(ai_real a1, ai_real a2, ai_real a3, ai_real b1, ai_real b2, ai_real b3, ai_real c1, ai_real c2, ai_real c3)
 		{
 			super(a1,a2,a3,b1,b2,b3,c1,c2,c3);
+		}
+		
+		public aiMatrix3x3(aiMatrix4x4 pMatrix) {
+			super(pMatrix);
 		}
 
 		public aiMatrix3x3()

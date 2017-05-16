@@ -319,7 +319,7 @@ public class defs {
 
 	public static class ai_real {
 
-		private final Number value;
+		private Number value;
 		private final Types type;
 
 		private ai_real(Number val, Types t) {
@@ -376,6 +376,10 @@ public class defs {
 				if(t.rank<result.rank) result = t;
 			}
 			return result;
+		}
+		
+		public void setValue(ai_real a) {
+			value=type.forValue(a.value);
 		}
 
 		public ai_real opAdd(ai_real a)

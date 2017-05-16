@@ -37,14 +37,14 @@ public class vector3 {
 			y=o.y;
 			z=o.z;
 		}
-		public aiVector3t multiply(aiMatrix3x3t pMatrix, aiVector3t pVector) {
+		public static aiVector3t multiply(aiMatrix3x3t pMatrix, aiVector3t pVector) {
 			aiVector3t res = new aiVector3t();
 			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z));
 			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z));
 			res.z = (pMatrix.c1.opMultiply(pVector.x)).opAdd(pMatrix.c2.opMultiply(pVector.y)).opAdd(pMatrix.c3.opMultiply(pVector.z));
 			return res;
 		}
-		public aiVector3t multiply(aiMatrix4x4t pMatrix, aiVector3t pVector) {
+		public static aiVector3t multiply(aiMatrix4x4t pMatrix, aiVector3t pVector) {
 			aiVector3t res = new aiVector3t();
 			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z)).opAdd(pMatrix.a4);
 			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z)).opAdd(pMatrix.b4);
@@ -108,7 +108,6 @@ public class vector3 {
 		{
 			// TODO Auto-generated constructor stub
 		}
-
 
 
 
