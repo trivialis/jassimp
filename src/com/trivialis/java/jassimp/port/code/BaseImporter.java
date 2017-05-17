@@ -96,6 +96,7 @@ public abstract class BaseImporter {
 	        // extract error description
 	        m_ErrorText = err.getMessage();
 	        Logger.getLogger("default").log(Level.SEVERE, m_ErrorText);
+                err.printStackTrace();
 	        return null;
 	    }
 

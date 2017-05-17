@@ -92,7 +92,7 @@ public class XFileHelper {
 
 	public static class Node {
 		public String mName;
-		public aiMatrix4x4 mTrafoMatrix;
+		public aiMatrix4x4 mTrafoMatrix = new aiMatrix4x4();
 		public Node mParent;
 		public ArrayList<Node> mChildren;
 		public ArrayList<Mesh> mMeshes;

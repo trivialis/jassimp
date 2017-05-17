@@ -16,7 +16,12 @@ public class TestingXFileImporting {
 
 	public static void main(String[] args) {
 		System.out.println(ctype.isspace('\r'));
-		String path = "X:/My Documents/Projects/RTR/{app}/Scenes/xfiles/mozd02.X";
+                
+		String path = ""
+                        + "/home/frank/Projects/RTR/"
+                        //+ "X:/My Documents/Projects/"
+                        + "RTR/{app}/Scenes/xfiles/mozd02.X";
+                
 		XFileImporter xfi = new XFileImporter();
 		ScopeGuard<aiScene> result = xfi.ReadFile(new Importer(), path, new IOSystem() {
 			

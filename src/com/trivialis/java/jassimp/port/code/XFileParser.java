@@ -258,8 +258,8 @@ public class XFileParser {
 			ReadUntilEndOfLine();
 		}
 		
-		System.out.println(mLineNumber);
-		System.out.println((int) P.get().charValue());
+		//System.out.println(mLineNumber);
+		//System.out.println((int) P.get().charValue());
 
 		mScene = new Scene();
 		ParseFile();
@@ -327,14 +327,14 @@ public class XFileParser {
 		boolean running = true;
 		while (running)
 		{
-			System.out.println("Getting next token");
+			//System.out.println("Getting next token");
 			String objectName = GetNextToken();
-			System.out.println(objectName);
+			//System.out.println(objectName);
 			
 			if (objectName.length() == 0)
 				break;
 			
-			//System.out.println(objectName);
+			System.out.println(objectName);
 
 			if (objectName.equals("template")){
 				ParseDataObjectTemplate();}
@@ -381,17 +381,17 @@ public class XFileParser {
 		IPointer<String> name = Pointer.valueOf("");
 		readHeadOfDataObject(name);
 		
-		System.out.println(name.get());
+		//System.out.println(name.get());
 
 		String guid = GetNextToken();
-		System.out.println(guid);
+		//System.out.println(guid);
 
 		boolean running = true;
 		while (running)
 		{
 			String s = GetNextToken();
-			System.out.println("dat object template, next token: " + s);
-			if (s == "}")
+			//System.out.println("dat object template, next token: " + s);
+			if ("}".equals(s))
 				break;
 
 			if (s.length() == 0)
@@ -417,7 +417,7 @@ public class XFileParser {
 		{
 			if (mScene.mRootNode != null)
 			{
-				if (mScene.mRootNode.mName != "$dummy_root")
+				if (!"$dummy_root".equals(mScene.mRootNode.mName))
 				{
 					Node exroot = mScene.mRootNode;
 					mScene.mRootNode = new Node(null);
@@ -441,13 +441,13 @@ public class XFileParser {
 			if (objectName.length() == 0)
 				ThrowException("Unexpected end of file reached while parsing frame");
 
-			if (objectName == "}")
+			if ("}".equals(objectName))
 				break; // frame finished
-			else if (objectName == "Frame")
+			else if ("Frame".equals(objectName))
 				ParseDataObjectFrame(node); // child frame
-			else if (objectName == "FrameTransformMatrix")
+			else if ("FrameTransformMatrix".equals(objectName))
 				ParseDataObjectTransformationMatrix(node.mTrafoMatrix);
-			else if (objectName == "Mesh")
+			else if ("Mesh".equals(objectName))
 			{
 				Mesh mesh = new Mesh(name.get());
 				node.mMeshes.add(mesh);
@@ -530,21 +530,21 @@ public class XFileParser {
 
 			if (objectName.length() == 0)
 				ThrowException("Unexpected end of file while parsing mesh structure");
-			else if (objectName == "}")
+			else if ("}".equals(objectName))
 				break;
-			else if (objectName == "MeshNormals")
+			else if ("MeshNormals".equals(objectName))
 				ParseDataObjectMeshNormals(pMesh);
-			else if (objectName == "MeshTextureCoords")
+			else if ("MeshTextureCoords".equals(objectName))
 				ParseDataObjectMeshTextureCoords(pMesh);
-			else if (objectName == "MeshVertexColors")
+			else if ("MeshVertexColors".equals(objectName))
 				ParseDataObjectMeshVertexColors(pMesh);
-			else if (objectName == "MeshMaterialList")
+			else if ("MeshMaterialList".equals(objectName))
 				ParseDataObjectMeshMaterialList(pMesh);
-			else if (objectName == "VertexDuplicationIndices")
+			else if ("VertexDuplicationIndices".equals(objectName))
 				ParseUnknownDataObject();
-			else if (objectName == "XSkinMeshHeader")
+			else if ("XSkinMeshHeader".equals(objectName))
 				ParseDataObjectSkinMeshHeader(pMesh);
-			else if (objectName == "SkinWeights")
+			else if ("SkinWeights".equals(objectName))
 				ParseDataObjectSkinWeights(pMesh);
 			else
 			{
@@ -735,9 +735,9 @@ public class XFileParser {
 			String objectName = GetNextToken();
 			if (objectName.length() == 0)
 				ThrowException("Unexpected end of file while parsing mesh material list.");
-			else if (objectName == "}")
+			else if ("}".equals(objectName))
 				break;
-			else if (objectName == "{")
+			else if ("{".equals(objectName))
 			{
 				String matName = GetNextToken();
 				Material material = new Material();
@@ -746,11 +746,11 @@ public class XFileParser {
 				pMesh.mMaterials.add(material);
 
 				CheckForClosingBrace();
-			} else if (objectName == "Material")
+			} else if ("Material".equals(objectName))
 			{
 				pMesh.mMaterials.add(new Material());
 				ParseDataObjectMaterial(pMesh.mMaterials.get(pMesh.mMaterials.size() - 1));
-			} else if (objectName == ";")
+			} else if (";".equals(objectName))
 			{
 
 			} else
@@ -795,14 +795,14 @@ public class XFileParser {
 			String objectName = GetNextToken();
 			if (objectName.length() == 0)
 				ThrowException("Unexpected end of file while parsing mesh material");
-			else if (objectName == "}")
+			else if ("}".equals(objectName))
 				break;
-			else if (objectName == "TextureFilename" || objectName == "TextureFileName")
+			else if ("TextureFilename".equals(objectName) || "TextureFileName".equals(objectName))
 			{
 				IPointer<String> texname = Pointer.valueOf("");
 				ParseDataObjectTextureFilename(texname);
 				pMaterial.mTextures.add(new TexEntry(texname.get()));
-			} else if (objectName == "NormalmapFilename" || objectName == "NormalmapFileName")
+			} else if ("NormalmapFilename".equals(objectName) || "NormalmapFileName".equals(objectName))
 			{
 				IPointer<String> texname = Pointer.valueOf("");
 				ParseDataObjectTextureFilename(texname);
@@ -846,9 +846,9 @@ public class XFileParser {
 			String objectName = GetNextToken();
 			if (objectName.length() == 0)
 				ThrowException("Unexpected end of file while parsing animation set.");
-			else if (objectName == "}")
+			else if ("}".equals(objectName))
 				break; // animation set finished
-			else if (objectName == "Animation")
+			else if ("Animation".equals(objectName))
 				ParseDataObjectAnimation(anim);
 			else
 			{
@@ -874,13 +874,13 @@ public class XFileParser {
 
 			if (objectName.length() == 0)
 				ThrowException("Unexpected end of file while parsing animation.");
-			else if (objectName == "}")
+			else if ("}".equals(objectName))
 				break; // animation finished
-			else if (objectName == "AnimationKey")
+			else if ("AnimationKey".equals(objectName))
 				ParseDataObjectAnimationKey(banim);
-			else if (objectName == "AnimationOptions")
+			else if ("AnimationOptions".equals(objectName))
 				ParseUnknownDataObject(); // not interested
-			else if (objectName == "{")
+			else if ("{".equals(objectName))
 			{
 				// read frame name
 				banim.mBoneName = GetNextToken();
@@ -1017,7 +1017,7 @@ public class XFileParser {
 			if (t.length() == 0)
 				ThrowException("Unexpected end of file while parsing unknown segment.");
 
-			if (t == "{")
+			if ("{".equals(t))
 				break;
 		}
 
@@ -1030,9 +1030,9 @@ public class XFileParser {
 			if (t.length() == 0)
 				ThrowException("Unexpected end of file while parsing unknown segment.");
 
-			if (t == "{")
+			if ("{".equals(t))
 				++counter;
-			else if (t == "}")
+			else if ("}".equals(t))
 				--counter;
 		}
 
@@ -1044,7 +1044,7 @@ public class XFileParser {
 
 	private void CheckForClosingBrace()
 	{
-		if (GetNextToken() != "}")
+		if (!"}".equals(GetNextToken()))
 			ThrowException("Closing brace expected.");
 	}
 
@@ -1055,7 +1055,7 @@ public class XFileParser {
 		if (mIsBinaryFormat)
 			return;
 
-		if (GetNextToken() != ";")
+		if (!";".equals(GetNextToken()))
 			ThrowException("Semicolon expected.");
 	}
 
@@ -1067,8 +1067,8 @@ public class XFileParser {
 			return;
 
 		String token = GetNextToken();
-		if (token != "," && token != ";")
-			ThrowException("Separator character (';' or ',') expected.");
+		if (!",".equals(token) && !";".equals(token))
+			ThrowException("Separator character (';' or ',') expected. Got: " + token);
 	}
 
 
@@ -1091,8 +1091,8 @@ public class XFileParser {
 	private void readHeadOfDataObject(IPointer<String> poName)
 	{
 		String nameOrBrace = GetNextToken();
-		System.out.println(nameOrBrace);
-		if (nameOrBrace != "{")
+		//System.out.println(nameOrBrace);
+		if (!"{".equals(nameOrBrace))
 		{
 			if (poName != null)
 				poName.set(nameOrBrace);
@@ -1212,7 +1212,7 @@ public class XFileParser {
 			FindNextNoneWhiteSpace();
 			if (P.getOffset() >= End.getOffset())
 				return s;
-			System.out.println(s);
+			//System.out.println(s);
 			while ((P.getOffset() < End.getOffset()) && !ctype.isspace(P.get()))
 			{
 				
@@ -1221,16 +1221,16 @@ public class XFileParser {
 					if (s == null || s.length() == 0)
 						s = s + P.get();
 					P.postInc();
-
+                                        break;
 				}
 				s = s + P.get();
 				P.postInc();
-				System.out.println(s);
+
 			}
-			System.out.println(ctype.isspace(P.get()));
+
 		}
-		//System.out.println("Got token: " + s);
-		return s.replaceAll("\n|\r", "");
+                
+		return s;
 	}
 
 
@@ -1423,7 +1423,7 @@ public class XFileParser {
 
 
 		}
-
+                System.out.print(P.get());
 		FindNextNoneWhiteSpace();
 		if (string.strncmp(P, "-1.#IND00", 9) == 0 || string.strncmp(P, "1.#IND00", 8) == 0)
 		{

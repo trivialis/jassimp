@@ -206,73 +206,73 @@ public class defs {
 				return -1*a.floatValue();
 			}
 		},
-//		LONG(2, Long.class) {
-//			@Override
-//			Number opAdd(Number a, Number b)
-//			{
-//				return a.longValue()+b.longValue();
-//			}
-//
-//			@Override
-//			Number forValue(Number a)
-//			{
-//				return a.longValue();
-//			}
-//
-//			@Override
-//			Number opMultiply(Number a, Number b)
-//			{
-//				return a.longValue()*b.longValue();
-//			}
-//
-//			@Override
-//			Number opSubtract(Number a, Number b)
-//			{
-//				return a.longValue()-b.longValue();
-//			}
-//
-//			@Override
-//			Number opDivide(Number a, Number b)
-//			{
-//				return a.longValue()/b.longValue();
-//			}
-//
-//			@Override
-//			boolean opBigger(Number a, Number b)
-//			{
-//				return a.longValue()>b.longValue();
-//			}
-//
-//			@Override
-//			boolean opSmaller(Number a, Number b)
-//			{
-//				return a.longValue()<b.longValue();
-//			}
-//
-//			@Override
-//			boolean opEquals(Number a, Number b)
-//			{
-//				return a.longValue()==b.longValue();
-//			}
-//
-//			@Override
-//			Number NaN()
-//			{
-//				return Long.MAX_VALUE;
-//			}
-//
-//			@Override
-//			Number getInfinity()
-//			{
-//				return Long.MAX_VALUE;
-//			}
-//
-//			@Override
-//			Number opNegate(Number a)
-//			{
-//				return -1*a.longValue();
-//			}
-//		}
+		LONG(2, Long.class) {
+			@Override
+			Number opAdd(Number a, Number b)
+			{
+				return a.longValue()+b.longValue();
+			}
+
+			@Override
+			Number forValue(Number a)
+			{
+				return a.longValue();
+			}
+
+			@Override
+			Number opMultiply(Number a, Number b)
+			{
+				return a.longValue()*b.longValue();
+			}
+
+			@Override
+			Number opSubtract(Number a, Number b)
+			{
+				return a.longValue()-b.longValue();
+			}
+
+			@Override
+			Number opDivide(Number a, Number b)
+			{
+				return a.longValue()/b.longValue();
+			}
+
+			@Override
+			boolean opBigger(Number a, Number b)
+			{
+				return a.longValue()>b.longValue();
+			}
+
+			@Override
+			boolean opSmaller(Number a, Number b)
+			{
+				return a.longValue()<b.longValue();
+			}
+
+			@Override
+			boolean opEquals(Number a, Number b)
+			{
+				return a.longValue()==b.longValue();
+			}
+
+			@Override
+			Number NaN()
+			{
+				return Long.MAX_VALUE;
+			}
+
+			@Override
+			Number getInfinity()
+			{
+				return Long.MAX_VALUE;
+			}
+
+			@Override
+			Number opNegate(Number a)
+			{
+				return -1*a.longValue();
+			}
+		}
 		;
 
 
@@ -289,7 +289,8 @@ public class defs {
 			for(Types typ : Types.values()) {
 				if(typ.type==t) return typ;
 			}
-			return null;
+                        throw new RuntimeException("Type not found: " + t.getName());
+//			return null;
 		}
 
 //		private static Types lookUpHighest(Class<? extends Number>... t) {
@@ -373,7 +374,8 @@ public class defs {
 			Types result = null;
 			for(Types t : types) {
 				if(result==null) result = t;
-				if(t.rank<result.rank) result = t;
+                                if(t==null) result = Types.FLOAT;
+				if(result.rank>=t.rank) result = t;
 			}
 			return result;
 		}
