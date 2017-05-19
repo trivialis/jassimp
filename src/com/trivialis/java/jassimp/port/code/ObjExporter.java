@@ -77,34 +77,34 @@ public class ObjExporter {
 	        aiMaterial mat = pScene.mMaterials[i];
 
 	        int illum = 1;
-	        mOutputMat.append("newmtl " + GetMaterialName(i)  + endl);
+	        mOutputMat.append("newmtl ").append(GetMaterialName(i)).append(endl);
 
 	        aiColor4D c = new aiColor4D();
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_DIFFUSE.x,material.AI_MATKEY_COLOR_DIFFUSE.y,material.AI_MATKEY_COLOR_DIFFUSE.z,c)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_DIFFUSE,c)) {
 	            mOutputMat .append("Kd " ).append(c.r ).append(" " ).append(c.g ).append(" " ).append(c.b ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_AMBIENT.x,material.AI_MATKEY_COLOR_AMBIENT.y,material.AI_MATKEY_COLOR_AMBIENT.z,c)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_AMBIENT,c)) {
 	            mOutputMat .append("Ka " ).append(c.r ).append(" " ).append(c.g ).append(" " ).append(c.b ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_SPECULAR.x,material.AI_MATKEY_COLOR_SPECULAR.y,material.AI_MATKEY_COLOR_SPECULAR.z,c)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_SPECULAR, c)) {
 	            mOutputMat .append("Ks " ).append(c.r ).append(" " ).append(c.g ).append(" " ).append(c.b ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_EMISSIVE.x,material.AI_MATKEY_COLOR_EMISSIVE.y,material.AI_MATKEY_COLOR_EMISSIVE.z,c)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_EMISSIVE,c)) {
 	            mOutputMat .append("Ke " ).append(c.r ).append(" " ).append(c.g ).append(" " ).append(c.b ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_TRANSPARENT.x,material.AI_MATKEY_COLOR_TRANSPARENT.y,material.AI_MATKEY_COLOR_TRANSPARENT.z,c)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_COLOR_TRANSPARENT,c)) {
 	            mOutputMat .append("Tf " ).append(c.r ).append(" " ).append(c.g ).append(" " ).append(c.b ).append(endl);
 	        }
 	        
 	        ai_real o = new ai_real(0F); //Implicit float creation!
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_OPACITY.x,material.AI_MATKEY_OPACITY.y,material.AI_MATKEY_OPACITY.z,o)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_OPACITY,o)) {
 	            mOutputMat .append("d " ).append(o ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_REFRACTI.x,material.AI_MATKEY_REFRACTI.y,material.AI_MATKEY_REFRACTI.z,o)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_REFRACTI,o)) {
 	            mOutputMat .append("Ni " ).append(o ).append(endl);
 	        }
 
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_SHININESS.x,material.AI_MATKEY_SHININESS.y,material.AI_MATKEY_SHININESS.z,o) && o.opBigger(new ai_real(0.0f))) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_SHININESS,o) && o.opBigger(new ai_real(0.0f))) {
 	            mOutputMat .append("Ns " ).append(o ).append(endl);
 	            illum = 2;
 	        }
@@ -112,22 +112,23 @@ public class ObjExporter {
 	        mOutputMat .append("illum " ).append(illum ).append(endl);
 
 	        aiString s = new aiString();
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_DIFFUSE(0).x,material.AI_MATKEY_TEXTURE_DIFFUSE(0).y,material.AI_MATKEY_TEXTURE_DIFFUSE(0).z,s)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_DIFFUSE(0),s)) {
 	            mOutputMat .append("map_Kd " ).append(new String(s.data) ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_AMBIENT(0).x,material.AI_MATKEY_TEXTURE_AMBIENT(0).y,material.AI_MATKEY_TEXTURE_AMBIENT(0).z,s)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_AMBIENT(0),s)) {
 	            mOutputMat .append("map_Ka " ).append(new String(s.data)).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_SPECULAR(0).x,material.AI_MATKEY_TEXTURE_SPECULAR(0).y,material.AI_MATKEY_TEXTURE_SPECULAR(0).z,s)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_SPECULAR(0), s)) {
 	            mOutputMat .append("map_Ks " ).append(new String(s.data) ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_SHININESS(0).x,material.AI_MATKEY_TEXTURE_SHININESS(0).y,material.AI_MATKEY_TEXTURE_SHININESS(0).z,s)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_SHININESS(0), s)) {
 	            mOutputMat .append("map_Ns " ).append(new String(s.data) ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_OPACITY(0).x,material.AI_MATKEY_TEXTURE_OPACITY(0).y,material.AI_MATKEY_TEXTURE_OPACITY(0).z,s)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_OPACITY(0), s)) {
 	            mOutputMat .append("map_d " ).append(new String(s.data) ).append(endl);
 	        }
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_HEIGHT(0).x,material.AI_MATKEY_TEXTURE_HEIGHT(0).y,material.AI_MATKEY_TEXTURE_HEIGHT(0).z,s) || aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_NORMALS(0).x,material.AI_MATKEY_TEXTURE_NORMALS(0).y,material.AI_MATKEY_TEXTURE_NORMALS(0).z,s)) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_HEIGHT(0),s) || 
+                        aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_NORMALS(0),s)) {
 	            // implementations seem to vary here, so write both variants
 	            mOutputMat .append("bump " ).append(new String(s.data) ).append(endl);
 	            mOutputMat .append("map_bump " ).append(new String(s.data) ).append(endl);
@@ -213,7 +214,7 @@ public class ObjExporter {
 	public String GetMaterialName(int index) {
 		aiMaterial mat = pScene.mMaterials[index];
 		aiString s = new aiString();
-		if(types.aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_NAME.x,material.AI_MATKEY_NAME.y,material.AI_MATKEY_NAME.z, s)) {
+		if(types.aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_NAME, s)) {
 			return new String(s.data);
 		}
 		

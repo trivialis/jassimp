@@ -35,13 +35,13 @@ public class MaterialSystem {
 
 		    for ( int i = 0; i < pMat.mNumProperties; ++i ) {
 		        aiMaterialProperty prop = pMat.mProperties.get(i);
-
+                        
 		        if (prop!=null
 		            && 0 == string.strcmp( Pointer.valueOf(StringUtil.toCharacterArray(prop.mKey.data)), Pointer.valueOf(StringUtil.toCharacterArray(pKey.toCharArray())) )
 		            && (Integer.MAX_VALUE == type  || prop.mSemantic == type)
 		            && (Integer.MAX_VALUE == index || prop.mIndex == index))
 		        {
-		            pPropOut.set(pMat.mProperties.get(index));
+		            pPropOut.set(pMat.mProperties.get(i));
 		            return aiReturn.SUCCESS;
 		        }
 		    }
@@ -69,10 +69,9 @@ public class MaterialSystem {
 
 		        // The string is stored as 32 but length prefix followed by zero-terminated UTF8 data
 		        pOut.length = ByteBuffer.wrap(prop.get().mData).getInt();//pOut.length = (int)((int)(prop.get().mData[0]));
-
 		        assert( pOut.length+4==prop.get().mDataLength ); if(pOut.length+4!=prop.get().mDataLength) throw new RuntimeException("pOut length: " + (pOut.length+4) + " does not equal mDataLength: " + prop.get().mDataLength);
 		        assert( prop.get().mData[ prop.get().mDataLength - 1 ] !=0 );
-		        pOut.data=Arrays.copyOfRange(prop.get().mData, 4, pOut.length);
+		        pOut.data=Arrays.copyOfRange(prop.get().mData, 4, pOut.length+4);
 		    }
 		    else {
 		        // TODO - implement lexical cast as well

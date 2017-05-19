@@ -360,6 +360,11 @@ public class material {
 		{
 			return MaterialSystem.aiGetMaterialString(this, pKey, type, idx, pOut);
 		}
+                
+                public aiReturn Get(Tuple<String, Integer, Integer> a, aiString pOut)
+		{
+			return MaterialSystem.aiGetMaterialString(this, a.x, a.y, a.z, pOut);
+		}
 
 		public aiReturn AddProperty(aiString tex, Tuple<String, Integer, Integer> t)
 		{
@@ -405,6 +410,14 @@ public class material {
 		{
 			return MaterialSystem.aiGetMaterialFloat(this, x, y, z, o);
 		}
+
+        public aiReturn Get(Tuple<String, Integer, Integer> a, aiColor4D c) {
+            return MaterialSystem.aiGetMaterialColor(this, a.x,a.y,a.z, c);
+        }
+        
+          public aiReturn Get(Tuple<String, Integer, Integer> a, ai_real o) {
+            return MaterialSystem.aiGetMaterialFloat(this, a.x,a.y,a.z, o);
+        }
 
 
 

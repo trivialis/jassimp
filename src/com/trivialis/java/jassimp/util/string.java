@@ -3,6 +3,7 @@ package com.trivialis.java.jassimp.util;
 import java.nio.ByteBuffer;
 
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
+import java.util.Objects;
 
 public class string {
 
@@ -20,7 +21,7 @@ public class string {
 	public static int strcmp(IPointer<Character> s1, IPointer<Character> s2) {
 		s2=s2.pointerCopy();
 		s1=s1.pointerCopy();
-	    while(s1.canInc() && (s1.get()==s2.get())) {
+	    while(s1.canInc() && (Objects.equals(s1.get(), s2.get()))) {
 	        s1.postInc();
 	        s2.postInc();
 	    }
@@ -43,7 +44,7 @@ public class string {
 		s2=s2.pointerCopy();
 		s1=s1.pointerCopy();
 	    while(n-->0){
-	        if(s1.get()!=s2.get())
+	        if(!Objects.equals(s1.get(), s2.get()))
 	            return (s1.get()) - (s2.get());
 	        s1.postInc();s2.postInc();
 	    }
@@ -54,7 +55,7 @@ public class string {
 		IPointer<Character> ps2=Pointer.valueOf(StringUtil.toCharacterArray(s2.toCharArray()));
 		s1=s1.pointerCopy();
 	    while(n-->0){
-	        if(s1.get()!=ps2.get())
+	        if(!Objects.equals(s1.get(), ps2.get()))
 	            return (s1.get()) - (ps2.get());
 	        s1.postInc();ps2.postInc();
 	    }
