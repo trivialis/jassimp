@@ -18,6 +18,8 @@ import com.trivialis.java.jassimp.port.code.XFileHelper.TexEntry;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiQuatKey;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiVectorKey;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
+import com.trivialis.java.jassimp.port.include.assimp.defs;
+import com.trivialis.java.jassimp.port.include.assimp.defs.Real;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.mesh;
@@ -26,6 +28,7 @@ import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
+import com.trivialis.java.jassimp.util.StringUtil;
 import com.trivialis.java.jassimp.util.ctype;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
@@ -258,8 +261,8 @@ public class XFileParser {
 			ReadUntilEndOfLine();
 		}
 		
-		//System.out.println(mLineNumber);
-		//System.out.println((int) P.get().charValue());
+		////System.out.println(mLineNumber);
+		////System.out.println((int) P.get().charValue());
 
 		mScene = new Scene();
 		ParseFile();
@@ -282,7 +285,7 @@ public class XFileParser {
 
 	private void ParseFile()
 	{
-//		System.out.println(new String(new StringBuilder(new CharSequence() {
+//		//System.out.println(new String(new StringBuilder(new CharSequence() {
 //			
 //			@Override
 //			public CharSequence subSequence(int start, int end)
@@ -327,14 +330,14 @@ public class XFileParser {
 		boolean running = true;
 		while (running)
 		{
-			//System.out.println("Getting next token");
+			////System.out.println("Getting next token");
 			String objectName = GetNextToken();
-			//System.out.println(objectName);
+			////System.out.println(objectName);
 			
 			if (objectName.length() == 0)
 				break;
 			
-			System.out.println(objectName);
+			//System.out.println(objectName);
 
 			if (objectName.equals("template")){
 				ParseDataObjectTemplate();}
@@ -381,16 +384,16 @@ public class XFileParser {
 		IPointer<String> name = Pointer.valueOf("");
 		readHeadOfDataObject(name);
 		
-		//System.out.println(name.get());
+		////System.out.println(name.get());
 
 		String guid = GetNextToken();
-		//System.out.println(guid);
+		////System.out.println(guid);
 
 		boolean running = true;
 		while (running)
 		{
 			String s = GetNextToken();
-			//System.out.println("dat object template, next token: " + s);
+			////System.out.println("dat object template, next token: " + s);
 			if ("}".equals(s))
 				break;
 
@@ -502,13 +505,13 @@ public class XFileParser {
 		readHeadOfDataObject(name);
 
 		int numVertices = ReadInt();
-		pMesh.mPositions.ensureCapacity(numVertices);
+		while(pMesh.mPositions.size()<numVertices) pMesh.mPositions.add(new aiVector3D());
 
 		for (int a = 0; a < numVertices; a++)
 			pMesh.mPositions.set(a, ReadVector3());
 
 		int numPosFaces = ReadInt();
-		pMesh.mPosFaces.ensureCapacity(numPosFaces);
+		while(pMesh.mPosFaces.size()<numPosFaces) pMesh.mPosFaces.add(new Face());
 		for (int a = 0; a < numPosFaces; a++)
 		{
 			int numIndices = ReadInt();
@@ -578,7 +581,7 @@ public class XFileParser {
 		Bone bone = pMesh.mBones.get(pMesh.mBones.size() - 1);
 		bone.mName = transformNodeName.get();
 		int numWeights = ReadInt();
-		bone.mWeights.ensureCapacity(numWeights);
+		while(bone.mWeights.size() < numWeights) bone.mWeights.add(new BoneWeight());
 		for (int a = 0; a < numWeights; a++)
 		{
 			BoneWeight weight = new BoneWeight();
@@ -625,7 +628,7 @@ public class XFileParser {
 		readHeadOfDataObject(Pointer.valueOf(""));
 
 		int numNormals = ReadInt();
-		pMesh.mNormals.ensureCapacity(numNormals);
+		while(pMesh.mNormals.size() < numNormals) pMesh.mNormals.add(new aiVector3D());
 
 		for (int a = 0; a < numNormals; a++)
 			pMesh.mNormals.set(a, ReadVector3());
@@ -665,7 +668,7 @@ public class XFileParser {
 		if (numCoords != pMesh.mPositions.size())
 			ThrowException("Texture coord count does not match vertex count");
 
-		coords.ensureCapacity(numCoords);
+		while(coords.size()<numCoords) coords.add(new aiVector2D());
 		for (int a = 0; a < numCoords; a++)
 			coords.set(a, ReadVector2());
 
@@ -1091,12 +1094,12 @@ public class XFileParser {
 	private void readHeadOfDataObject(IPointer<String> poName)
 	{
 		String nameOrBrace = GetNextToken();
-		//System.out.println(nameOrBrace);
+		////System.out.println(nameOrBrace);
 		if (!"{".equals(nameOrBrace))
 		{
 			if (poName != null)
 				poName.set(nameOrBrace);
-			String a = GetNextToken();// System.out.println((int) a.charAt(1));
+			String a = GetNextToken();// //System.out.println((int) a.charAt(1));
 			if (!a.equals("{"))
 				ThrowException("Opening brace expected:" + a);
 		}
@@ -1208,11 +1211,11 @@ public class XFileParser {
 
 		} else
 		{
-			//System.out.println("Getting token...");
+			////System.out.println("Getting token...");
 			FindNextNoneWhiteSpace();
 			if (P.getOffset() >= End.getOffset())
 				return s;
-			//System.out.println(s);
+			////System.out.println(s);
 			while ((P.getOffset() < End.getOffset()) && !ctype.isspace(P.get()))
 			{
 				
@@ -1423,11 +1426,11 @@ public class XFileParser {
 
 
 		}
-                System.out.print(P.get());
+
 		FindNextNoneWhiteSpace();
 		if (string.strncmp(P, "-1.#IND00", 9) == 0 || string.strncmp(P, "1.#IND00", 8) == 0)
 		{
-			P.pointerAdjust(9);
+			//System.out.println(StringUtil.getCharactersAsString(P, 9));P.pointerAdjust(9);
 			CheckForSeparator();
 			return new ai_real(0.0);
 		} else if (string.strncmp(P, "1.#QNAN0", 8) == 0)
@@ -1436,12 +1439,12 @@ public class XFileParser {
 			return new ai_real(0.0);
 		}
 
-		IPointer<ai_real> result = Pointer.valueOf(new ai_real(0.0));
+		IPointer<Real> result = Pointer.valueOf(new defs.Real(0.0));
 		P = (fast_atof.fast_atoreal_move(P, result));
 
 		CheckForSeparator();
 
-		return result.get();
+		return new ai_real(0.0f).forValue(result.get().getValue());
 	}
 
 

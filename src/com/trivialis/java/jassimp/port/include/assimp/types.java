@@ -77,7 +77,7 @@ public class types {
 
 
 		public int length;
-		public byte[] data;
+		public byte[] data = new byte[1];
 
 		public aiString() {
 			length = 0;
@@ -92,10 +92,8 @@ public class types {
 		}
 
 		public aiString(String pString) {
-			length=pString.length();
-			length=length>=MAXLEN?MAXLEN-1:length;
-			string.memcpy(data, pString.getBytes(StandardCharsets.UTF_8), length);
-			data[length]='\0';
+			this();
+			Set(pString);
 		}
 
 		public void Set(String pString) {
@@ -103,6 +101,7 @@ public class types {
 				return;
 			}
 			length=pString.length();
+			data=new byte[length];
 			string.memcpy(data, pString.getBytes(StandardCharsets.UTF_8), length);
 		}
 
@@ -154,6 +153,13 @@ public class types {
 
 		public byte[] C_Str() {
 			return data;
+		}
+
+		//Jassimp
+		public void setLength(int length2)
+		{
+			length=length2;
+			this.data=new byte[length2+1];
 		}
 	}
 

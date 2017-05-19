@@ -1,6 +1,10 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
+import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import com.trivialis.java.jassimp.port.code.MaterialSystem;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
@@ -9,6 +13,7 @@ import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiReturn;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.util.AiRealUtil;
+import com.trivialis.java.jassimp.util.ArrayUtil;
 import com.trivialis.java.jassimp.util.Tuples.Tuple;
 import com.trivialis.java.jassimp.util.string;
 import com.trivialis.java.jassimp.util.serialization.Bytes;
@@ -122,7 +127,7 @@ public class material {
 	    /** Specifies the name of the property (key)
 	     *  Keys are generally case insensitive.
 	     */
-	    public aiString mKey;
+	    public aiString mKey = new aiString();
 
 	    /** Textures: Specifies their exact usage semantic.
 	     * For non-texture properties, this member is always 0
@@ -243,7 +248,7 @@ public class material {
 
 		public int mNumAllocated;
 		public int mNumProperties;
-		public aiMaterialProperty[] mProperties;
+		public List<aiMaterialProperty> mProperties = new ArrayList<>();
 
 		public aiReturn AddBinaryProperty (byte[] pInput,
 			    int pSizeInBytes,
@@ -260,12 +265,12 @@ public class material {
 			    // first search the list whether there is already an entry with this key
 			    int iOutIndex = Integer.MAX_VALUE;
 			    for (int i = 0; i < mNumProperties;++i)    {
-			        aiMaterialProperty prop = mProperties[i];
+			        aiMaterialProperty prop = mProperties.get(i);
 
 			        if (prop !=null/* just for safety */ && string.strcmp( prop.mKey.data, pKey.getBytes(StandardCharsets.UTF_8) )==0 &&
 			            prop.mSemantic == type && prop.mIndex == index){
 
-			            mProperties[i]=null;
+			            mProperties.set(i, null);
 			            iOutIndex = i;
 			        }
 			    }
@@ -282,12 +287,12 @@ public class material {
 			    pcNew.mData = new byte[pSizeInBytes];
 			    string.memcpy (pcNew.mData,pInput,pSizeInBytes);
 
-			    pcNew.mKey.length = string.strlen(pKey.toCharArray());
+			    //pcNew.mKey.length = string.strlen(pKey.toCharArray());
 			    assert (types.MAXLEN > pcNew.mKey.length);
-			    string.strcpy( pcNew.mKey.data, pKey.getBytes(StandardCharsets.UTF_8) );
+			    pcNew.mKey.Set(pKey);
 
 			    if (Integer.MAX_VALUE != iOutIndex)  {
-			        mProperties[iOutIndex] = pcNew;
+			        mProperties.set(iOutIndex, pcNew);
 			        return aiReturn.SUCCESS;
 			    }
 
@@ -305,13 +310,13 @@ public class material {
 			        }
 
 			        // just copy all items over; then replace the old array
-			        string.memcpy (ppTemp,mProperties,iOld);
+			        string.memcpy (ppTemp,mProperties.toArray(new aiMaterialProperty[0]),iOld);
 
 			        mProperties = null;
-			        mProperties = ppTemp;
+			        mProperties = ArrayUtil.toList(ppTemp);
 			    }
 			    // push back ...
-			    mProperties[mNumProperties++] = pcNew;
+			    mProperties.add(pcNew);mNumProperties++;
 			    return aiReturn.SUCCESS;
 			}
 
@@ -383,8 +388,8 @@ public class material {
 			            aiPropertyTypeInfo.aiPTI_String);
 			    }
 			    assert(Integer.BYTES==4);
-			    return AddBinaryProperty(pInput.data,
-			    		pInput.length+1+4,
+			    return AddBinaryProperty(ByteBuffer.allocate(pInput.length+4).putInt(pInput.length).put(pInput.data).array(),
+			    		pInput.length+4, //+1 already done in aiString?
 			        pKey,
 			        type,
 			        index,

@@ -30,4 +30,6 @@ public interface IPointer<T> {
 
 	int getOffset();
 
+	T getAtOffset(int offset);
+
 }

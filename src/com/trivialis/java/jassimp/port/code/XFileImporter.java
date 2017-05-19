@@ -27,18 +27,19 @@ import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.mesh;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiBone;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiFace;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.mesh.aiVertexWeight;
 import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaternion;
 import com.trivialis.java.jassimp.port.include.assimp.scene;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiBone;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiFace;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiNode;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
+import com.trivialis.java.jassimp.util.ArrayUtil;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
 import com.trivialis.java.jassimp.util.StringUtil;
@@ -145,10 +146,9 @@ public class XFileImporter extends BaseImporter {
 
 	    // create node
 	    aiNode node = new aiNode();
-	    node.mName.length = pNode.mName.length();
+	    node.mName.setLength(pNode.mName.length());
 	    node.mParent = pParent;
-	    string.memcpy( node.mName.data, pNode.mName.getBytes(StandardCharsets.UTF_8), pNode.mName.length());
-	    node.mName.data[node.mName.length] = 0;
+	    node.mName.Set(pNode.mName);//string.memcpy( node.mName.data, pNode.mName.getBytes(StandardCharsets.UTF_8), pNode.mName.length());
 	    node.mTransformation = pNode.mTrafoMatrix;
 
 	    // convert meshes from the source node
@@ -230,19 +230,19 @@ public class XFileImporter extends BaseImporter {
 	            mesh.mNumVertices = numVertices;
 	            mesh.mVertices = new aiVector3D[numVertices];
 	            mesh.mNumFaces = (int)faces.size();
-	            mesh.mFaces = new scene.aiFace[mesh.mNumFaces];
+	            mesh.mFaces = ArrayUtil.Generator.populateArray(new aiFace[mesh.mNumFaces], new ArrayUtil.Generator<aiFace>() {});
 
 	            // name
 	            mesh.mName.Set(sourceMesh.mName);
 
 	            // normals?
 	            if( sourceMesh.mNormals.size() > 0)
-	                mesh.mNormals = new aiVector3D[numVertices];
+	            	mesh.mNormals = ArrayUtil.Generator.populateArray(new aiVector3D[numVertices], new ArrayUtil.Generator<aiVector3D>() {});//mesh.mNormals = new aiVector3D[numVertices];
 	            // texture coords
 	            for( int c = 0; c < get_AI_MAX_NUMBER_OF_TEXTURECOORDS(); c++)
 	            {
 	                if( sourceMesh.mTexCoords[c].size() > 0)
-	                    mesh.mTextureCoords[c] = new aiVector3D[numVertices];
+	                	mesh.mTextureCoords[c] = ArrayUtil.Generator.populateArray(new aiVector3D[numVertices], new ArrayUtil.Generator<aiVector3D>() {});     //mesh.mTextureCoords[c] = new aiVector3D[numVertices];
 	            }
 	            // vertex colors
 	            for(int c = 0; c < get_AI_MAX_NUMBER_OF_COLOR_SETS(); c++)
@@ -254,7 +254,11 @@ public class XFileImporter extends BaseImporter {
 	            // now collect the vertex data of all data streams present in the imported mesh
 	            int newIndex = 0;
 	            ArrayList<Integer> orgPoints = new ArrayList<Integer>(); // from which original point each new vertex stems
-	            orgPoints.ensureCapacity(numVertices);
+	            ArrayUtil.Generator.ensureSize(orgPoints,numVertices, new ArrayUtil.Generator<Integer>() {@Override
+	            public Integer generate() throws InstantiationException, IllegalAccessException
+	            {
+	            	return 0;
+	            }});//orgPoints.ensureCapacity(numVertices);
 
 	            for(int c = 0; c < faces.size(); c++)
 	            {
@@ -262,7 +266,7 @@ public class XFileImporter extends BaseImporter {
 	                Face pf = sourceMesh.mPosFaces.get(f); // position source face
 
 	                // create face. either triangle or triangle fan depending on the index count
-	                aiFace df = mesh.mFaces[c]; // destination face
+	                aiFace df = mesh.mFaces[c];// destination face
 	                df.mNumIndices = (int)pf.mIndices.size();
 	                df.mIndices = new int[ df.mNumIndices];
 
@@ -547,7 +551,7 @@ public class XFileImporter extends BaseImporter {
 	        // Shading model: hardcoded to PHONG, there is no such information in an XFile
 	        // FIX (aramis): If the specular exponent is 0, use gouraud shading. This is a bugfix
 	        // for some models in the SDK (e.g. good old tiny.x)
-	        int shadeMode = oldMat.mSpecularExponent.cast(new ai_real(0)).opEquals(new ai_real(0.0f))
+	        int shadeMode = oldMat.mSpecularExponent.cast(new ai_real(0.0f)).opEquals(new ai_real(0.0f))
 	            ? material.aiShadingMode.aiShadingMode_Gouraud.value : material.aiShadingMode.aiShadingMode_Phong.value;
 
 	        mat.AddProperty(new int[]{shadeMode}, 1, material.AI_MATKEY_SHADING_MODEL.x, material.AI_MATKEY_SHADING_MODEL.y, material.AI_MATKEY_SHADING_MODEL.z);

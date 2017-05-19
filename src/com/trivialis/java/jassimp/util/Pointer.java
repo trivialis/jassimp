@@ -97,6 +97,11 @@ public class Pointer<T> implements IPointer<T> {
 	{
 		return currentOffset + 1;
 	}
+	
+	@Override
+	public T getAtOffset(int offset) {
+		return val[currentOffset+offset];
+	}
 
 	@Override
 	public T get()

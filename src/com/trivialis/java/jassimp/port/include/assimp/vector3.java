@@ -15,7 +15,9 @@ public class vector3 {
 		public ai_real z;
 
 		public aiVector3t() {
-
+			x=new ai_real(0.0f);
+			y=new ai_real(0.0f);
+			z=new ai_real(0.0f);
 		}
 
 
@@ -38,14 +40,14 @@ public class vector3 {
 			z=o.z;
 		}
 		public static aiVector3t multiply(aiMatrix3x3t pMatrix, aiVector3t pVector) {
-			aiVector3t res = new aiVector3t();
+			aiVector3t res = pVector.newInstance();
 			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z));
 			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z));
 			res.z = (pMatrix.c1.opMultiply(pVector.x)).opAdd(pMatrix.c2.opMultiply(pVector.y)).opAdd(pMatrix.c3.opMultiply(pVector.z));
 			return res;
 		}
 		public static aiVector3t multiply(aiMatrix4x4t pMatrix, aiVector3t pVector) {
-			aiVector3t res = new aiVector3t();
+			aiVector3t res = pVector.newInstance();
 			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z)).opAdd(pMatrix.a4);
 			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z)).opAdd(pMatrix.b4);
 			res.z = (pMatrix.c1.opMultiply(pVector.x)).opAdd(pMatrix.c2.opMultiply(pVector.y)).opAdd(pMatrix.c3.opMultiply(pVector.z)).opAdd(pMatrix.c4);
@@ -94,6 +96,10 @@ public class vector3 {
 			// TODO Auto-generated method stub
 			return null;
 		}
+		
+		public <T extends aiVector3t> T newInstance() {
+			return (T) new aiVector3t();
+		}
 
 	}
 
@@ -110,7 +116,12 @@ public class vector3 {
 		}
 
 
+		@Override
+		public aiVector3D newInstance()
+		{
 
+			return new aiVector3D();
+		}
 
 
 

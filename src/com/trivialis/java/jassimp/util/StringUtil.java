@@ -23,5 +23,18 @@ public class StringUtil {
 		}
 		return result;
 	}
+	
+	public static String getCharactersAsString(IPointer<Character> string, int amount) {
+		IPointer<Character> clone = string.pointerCopy();
+		String result = "";
+		int i = 0;
+		while(i<amount) {
+			result+=clone.get();
+			clone.postInc();
+			i++;
+		}
+		
+		return result;
+	}
 
 }

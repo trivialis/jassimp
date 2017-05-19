@@ -15,7 +15,22 @@ public class matrix4x4 {
 		public ai_real d1, d2, d3, d4;
 
 		public aiMatrix4x4t() {
-
+	    	a1=new ai_real(0.0f);
+	    	a2=new ai_real(0.0f);
+	    	a3=new ai_real(0.0f);
+	    	a4=new ai_real(0.0f);
+	    	b1=new ai_real(0.0f);
+	    	b2=new ai_real(0.0f);
+	    	b3=new ai_real(0.0f);
+	    	b4=new ai_real(0.0f);
+	    	c1=new ai_real(0.0f);
+	    	c2=new ai_real(0.0f);
+	    	c3=new ai_real(0.0f);
+	    	c4=new ai_real(0.0f);
+	    	d1=new ai_real(0.0f);
+	    	d2=new ai_real(0.0f);
+	    	d3=new ai_real(0.0f);
+	    	d4=new ai_real(0.0f);
 		}
 
 	    public aiMatrix4x4t (  ai_real _a1, ai_real _a2, ai_real _a3, ai_real _a4,

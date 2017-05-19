@@ -1,6 +1,11 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
+import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiVertexWeight;
+import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
+import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 
 public class mesh {
 
@@ -12,6 +17,61 @@ public class mesh {
 		}
 
 	}
+
+	public static class aiBone {
+
+		public aiString mName;
+		public aiMatrix4x4 mOffsetMatrix;
+		public int mNumWeights;
+		public aiVertexWeight[] mWeights;
+
+	}
+
+	public static class aiFace {
+
+		public int mNumIndices;
+		public int[] mIndices;
+
+	}
+
+	public static class aiMesh {
+
+		public int mMaterialIndex;
+		public int mNumVertices;
+		public int mNumFaces;
+		public aiFace[] mFaces = new aiFace[0];
+		public aiVector3D[] mVertices;
+		public aiString mName = new aiString();
+		public aiVector3D[] mNormals = new aiVector3D[0];
+		public aiVector3D[][] mTextureCoords = new aiVector3D[AI_MAX_NUMBER_OF_TEXTURECOORDS][];
+		public aiColor4D[][] mColors = new aiColor4D[AI_MAX_NUMBER_OF_COLOR_SETS][];
+		public int mNumBones;
+		public aiBone[] mBones;
+		public aiVector3D[] mTangents;
+		public aiVector3D[] mBitangents;
+		public boolean HasNormals()
+		{
+			// TODO Auto-generated method stub
+			return false;
+		}
+		public boolean HasTextureCoords(int e)
+		{
+			// TODO Auto-generated method stub
+			return false;
+		}
+		public boolean HasVertexColors(int e)
+		{
+			// TODO Auto-generated method stub
+			return false;
+		}
+		public boolean HasTangentsAndBitangents()
+		{
+			// TODO Auto-generated method stub
+			return false;
+		}
+
+	}
+	
 	public static int AI_MAX_NUMBER_OF_TEXTURECOORDS = 0x8;
 	public static int AI_MAX_NUMBER_OF_COLOR_SETS = 0x8;
 

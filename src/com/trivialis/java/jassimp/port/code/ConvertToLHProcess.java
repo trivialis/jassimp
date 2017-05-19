@@ -11,8 +11,8 @@ import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterialProperty;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiBone;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiMesh;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiBone;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiNode;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
@@ -30,7 +30,7 @@ public class ConvertToLHProcess {
 		    Logger.getLogger("default").log(Level.FINEST, "MakeLeftHandedProcess begin");
 
 		    // recursively convert all the nodes
-		    ProcessNode( pScene.mRootNode, new matrix4x4.aiMatrix4x4());
+		    ProcessNode( pScene.mRootNode, new aiMatrix4x4());
 
 		    // process the meshes accordingly
 		    for( int a = 0; a < pScene.mNumMeshes; ++a)
@@ -113,11 +113,11 @@ public class ConvertToLHProcess {
 		{
 		    aiMaterial mat = (aiMaterial)_mat;
 		    for (int a = 0; a < mat.mNumProperties;++a)   {
-		        aiMaterialProperty prop = mat.mProperties[a];
+		        aiMaterialProperty prop = mat.mProperties.get(a);
 
 		        // Mapping axis for UV mappings?
 		        if (string.strcmp( prop.mKey.data, "$tex.mapaxis".getBytes(Charset.forName("UTF-8")))==0)    {
-		            assert( prop.mDataLength >= ai_real.getSize()*3); /* something is wrong with the validation if we end up here */
+		            assert( prop.mDataLength >= ai_real.getSize()*3); if(prop.mDataLength<ai_real.getSize()*3) throw new RuntimeException("Invalid datalength: " + prop.mDataLength); /* something is wrong with the validation if we end up here */
 		            aiVector3D pff = Bytes.deserializeTo_aiVector3D(prop.mData);
 
 		            pff.z = pff.z.opMultiply(new ai_real(-1.f));

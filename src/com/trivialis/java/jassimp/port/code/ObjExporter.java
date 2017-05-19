@@ -12,8 +12,8 @@ import com.trivialis.java.jassimp.port.include.assimp.material;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiFace;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiMesh;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiFace;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiNode;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.port.include.assimp.types;
@@ -104,7 +104,7 @@ public class ObjExporter {
 	            mOutputMat .append("Ni " ).append(o ).append(endl);
 	        }
 
-	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_SHININESS.x,material.AI_MATKEY_SHININESS.y,material.AI_MATKEY_SHININESS.z,o) && o.opBigger(new ai_real(0))) {
+	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_SHININESS.x,material.AI_MATKEY_SHININESS.y,material.AI_MATKEY_SHININESS.z,o) && o.opBigger(new ai_real(0.0f))) {
 	            mOutputMat .append("Ns " ).append(o ).append(endl);
 	            illum = 2;
 	        }
@@ -113,24 +113,24 @@ public class ObjExporter {
 
 	        aiString s = new aiString();
 	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_DIFFUSE(0).x,material.AI_MATKEY_TEXTURE_DIFFUSE(0).y,material.AI_MATKEY_TEXTURE_DIFFUSE(0).z,s)) {
-	            mOutputMat .append("map_Kd " ).append(s.data ).append(endl);
+	            mOutputMat .append("map_Kd " ).append(new String(s.data) ).append(endl);
 	        }
 	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_AMBIENT(0).x,material.AI_MATKEY_TEXTURE_AMBIENT(0).y,material.AI_MATKEY_TEXTURE_AMBIENT(0).z,s)) {
-	            mOutputMat .append("map_Ka " ).append(s.data ).append(endl);
+	            mOutputMat .append("map_Ka " ).append(new String(s.data)).append(endl);
 	        }
 	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_SPECULAR(0).x,material.AI_MATKEY_TEXTURE_SPECULAR(0).y,material.AI_MATKEY_TEXTURE_SPECULAR(0).z,s)) {
-	            mOutputMat .append("map_Ks " ).append(s.data ).append(endl);
+	            mOutputMat .append("map_Ks " ).append(new String(s.data) ).append(endl);
 	        }
 	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_SHININESS(0).x,material.AI_MATKEY_TEXTURE_SHININESS(0).y,material.AI_MATKEY_TEXTURE_SHININESS(0).z,s)) {
-	            mOutputMat .append("map_Ns " ).append(s.data ).append(endl);
+	            mOutputMat .append("map_Ns " ).append(new String(s.data) ).append(endl);
 	        }
 	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_OPACITY(0).x,material.AI_MATKEY_TEXTURE_OPACITY(0).y,material.AI_MATKEY_TEXTURE_OPACITY(0).z,s)) {
-	            mOutputMat .append("map_d " ).append(s.data ).append(endl);
+	            mOutputMat .append("map_d " ).append(new String(s.data) ).append(endl);
 	        }
 	        if(aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_HEIGHT(0).x,material.AI_MATKEY_TEXTURE_HEIGHT(0).y,material.AI_MATKEY_TEXTURE_HEIGHT(0).z,s) || aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_TEXTURE_NORMALS(0).x,material.AI_MATKEY_TEXTURE_NORMALS(0).y,material.AI_MATKEY_TEXTURE_NORMALS(0).z,s)) {
 	            // implementations seem to vary here, so write both variants
-	            mOutputMat .append("bump " ).append(s.data ).append(endl);
-	            mOutputMat .append("map_bump " ).append(s.data ).append(endl);
+	            mOutputMat .append("bump " ).append(new String(s.data) ).append(endl);
+	            mOutputMat .append("map_bump " ).append(new String(s.data) ).append(endl);
 	        }
 
 	        mOutputMat .append(endl);
@@ -309,12 +309,12 @@ public class ObjExporter {
 		@Override
 		public int compare(aiVector3D a, aiVector3D b)
 		{
-	          if(a.x.opSmaller(b.x)) return 1;
+	          	if(a.x.opSmaller(b.x)) return 1;
 	            if(a.x.opBigger(b.x)) return -1;
 	            if(a.y.opSmaller(b.y)) return 1;
 	            if(a.y.opBigger(b.y)) return -1;
 	            if(a.z.opSmaller(b.z)) return 1;
-	            return -1;
+	            return 0;
 		}
 	}
 	
@@ -342,7 +342,7 @@ public class ObjExporter {
             if ( a.b.opBigger(b.b) ) return -1;
             if ( a.a.opSmaller(b.a) ) return 1;
             if ( a.a.opBigger(b.a) ) return -1;
-            return -1;
+            return 0;
 		}
     };
     

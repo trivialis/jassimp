@@ -14,7 +14,7 @@ public class string {
 			s1++;
 			s2++;
 		}
-		return data[s1]-data[s2];
+		return data[s1]-data2[s2];
 	}
 
 	public static int strcmp(IPointer<Character> s1, IPointer<Character> s2) {
@@ -32,8 +32,9 @@ public class string {
 		int i1=0;
 		int i2=0;
 		while(n-->0) {
-			if(s1.charAt(i1++)!=s2.charAt(i2++))
-				return (s1.charAt(i1-1)-(s2.charAt(i2)-1));
+			if(s1.charAt(i1)!=s2.charAt(i2))
+				return (s1.charAt(i1)-(s2.charAt(i2)));
+			i1++;i2++;
 		}
 		return 0;
 	}
@@ -42,28 +43,36 @@ public class string {
 		s2=s2.pointerCopy();
 		s1=s1.pointerCopy();
 	    while(n-->0){
-	        if(s1.postInc().get()!=s2.postInc().get())
-	            return (s1.get() - 1) - (s2.get() - 1);
+	        if(s1.get()!=s2.get())
+	            return (s1.get()) - (s2.get());
+	        s1.postInc();s2.postInc();
 	    }
 	    return 0;
 	}
-
+	
 	public static int strncmp(IPointer<Character> s1, String s2, int n) {
 		IPointer<Character> ps2=Pointer.valueOf(StringUtil.toCharacterArray(s2.toCharArray()));
 		s1=s1.pointerCopy();
 	    while(n-->0){
-	        if(s1.postInc().get()!=ps2.postInc().get())
-	            return (s1.get() - 1) - (ps2.get() - 1);
+	        if(s1.get()!=ps2.get())
+	            return (s1.get()) - (ps2.get());
+	        s1.postInc();ps2.postInc();
 	    }
 	    return 0;
 	}
 
 	public static void main(String[] args) {
-		IPointer<Character> p1 = Pointer.valueOf(StringUtil.toCharacterArray("Hello world!".toCharArray()));
-		IPointer<Character> p2 = Pointer.valueOf(StringUtil.toCharacterArray("Hello world!".toCharArray()));
+		String s1 = "Hello_world!";
+		String s2 = "Hello world!";
+		
+		IPointer<Character> p1 = Pointer.valueOf(StringUtil.toCharacterArray(s1.toCharArray()));
+		IPointer<Character> p2 = Pointer.valueOf(StringUtil.toCharacterArray(s2.toCharArray()));
 
+		System.out.println(strcmp(s1.toCharArray(),s2.toCharArray()));
+		System.out.println(strncmp(s1, s2, 10));
+		System.out.println(strncmp(p1, s2, 10));
 		System.out.println(strcmp(p1, p2));
-		System.out.println(strncmp(p1, p2, 5));
+		System.out.println(strncmp(p1, p2, 10));
 	}
 
 	public static <T extends Object> void memcpy(T[] data, T[] data2, int length)
@@ -151,7 +160,8 @@ public class string {
 	{
 		for(int i = 0; i<length&i<length; i++)
 		{
-			data[i]=data2[i];
+			data[i]=
+					data2[i];
 		}
 
 	}
@@ -164,7 +174,7 @@ public class string {
 			s1++;
 			s2++;
 		}
-		return data[s1]-data[s2];
+		return data[s1]-data2[s2];
 	}
 
 	public static void strcpy(byte[] data, byte[] data2)

@@ -33,7 +33,7 @@ public class Bytes {
 
 	public static byte[] serialize(aiColor4D... clr)
 	{
-		ByteBuffer mediator = ByteBuffer.allocate(clr.length*4*3);
+		ByteBuffer mediator = ByteBuffer.allocate(clr.length*4*4);
 		for(aiColor4D a : clr) mediator.putFloat(a.r.getValue().floatValue()).putFloat(a.g.getValue().floatValue()).putFloat(a.b.getValue().floatValue()).putFloat(a.a.getValue().floatValue());
 		return mediator.array();
 	}
@@ -89,7 +89,7 @@ public class Bytes {
 		} else if(mData.length==24) {
 			return new aiVector3D(new ai_real(mediator.getDouble()), new ai_real(mediator.getDouble()), new ai_real(mediator.getDouble()));
 		}
-		throw new RuntimeException();
+		throw new RuntimeException("Invalid length: " + mData.length);
 	}
 
 }
