@@ -337,7 +337,7 @@ public class XFileParser {
 			if (objectName.length() == 0)
 				break;
 			
-			//System.out.println(objectName);
+			System.out.println(objectName);
 
 			if (objectName.equals("template")){
 				ParseDataObjectTemplate();}
@@ -412,7 +412,9 @@ public class XFileParser {
 		readHeadOfDataObject(name);
 
 		Node node = new Node(pParent);
+
 		node.mName = name.get();// System.out.println(name.get());
+
 		if (pParent != null)
 		{
 			pParent.mChildren.add(node);
@@ -505,12 +507,14 @@ public class XFileParser {
 		readHeadOfDataObject(name);
 
 		int numVertices = ReadInt();//System.out.println(numVertices);
+
 		while(pMesh.mPositions.size()<numVertices) pMesh.mPositions.add(new aiVector3D());
 
 		for (int a = 0; a < numVertices; a++)
 			pMesh.mPositions.set(a, ReadVector3());
 		
 		int numPosFaces = ReadInt(); //System.out.println(numPosFaces); 
+
 		while(pMesh.mPosFaces.size()<numPosFaces) pMesh.mPosFaces.add(new Face());
 		for (int a = 0; a < numPosFaces; a++)
 		{

@@ -70,6 +70,7 @@ public class TestingXFileImporting {
 //		System.out.println(new String(result.get().mMaterials[0].mProperties.get(6).mType.toString()));
 		
 		//TODO: Change paths of texture pictures. Make it follow jme3 rules.
+
 		for(aiMaterial m : result.get().mMaterials) {
 			aiString pOut = new aiString();
 			m.Get(material.AI_MATKEY_TEXTURE_DIFFUSE(0),pOut);
@@ -77,17 +78,12 @@ public class TestingXFileImporting {
 
 			//TODO: Why does this give an error? m.AddProperty(temp, material.AI_MATKEY_TEXTURE_DIFFUSE(0));
 		}
-		
-		//TODO: Check texture corodinates
-//		for(aiVector3t aa : result.get().mMeshes[0].mTextureCoords[0]) System.out.println(aa.x.getValue()+" "+aa.y.getValue()+" "+aa.z.getValue());
-//		for(aiVector3t aa : result.get().mMeshes[1].mTextureCoords[0]) System.out.println(aa.x.getValue()+" "+aa.y.getValue()+" "+aa.z.getValue());
-//		for(aiVector3t aa : result.get().mMeshes[2].mTextureCoords[0]) System.out.println(aa.x.getValue()+" "+aa.y.getValue()+" "+aa.z.getValue());
+
 		
 		ObjExporter obj = new ObjExporter(Pointer.valueOf(new StringBuilder("test.obj")), result.get());
 		File f = new File("../openRail/assets/Models/test.obj");
 		File f2 = new File("../openRail/assets/Models/test.obj.mtl");
 		Files.write(f.toPath(), obj.mOutput.toString().getBytes());
-		//System.out.println(obj.mOutput.toString().getBytes().length);
 		Files.write(f2.toPath(), obj.mOutputMat.toString().getBytes());
 	}
 	
