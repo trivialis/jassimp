@@ -337,7 +337,7 @@ public class XFileParser {
 			if (objectName.length() == 0)
 				break;
 			
-			//System.out.println(objectName);
+			System.out.println(objectName);
 
 			if (objectName.equals("template")){
 				ParseDataObjectTemplate();}
@@ -412,7 +412,7 @@ public class XFileParser {
 		readHeadOfDataObject(name);
 
 		Node node = new Node(pParent);
-		node.mName = name.get();
+		node.mName = name.get(); System.out.println(name.get());
 		if (pParent != null)
 		{
 			pParent.mChildren.add(node);
@@ -504,12 +504,12 @@ public class XFileParser {
 		IPointer<String> name = Pointer.valueOf("");
 		readHeadOfDataObject(name);
 
-		int numVertices = ReadInt();
+		int numVertices = ReadInt();System.out.println(numVertices);
 		while(pMesh.mPositions.size()<numVertices) pMesh.mPositions.add(new aiVector3D());
 
 		for (int a = 0; a < numVertices; a++)
 			pMesh.mPositions.set(a, ReadVector3());
-
+		//System.out.println(pMesh.mPositions.get(0).x.getValue()); if(true) throw new RuntimeException();
 		int numPosFaces = ReadInt();
 		while(pMesh.mPosFaces.size()<numPosFaces) pMesh.mPosFaces.add(new Face());
 		for (int a = 0; a < numPosFaces; a++)
@@ -1430,21 +1430,21 @@ public class XFileParser {
 		FindNextNoneWhiteSpace();
 		if (string.strncmp(P, "-1.#IND00", 9) == 0 || string.strncmp(P, "1.#IND00", 8) == 0)
 		{
-			//System.out.println(StringUtil.getCharactersAsString(P, 9));P.pointerAdjust(9);
+			P.pointerAdjust(9);
 			CheckForSeparator();
-			return new ai_real(0.0);
+			return new ai_real(0.0F);
 		} else if (string.strncmp(P, "1.#QNAN0", 8) == 0)
 		{
 			P.pointerAdjust(8);
-			return new ai_real(0.0);
+			return new ai_real(0.0F);
 		}
 
-		IPointer<Real> result = Pointer.valueOf(new defs.Real(0.0));
+		IPointer<Real> result = Pointer.valueOf(new defs.Real(0.0F));
 		P = (fast_atof.fast_atoreal_move(P, result));
 
 		CheckForSeparator();
 
-		return new ai_real(0.0f).forValue(result.get().getValue());
+		return new ai_real(0.0F).forValue(result.get().getValue());
 	}
 
 

@@ -20,10 +20,11 @@ public class TestingXFileImporting {
 
 	public static void main(String[] args) throws IOException {
                 
-		String path = ""
-                        + "/home/frank/Projects/RTR/"
-                        //+ "X:/My Documents/Projects/"
-                        + "RTR/{app}/Scenes/xfiles/mozd02.X";
+		String path = (!System.getProperty("os.name").contains("Windows"))?
+				System.getProperty("user.home")+"/Projects/RTR/RTR/{app}/Scenes/xfiles/mozd02.X"
+                        :System.getProperty("user.name").toLowerCase().contains("s23")?
+                        		System.getProperty("user.home")+"/My Documents/Projects/RTR/{app}/Scenes/xfiles/mozd02.X":
+                        			"C:/Users/MWPuser/AppData/Local/BrainBombers/Rule the Rail!/Scenes/xfiles/mozd02.X";
                 
 		XFileImporter xfi = new XFileImporter();
 		ScopeGuard<aiScene> result = xfi.ReadFile(new Importer(), path, new IOSystem() {
@@ -61,11 +62,17 @@ public class TestingXFileImporting {
 //                System.out.println(new String(result.get().mMaterials[0].mProperties.get(4).mType.toString()));
 //                System.out.println(new String(result.get().mMaterials[0].mProperties.get(5).mType.toString()));
 //		System.out.println(new String(result.get().mMaterials[0].mProperties.get(6).mType.toString()));
+		
+		//TODO: Change paths of texture pictures. Make it follow jme3 rules.
+		
+		
+		
 		ObjExporter obj = new ObjExporter(Pointer.valueOf(new StringBuilder("test.obj")), result.get());
 		File f = new File("../openRail/assets/Models/test.obj");
-                File f2 = new File("../openRail/assets/Models/test.obj.mtl");
-                Files.write(f.toPath(), obj.mOutput.toString().getBytes());
-                Files.write(f2.toPath(), obj.mOutputMat.toString().getBytes());
+		File f2 = new File("../openRail/assets/Models/test.obj.mtl");
+		Files.write(f.toPath(), obj.mOutput.toString().getBytes());
+		System.out.println(obj.mOutput.toString().getBytes().length);
+		Files.write(f2.toPath(), obj.mOutputMat.toString().getBytes());
 	}
 	
 }
