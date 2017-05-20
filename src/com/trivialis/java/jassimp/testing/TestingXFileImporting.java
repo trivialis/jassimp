@@ -1,5 +1,6 @@
 package com.trivialis.java.jassimp.testing;
 
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 
 import com.trivialis.java.jassimp.port.code.BaseImporter.ScopeGuard;
@@ -9,21 +10,27 @@ import com.trivialis.java.jassimp.port.code.ObjExporter;
 import com.trivialis.java.jassimp.port.code.XFileImporter;
 import com.trivialis.java.jassimp.port.include.assimp.IOStream;
 import com.trivialis.java.jassimp.port.include.assimp.IOSystem;
+import com.trivialis.java.jassimp.port.include.assimp.material;
+import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
+import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
+import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
 import com.trivialis.java.jassimp.util.ctype;
 import java.io.IOException;
+import java.nio.ByteBuffer;
 import java.nio.file.Files;
 
 public class TestingXFileImporting {
 
 	public static void main(String[] args) throws IOException {
                 
-		String path = ""
-                        + "/home/frank/Projects/RTR/"
-                        //+ "X:/My Documents/Projects/"
-                        + "RTR/{app}/Scenes/xfiles/mozd02.X";
+		String path = (!System.getProperty("os.name").contains("Windows"))?
+				System.getProperty("user.home")+"/Projects/RTR/RTR/{app}/Scenes/xfiles/mozd02.X"
+                        :System.getProperty("user.name").toLowerCase().contains("s23")?
+                        		System.getProperty("user.home")+"/My Documents/Projects/RTR/{app}/Scenes/xfiles/mozd02.X":
+                        			"C:/Users/MWPuser/AppData/Local/BrainBombers/Rule the Rail!/Scenes/xfiles/mozd02.X";
                 
 		XFileImporter xfi = new XFileImporter();
 		ScopeGuard<aiScene> result = xfi.ReadFile(new Importer(), path, new IOSystem() {
@@ -61,11 +68,27 @@ public class TestingXFileImporting {
 //                System.out.println(new String(result.get().mMaterials[0].mProperties.get(4).mType.toString()));
 //                System.out.println(new String(result.get().mMaterials[0].mProperties.get(5).mType.toString()));
 //		System.out.println(new String(result.get().mMaterials[0].mProperties.get(6).mType.toString()));
+		
+		//TODO: Change paths of texture pictures. Make it follow jme3 rules.
+		for(aiMaterial m : result.get().mMaterials) {
+			aiString pOut = new aiString();
+			m.Get(material.AI_MATKEY_TEXTURE_DIFFUSE(0),pOut);
+			//System.out.println(new File(new String(pOut.data)).getName());
+
+			//TODO: Why does this give an error? m.AddProperty(temp, material.AI_MATKEY_TEXTURE_DIFFUSE(0));
+		}
+		
+		//TODO: Check texture corodinates
+//		for(aiVector3t aa : result.get().mMeshes[0].mTextureCoords[0]) System.out.println(aa.x.getValue()+" "+aa.y.getValue()+" "+aa.z.getValue());
+//		for(aiVector3t aa : result.get().mMeshes[1].mTextureCoords[0]) System.out.println(aa.x.getValue()+" "+aa.y.getValue()+" "+aa.z.getValue());
+//		for(aiVector3t aa : result.get().mMeshes[2].mTextureCoords[0]) System.out.println(aa.x.getValue()+" "+aa.y.getValue()+" "+aa.z.getValue());
+		
 		ObjExporter obj = new ObjExporter(Pointer.valueOf(new StringBuilder("test.obj")), result.get());
 		File f = new File("../openRail/assets/Models/test.obj");
-                File f2 = new File("../openRail/assets/Models/test.obj.mtl");
-                Files.write(f.toPath(), obj.mOutput.toString().getBytes());
-                Files.write(f2.toPath(), obj.mOutputMat.toString().getBytes());
+		File f2 = new File("../openRail/assets/Models/test.obj.mtl");
+		Files.write(f.toPath(), obj.mOutput.toString().getBytes());
+		//System.out.println(obj.mOutput.toString().getBytes().length);
+		Files.write(f2.toPath(), obj.mOutputMat.toString().getBytes());
 	}
 	
 }

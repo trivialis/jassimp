@@ -285,7 +285,7 @@ public class XFileImporter extends BaseImporter {
 	                    // texture coord sets
 	                    for(int e = 0; e < get_AI_MAX_NUMBER_OF_TEXTURECOORDS(); e++)
 	                    {
-	                        if( mesh.HasTextureCoords( e))
+	                    	if( mesh.HasTextureCoords( e))
 	                        {
 	                            aiVector2D tex = sourceMesh.mTexCoords[e].get(pf.mIndices.get(d));
 	                            mesh.mTextureCoords[e][newIndex] = new aiVector3D( tex.x, new ai_real(1.0f).opSubtract(tex.y), new ai_real(0.0f));
@@ -545,8 +545,8 @@ public class XFileImporter extends BaseImporter {
 
 	        aiMaterial mat = new aiMaterial();
 	        aiString name = new aiString();
-	        name.Set( oldMat.mName);
-	        mat.AddProperty(name, material.AI_MATKEY_NAME.x, material.AI_MATKEY_NAME.y, material.AI_MATKEY_NAME.z);
+	        name.Set( oldMat.mName);// System.out.println(new String(name.data));
+	        mat.AddProperty(name, material.AI_MATKEY_NAME);
 
 	        // Shading model: hardcoded to PHONG, there is no such information in an XFile
 	        // FIX (aramis): If the specular exponent is 0, use gouraud shading. This is a bugfix

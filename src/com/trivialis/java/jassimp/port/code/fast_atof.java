@@ -80,10 +80,10 @@ public class fast_atof {
 		{
 			c.postInc();
 
-			int diff = AI_FAST_ATOF_RELAVANT_DECIMALS;
-			double pl = (double)( strtoul10_64 ( c, c.pointerAddressOf(), Pointer.valueOf(diff) ));
+			IPointer<Integer> diff = Pointer.valueOf(AI_FAST_ATOF_RELAVANT_DECIMALS);
+			double pl = (double)( strtoul10_64 ( c, c.pointerAddressOf(), diff));
 
-			pl = pl * fast_atof_table[diff];
+			pl = pl * fast_atof_table[diff.get()];
 			f = f.opAdd(new Real( pl ));
 		}
 
@@ -103,7 +103,7 @@ public class fast_atof {
 			if (einv) {
 				exp = exp.opNegate();
 			}
-			f = f.opMultiply(new Real(std.pow((Double)new ai_real(10.0).getValue(), (Double)exp.getValue())));
+			f = f.opMultiply(new Real(std.pow((Double)new ai_real(10.0D).getValue(), (Double)exp.getValue())));
 		}
 
 		if (inv) {

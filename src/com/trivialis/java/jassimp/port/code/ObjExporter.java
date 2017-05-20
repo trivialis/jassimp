@@ -146,7 +146,7 @@ public class ObjExporter {
 	    AddNode(pScene.mRootNode, mBase);
 
 	    // write vertex positions with colors, if any
-	    vpMap.getVectors( vp );
+	    vpMap.getVectors( vp );// System.out.println(vp.size());
 	    vcMap.getColors( vc );
 	    if ( vc.isEmpty() ) {
 	        mOutput .append("# " ).append(vp.size() ).append(" vertex positions" ).append(endl);
@@ -164,7 +164,7 @@ public class ObjExporter {
 	    mOutput .append(endl);
 
 	    // write uv coordinates
-	    vtMap.getVectors(vt);
+	    vtMap.getVectors(vt); //System.out.println(vt.size());
 	    mOutput .append("# " ).append(vt.size() ).append(" UV coordinates" ).append(endl);
 	    for(aiVector3D v : vt) {
 	        mOutput .append("vt " ).append(v.x ).append(" " ).append(v.y ).append(" " ).append(v.z ).append(endl);
@@ -245,17 +245,17 @@ public class ObjExporter {
 		            default:
 		                face.kind = 'f';
 		        }
-		        while(face.indices.size()<f.mNumIndices) face.indices.add(new FaceVertex());
+		        while(face.indices.size()<f.mNumIndices) face.indices.add(new FaceVertex());//System.out.println(f.mNumIndices);
 
 		        for(int a = 0; a < f.mNumIndices; ++a) {
-		            int idx = f.mIndices[a];
+		            int idx = f.mIndices[a];//System.out.println(idx);
 
-		            aiVector3D vert = (aiVector3D) aiVector3t.multiply(mat, m.mVertices[idx]);
-		            face.indices.get(a).vp = vpMap.getIndex(vert);
+		            aiVector3D vert = (aiVector3D) aiVector3t.multiply(mat, m.mVertices[idx]);//System.out.println(mat.a1);//System.out.println(m.mVertices[idx].x);//System.out.println(vert.x);
+		            face.indices.get(a).vp = vpMap.getIndex(vert);//System.out.println(face.indices.get(a).vp);
 
 		            if (m.mNormals.length>0) {
 		                aiVector3D norm = (aiVector3D) aiVector3t.multiply(new matrix3x3.aiMatrix3x3(mat), m.mNormals[idx]);
-		                face.indices.get(a).vn = vnMap.getIndex(norm);
+		                face.indices.get(a).vn = vnMap.getIndex(norm); 
 		            } else {
 		                face.indices.get(a).vn = 0;
 		            }
@@ -266,9 +266,9 @@ public class ObjExporter {
 		            } else {
 		                face.indices.get(a).vc = 0;
 		            }
-
+		         //   System.out.println(m.mTextureCoords[ 0 ].length);// for(aiVector3t aa : m.mTextureCoords[0]) System.out.println(aa.x.getValue()+" "+aa.y.getValue()+" "+aa.z.getValue());
 		            if ( m.mTextureCoords[ 0 ].length>0 ) {
-		                face.indices.get(a).vt = vtMap.getIndex(m.mTextureCoords[0][idx]);
+		                face.indices.get(a).vt = vtMap.getIndex(m.mTextureCoords[0][idx]); //System.out.println(face.indices.get(a).vt); System.out.println(m.mTextureCoords[0][idx].x.getValue());
 		            } else {
 		                face.indices.get(a).vt = 0;
 		            }
@@ -278,11 +278,11 @@ public class ObjExporter {
 	
 	public void AddNode(aiNode nd, aiMatrix4x4 mParent) {
 		   aiMatrix4x4 mAbs = (aiMatrix4x4) mParent.opMultiply(nd.mTransformation);
-
+		  //System.out.println("Addnode: " + mAbs.a1);//System.out.println("Mutipl: " + nd.mTransformation.a1);
 		    for(int i = 0; i < nd.mNumMeshes; ++i) {
 		        AddMesh(nd.mName, pScene.mMeshes[nd.mMeshes[i]], mAbs);
 		    }
-
+		   //System.out.println(nd.mNumChildren);
 		    for(int i = 0; i < nd.mNumChildren; ++i) {
 		        AddNode(nd.mChildren[i], mAbs);
 		    }
@@ -366,12 +366,12 @@ public class ObjExporter {
     		if(_vecMap.containsKey(vec)) return _vecMap.get(vec);
     		_vecMap.put(vec, mNextIndex);
     		int ret = mNextIndex;
-    		mNextIndex++;
+    		mNextIndex++; 
     		return ret; 
     	}
     	
     	public void getVectors(ArrayList<aiVector3D> vecs) {
-    		vecs.clear();
+    		vecs.clear(); //System.out.println(_vecMap.keySet().size());
     		for(aiVector3D a : _vecMap.keySet()) {
     			vecs.add(a);
     		}

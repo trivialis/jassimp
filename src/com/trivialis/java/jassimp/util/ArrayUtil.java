@@ -72,8 +72,8 @@ public class ArrayUtil {
 
 	public static void main(String[] args) throws InstantiationException, IllegalAccessException
 	{
-		String[] s = Generator.populateArray(new String[10], new Generator<String>() {});
-		System.out.println(s[0]);
+		ArrayList[] s = Generator.populateArray(new ArrayList[10], new Generator<ArrayList>() {});
+		System.out.println(s[0].equals(s[1]));
 	}
 	
 }

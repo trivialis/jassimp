@@ -49,25 +49,22 @@ public class mesh {
 		public aiBone[] mBones;
 		public aiVector3D[] mTangents;
 		public aiVector3D[] mBitangents;
+		
 		public boolean HasNormals()
 		{
-			// TODO Auto-generated method stub
-			return false;
+			return mNormals!=null;
 		}
-		public boolean HasTextureCoords(int e)
+		public boolean HasTextureCoords(int pIndex)
 		{
-			// TODO Auto-generated method stub
-			return false;
+			return pIndex >= AI_MAX_NUMBER_OF_TEXTURECOORDS ? false : mTextureCoords[pIndex] != null;
 		}
-		public boolean HasVertexColors(int e)
+		public boolean HasVertexColors(int pIndex)
 		{
-			// TODO Auto-generated method stub
-			return false;
+			return pIndex >= AI_MAX_NUMBER_OF_COLOR_SETS ? false : mColors[pIndex] != null;
 		}
 		public boolean HasTangentsAndBitangents()
 		{
-			// TODO Auto-generated method stub
-			return false;
+			return mTangents!=null;
 		}
 
 	}

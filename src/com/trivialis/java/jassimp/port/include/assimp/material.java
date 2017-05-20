@@ -267,7 +267,9 @@ public class material {
 			    for (int i = 0; i < mNumProperties;++i)    {
 			        aiMaterialProperty prop = mProperties.get(i);
 
-			        if (prop !=null/* just for safety */ && string.strcmp( prop.mKey.data, pKey.getBytes(StandardCharsets.UTF_8) )==0 &&
+			        if (prop !=null/* just for safety */ && 
+			        		string.strcmp( prop.mKey.data, 
+			        		pKey.getBytes(StandardCharsets.UTF_8) )==0 &&
 			            prop.mSemantic == type && prop.mIndex == index){
 
 			            mProperties.set(i, null);
@@ -393,7 +395,7 @@ public class material {
 			            aiPropertyTypeInfo.aiPTI_String);
 			    }
 			    assert(Integer.BYTES==4);
-			    return AddBinaryProperty(ByteBuffer.allocate(pInput.length+4).putInt(pInput.length).put(pInput.data).array(),
+			    return AddBinaryProperty(ByteBuffer.allocate(pInput.length+4+1).putInt(pInput.length).put(pInput.data).array(),
 			    		pInput.length+4, //+1 already done in aiString?
 			        pKey,
 			        type,
