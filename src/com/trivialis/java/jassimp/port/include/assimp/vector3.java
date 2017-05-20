@@ -63,7 +63,7 @@ public class vector3 {
 			return (x.opMultiply(x)).opAdd(y.opMultiply(y)).opAdd(z.opMultiply(z));
 		}
 		public ai_real Length() {
-			return x.forValue(std.sqrt((Double) SquareLength().getValue()));
+			return x.forValue(std.sqrt((double) SquareLength().getValue()));
 		}
 		public aiVector3t Normalize() {
 			ai_real length = Length();
@@ -81,20 +81,18 @@ public class vector3 {
 			x=x.opAdd(o.x);y=y.opAdd(o.y);z=z.opAdd(o.z);
 			return this;
 		}
-		//TODO
-		public boolean opEquals(aiVector3D o)
+
+		public boolean opEquals(aiVector3t o)
 		{
 			return x.opEquals(o.x) && y.opEquals(o.y) && z.opEquals(o.z);
 		}
-		public aiVector3D opSubtract(aiVector3D a)
+		public aiVector3t opSubtract(aiVector3t a)
 		{
-			// TODO Auto-generated method stub
-			return null;
+                    return new aiVector3t(x.opSubtract(a.x), y.opSubtract(a.y), z.opSubtract(a.z));
 		}
 		public aiVector3t opMultiply(ai_real d)
 		{
-			// TODO Auto-generated method stub
-			return null;
+                    return new aiVector3t(x.opSubtract(d),y.opSubtract(d),z.opSubtract(d));
 		}
 		
 		public <T extends aiVector3t> T newInstance() {
@@ -110,18 +108,15 @@ public class vector3 {
 			super(x, y, z);
 		}
 
-		public aiVector3D()
-		{
-			// TODO Auto-generated constructor stub
-		}
+            public aiVector3D() {
+                super();
+            }
 
+            @Override
+            public aiVector3D newInstance() {
 
-		@Override
-		public aiVector3D newInstance()
-		{
-
-			return new aiVector3D();
-		}
+                return new aiVector3D();
+            }
 
 
 

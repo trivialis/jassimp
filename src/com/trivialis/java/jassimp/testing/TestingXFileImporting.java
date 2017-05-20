@@ -83,8 +83,8 @@ public class TestingXFileImporting {
 		ObjExporter obj = new ObjExporter(Pointer.valueOf(new StringBuilder("test.obj")), result.get());
 		File f = new File("../openRail/assets/Models/test.obj");
 		File f2 = new File("../openRail/assets/Models/test.obj.mtl");
-		Files.write(f.toPath(), obj.mOutput.toString().getBytes());
-		Files.write(f2.toPath(), obj.mOutputMat.toString().getBytes());
+		//Files.write(f.toPath(), obj.mOutput.toString().getBytes());
+		//Files.write(f2.toPath(), obj.mOutputMat.toString().replaceAll("[A-Z][:][\\\\]([A-Za-z0-9 ]+\\\\)*", "").replaceAll("[.]bmp", ".dds").getBytes());
 	}
 	
 }

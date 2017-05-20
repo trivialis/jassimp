@@ -424,7 +424,7 @@ public class XFileImporter extends BaseImporter {
 	                    nbone.mPositionKeys[c].mValue = pos;
 
 	                    // extract scaling
-	                    aiVector3D scale = new aiVector3D();
+	                    aiVector3D scale = pos.newInstance();
 	                    scale.x = new aiVector3D( trafo.a1, trafo.b1, trafo.c1).Length();
 	                    scale.y = new aiVector3D( trafo.a2, trafo.b2, trafo.c2).Length();
 	                    scale.z = new aiVector3D( trafo.a3, trafo.b3, trafo.c3).Length();

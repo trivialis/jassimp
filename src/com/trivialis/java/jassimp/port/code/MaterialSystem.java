@@ -75,8 +75,7 @@ public class MaterialSystem {
 		    }
 		    else {
 		        // TODO - implement lexical cast as well
-		        Logger.getLogger("default").log(Level.SEVERE, "Material property" + new String(pKey) +
-		            " was found, but is no string" );
+		        Logger.getLogger("default").log(Level.SEVERE, "Material property{0} was found, but is no string", pKey);
 		        return aiReturn.FAILURE;
 		    }
 		    return aiReturn.SUCCESS;

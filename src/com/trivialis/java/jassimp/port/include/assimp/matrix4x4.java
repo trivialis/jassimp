@@ -93,6 +93,10 @@ public class matrix4x4 {
 
 	    	return new aiMatrix4x4t(a1.opMultiply(m), a2.opMultiply(m), a3.opMultiply(m), a4.opMultiply(m), b1.opMultiply(m), b2.opMultiply(m), b3.opMultiply(m), b4.opMultiply(m), c1.opMultiply(m), c2.opMultiply(m), c3.opMultiply(m), c4.opMultiply(m), d1.opMultiply(m), d2.opMultiply(m), d3.opMultiply(m), d4.opMultiply(m));
 	    }
+            
+            public aiMatrix4x4t newInstance() {
+                return new aiMatrix4x4t();
+            }
 
 	    public aiMatrix4x4t opMultiply(aiMatrix4x4t m) { //*this does no exist in Java. pointer?
 
@@ -112,11 +116,30 @@ public class matrix4x4 {
 	    	        ai_real _d2=(m.a2.opMultiply(d1)).opAdd(m.b2.opMultiply(d2)).opAdd(m.c2.opMultiply(d3)).opAdd(m.d2.opMultiply(d4));
 	    	        ai_real _d3=(m.a3.opMultiply(d1)).opAdd(m.b3.opMultiply(d2)).opAdd(m.c3.opMultiply(d3)).opAdd(m.d3.opMultiply(d4));
 	    	        ai_real _d4=(m.a4.opMultiply(d1)).opAdd(m.b4.opMultiply(d2)).opAdd(m.c4.opMultiply(d3)).opAdd(m.d4.opMultiply(d4));
-	    			a1=_a1;a2=_a2;a3=_a3;a4=_a4;
-	    			b1=_b1;b2=_b2;b3=_b3;b4=_b4;
-	    			c1=_c1;c2=_c2;c3=_c3;c4=_c4;
-	    			d1=_d1;d2=_d2;d3=_d3;d4=_d4;
-	    	return this;
+  //TODO: Not sure about this:
+  aiMatrix4x4t result =  m.newInstance();
+                result.a1 = _a1;
+                result.a2 = _a2;
+                result.a3 = _a3;
+                result.a4 = _a4;
+                result.b1 = _b1;
+                result.b2 = _b2;
+                result.b3 = _b3;
+                result.b4 = _b4;
+                result.c1 = _c1;
+                result.c2 = _c2;
+                result.c3 = _c3;
+                result.c4 = _c4;
+                result.d1 = _d1;
+                result.d2 = _d2;
+                result.d3 = _d3;
+                result.d4 = _d4;
+            return result;
+//	    			a1=_a1;a2=_a2;a3=_a3;a4=_a4;
+//	    			b1=_b1;b2=_b2;b3=_b3;b4=_b4;
+//	    			c1=_c1;c2=_c2;c3=_c3;c4=_c4;
+//	    			d1=_d1;d2=_d2;d3=_d3;d4=_d4;
+//	    	return this;
 	    }
 
 //	    public aiMatrix4x4t opMultiply_new(aiMatrix4x4t m) { //Renamed because otherwise duplicate of function above.
@@ -160,41 +183,41 @@ public class matrix4x4 {
 	               .opSubtract(a4.opMultiply(b2).opMultiply(c3).opMultiply(d1)).opAdd(a4.opMultiply(b2).opMultiply(c1).opMultiply(d3)).opSubtract(a4.opMultiply(b3).opMultiply(c1).opMultiply(d2)).opAdd(a4.opMultiply(b3).opMultiply(c2).opMultiply(d1));
 	    }
 
-	    public aiMatrix4x4t Inverse() {
-	    	ai_real det = Determinant();
-	    	if(det.opEquals(det.forValue(0.0))) {
-	    		ai_real nan = det.getNaN();
-	    		a1=nan;a2=nan;a3=nan;a4=nan;
-	    		b1=nan;b2=nan;b3=nan;b4=nan;
-	    		c1=nan;c2=nan;c3=nan;c4=nan;
-	    		d1=nan;d2=nan;d3=nan;d4=nan;
-	    		return this;
-	    	}
-	    	ai_real invdet = det.forValue(1.0).opDivide(det);
-
-	    	ai_real _a1 = invdet.opMultiply(
-	    			(b2.opMultiply(
-	    					(c3.opMultiply(d4)).opSubtract(c4.opMultiply(d3))))
-	    			.opAdd(
-	    					(b3.opMultiply(
-	    							(c4.opMultiply(d2)).opSubtract(c2.opMultiply(d4)))))
-	    			.opAdd(
-	    					(b4.opMultiply(
-	    							(c2.opMultiply(d3)).opSubtract(c3.opMultiply(d2)))))
-	    			);
-	    	ai_real _a2 = invdet.opMultiply(invdet.forValue(-1.0)).opMultiply(
-	    			(a2.opMultiply(
-	    					(c3.opMultiply(d4)).opSubtract(c4.opMultiply(d3))))
-	    			.opAdd(
-	    					(a3.opMultiply(
-	    							(c4.opMultiply(d2)).opSubtract(c2.opMultiply(d4)))))
-	    			.opAdd(
-	    					(a4.opMultiply(
-	    							(c2.opMultiply(d3)).opSubtract(c3.opMultiply(d2)))))
-	    			);
-	    	//TODO
-	    	return this;
-	    }
+//	    public aiMatrix4x4t Inverse() {
+//	    	ai_real det = Determinant();
+//	    	if(det.opEquals(det.forValue(0.0))) {
+//	    		ai_real nan = det.getNaN();
+//	    		a1=nan;a2=nan;a3=nan;a4=nan;
+//	    		b1=nan;b2=nan;b3=nan;b4=nan;
+//	    		c1=nan;c2=nan;c3=nan;c4=nan;
+//	    		d1=nan;d2=nan;d3=nan;d4=nan;
+//	    		return this;
+//	    	}
+//	    	ai_real invdet = det.forValue(1.0).opDivide(det);
+//
+//	    	ai_real _a1 = invdet.opMultiply(
+//	    			(b2.opMultiply(
+//	    					(c3.opMultiply(d4)).opSubtract(c4.opMultiply(d3))))
+//	    			.opAdd(
+//	    					(b3.opMultiply(
+//	    							(c4.opMultiply(d2)).opSubtract(c2.opMultiply(d4)))))
+//	    			.opAdd(
+//	    					(b4.opMultiply(
+//	    							(c2.opMultiply(d3)).opSubtract(c3.opMultiply(d2)))))
+//	    			);
+//	    	ai_real _a2 = invdet.opMultiply(invdet.forValue(-1.0)).opMultiply(
+//	    			(a2.opMultiply(
+//	    					(c3.opMultiply(d4)).opSubtract(c4.opMultiply(d3))))
+//	    			.opAdd(
+//	    					(a3.opMultiply(
+//	    							(c4.opMultiply(d2)).opSubtract(c2.opMultiply(d4)))))
+//	    			.opAdd(
+//	    					(a4.opMultiply(
+//	    							(c2.opMultiply(d3)).opSubtract(c3.opMultiply(d2)))))
+//	    			);
+//	    	//TODO
+//	    	return this;
+//	    }
 
 
 
@@ -202,6 +225,11 @@ public class matrix4x4 {
 
 	public static class aiMatrix4x4 extends aiMatrix4x4t {
 
+            @Override
+              public aiMatrix4x4 newInstance() {
+                return new aiMatrix4x4();
+            }
+            
 	}
 
 }

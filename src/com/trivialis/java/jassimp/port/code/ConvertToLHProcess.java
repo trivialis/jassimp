@@ -12,6 +12,7 @@ import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterialPropert
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.mesh.aiBone;
+import com.trivialis.java.jassimp.port.include.assimp.mesh.aiFace;
 import com.trivialis.java.jassimp.port.include.assimp.mesh.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiNode;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
@@ -104,8 +105,8 @@ public class ConvertToLHProcess {
 		    // mirror bitangents as well as they're derived from the texture coords
 		    if( pMesh.HasTangentsAndBitangents())
 		    {
-		        for( int a = 0; a < pMesh.mNumVertices; a++)
-		            pMesh.mBitangents[a]=(aiVector3D) pMesh.mBitangents[a].opMultiply(new ai_real(-1.0f));
+		        for( int a = 0; a < pMesh.mNumVertices; a++){//System.out.println(pMesh.mBitangents[a].x);System.out.println(pMesh.mBitangents[a].opMultiply(new ai_real(-1.0f)));
+		            pMesh.mBitangents[a]=(aiVector3D) pMesh.mBitangents[a].opMultiply(new ai_real(-1.0f));}
 		    }
 		}
 
@@ -120,7 +121,7 @@ public class ConvertToLHProcess {
 		            assert( prop.mDataLength >= ai_real.getSize()*3); if(prop.mDataLength<ai_real.getSize()*3) throw new RuntimeException("Invalid datalength: " + prop.mDataLength); /* something is wrong with the validation if we end up here */
 		            aiVector3D pff = Bytes.deserializeTo_aiVector3D(prop.mData);
 
-		            pff.z = pff.z.opMultiply(new ai_real(-1.f));
+		            pff.z = pff.z.opMultiply(new ai_real(-1.0f));
 		        }
 		    }
 		}
@@ -148,13 +149,28 @@ public class ConvertToLHProcess {
 
 	}
 
-	public static class FlipWindingOrderProcess {
+	   public static class FlipWindingOrderProcess {
 
-		public void Execute(aiScene pScene)
-		{
-			// TODO Auto-generated method stub
+               public void Execute(aiScene pScene) {
+//		 DefaultLogger::get()->debug("FlipWindingOrderProcess begin");
+                   for (int i = 0; i < pScene.mNumMeshes; ++i) {
+                       ProcessMesh(pScene.mMeshes[i]);
+                   }
+//                    DefaultLogger::get()->debug("FlipWindingOrderProcess finished");
+               }
 
-		}
+               public void ProcessMesh(aiMesh pMesh) {
+                   // invert the order of all faces in this mesh
+                   for (int a = 0; a < pMesh.mNumFaces; a++) {
+                       aiFace face = pMesh.mFaces[a];
+                       for (int b = 0; b < face.mNumIndices / 2; b++) {
+                           int aa = face.mIndices[b];
+                           int bb = face.mIndices[face.mNumIndices - 1 - b];
+                           face.mIndices[b] = bb;
+                           face.mIndices[face.mNumIndices - 1 - b] = aa;
+                       }
+                   }
+               }
 
 	}
 
