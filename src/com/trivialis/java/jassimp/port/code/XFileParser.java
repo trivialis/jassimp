@@ -337,7 +337,7 @@ public class XFileParser {
 			if (objectName.length() == 0)
 				break;
 			
-			System.out.println(objectName);
+			//System.out.println(objectName);
 
 			if (objectName.equals("template")){
 				ParseDataObjectTemplate();}
