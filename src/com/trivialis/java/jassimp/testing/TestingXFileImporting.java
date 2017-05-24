@@ -29,7 +29,7 @@ public class TestingXFileImporting {
 		String path = (!System.getProperty("os.name").contains("Windows"))?
 				System.getProperty("user.home")+"/Projects/RTR/RTR/{app}/Scenes/xfiles/mozd02.X"
                         :System.getProperty("user.name").toLowerCase().contains("s23")?
-                        		System.getProperty("user.home")+"/My Documents/Projects/RTR/{app}/Scenes/xfiles/mozd02.X":
+                        		"X:/My Documents/Projects/RTR/{app}/Scenes/xfiles/mozd02.X":
                         			"C:/Users/MWPuser/AppData/Local/BrainBombers/Rule the Rail!/Scenes/xfiles/mozd02.X";
                 
 		XFileImporter xfi = new XFileImporter();
@@ -83,8 +83,8 @@ public class TestingXFileImporting {
 		ObjExporter obj = new ObjExporter(Pointer.valueOf(new StringBuilder("test.obj")), result.get());
 		File f = new File("../openRail/assets/Models/test.obj");
 		File f2 = new File("../openRail/assets/Models/test.obj.mtl");
-		//Files.write(f.toPath(), obj.mOutput.toString().getBytes());
-		//Files.write(f2.toPath(), obj.mOutputMat.toString().replaceAll("[A-Z][:][\\\\]([A-Za-z0-9 ]+\\\\)*", "").replaceAll("[.]bmp", ".dds").getBytes());
+		Files.write(f.toPath(), obj.mOutput.toString().getBytes());
+		Files.write(f2.toPath(), obj.mOutputMat.toString().replaceAll("[A-Z][:][\\\\]([A-Za-z0-9 ]+\\\\)*", "").replaceAll("[.]bmp", ".dds").getBytes());
 	}
 	
 }

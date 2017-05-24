@@ -17,6 +17,11 @@ public class defs {
 	}
 
 	public static class ai_real {
+		
+		@Override
+		public String toString() {
+			return value.toString();
+		}
 
 		private Number value;
 
