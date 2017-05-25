@@ -98,6 +98,11 @@ public class vector3 {
 		public <T extends aiVector3t> T newInstance() {
 			return (T) new aiVector3t();
 		}
+                
+                @Override
+            public String toString() {
+                return new StringBuilder("aiVector3:").append(" x: ").append(x).append(" y: ").append(y).append(" z: ").append(z).toString();
+            }
 
 	}
 
@@ -117,8 +122,7 @@ public class vector3 {
 
                 return new aiVector3D();
             }
-
-
+            
 
 	}
 

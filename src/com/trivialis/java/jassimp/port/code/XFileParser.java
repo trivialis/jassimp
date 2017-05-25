@@ -46,7 +46,7 @@ public class XFileParser {
 	private IPointer<Character> P;
 	private IPointer<Character> End;
 	private int mLineNumber;
-	private Scene mScene;
+	public Scene mScene;
 	private int mBinaryFloatSize;
 
 

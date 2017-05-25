@@ -35,7 +35,7 @@ public class fast_atof {
 
 	public static IPointer<Character> fast_atoreal_move(IPointer<Character> c, IPointer<Real> out, boolean check_comma) {
 		c=c.pointerCopy();
-		Real f = out.get().forValue(0);
+		Real f = out.get().forValue(0); //if(true) throw new RuntimeException(f.getValue().getClass().toString());
 
 		boolean inv = (c.get()=='-');
 		if(inv || c.get()=='+') {

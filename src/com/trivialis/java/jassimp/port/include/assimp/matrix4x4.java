@@ -117,29 +117,29 @@ public class matrix4x4 {
 	    	        ai_real _d3=(m.a3.opMultiply(d1)).opAdd(m.b3.opMultiply(d2)).opAdd(m.c3.opMultiply(d3)).opAdd(m.d3.opMultiply(d4));
 	    	        ai_real _d4=(m.a4.opMultiply(d1)).opAdd(m.b4.opMultiply(d2)).opAdd(m.c4.opMultiply(d3)).opAdd(m.d4.opMultiply(d4));
   //TODO: Not sure about this:
-  aiMatrix4x4t result =  m.newInstance();
-                result.a1 = _a1;
-                result.a2 = _a2;
-                result.a3 = _a3;
-                result.a4 = _a4;
-                result.b1 = _b1;
-                result.b2 = _b2;
-                result.b3 = _b3;
-                result.b4 = _b4;
-                result.c1 = _c1;
-                result.c2 = _c2;
-                result.c3 = _c3;
-                result.c4 = _c4;
-                result.d1 = _d1;
-                result.d2 = _d2;
-                result.d3 = _d3;
-                result.d4 = _d4;
-            return result;
-//	    			a1=_a1;a2=_a2;a3=_a3;a4=_a4;
-//	    			b1=_b1;b2=_b2;b3=_b3;b4=_b4;
-//	    			c1=_c1;c2=_c2;c3=_c3;c4=_c4;
-//	    			d1=_d1;d2=_d2;d3=_d3;d4=_d4;
-//	    	return this;
+//  aiMatrix4x4t result =  m.newInstance();
+//                result.a1 = _a1;
+//                result.a2 = _a2;
+//                result.a3 = _a3;
+//                result.a4 = _a4;
+//                result.b1 = _b1;
+//                result.b2 = _b2;
+//                result.b3 = _b3;
+//                result.b4 = _b4;
+//                result.c1 = _c1;
+//                result.c2 = _c2;
+//                result.c3 = _c3;
+//                result.c4 = _c4;
+//                result.d1 = _d1;
+//                result.d2 = _d2;
+//                result.d3 = _d3;
+//                result.d4 = _d4;
+//            return result;
+	    			a1=_a1;a2=_a2;a3=_a3;a4=_a4;
+	    			b1=_b1;b2=_b2;b3=_b3;b4=_b4;
+	    			c1=_c1;c2=_c2;c3=_c3;c4=_c4;
+	    			d1=_d1;d2=_d2;d3=_d3;d4=_d4;
+	    	return this;
 	    }
 
 //	    public aiMatrix4x4t opMultiply_new(aiMatrix4x4t m) { //Renamed because otherwise duplicate of function above.

@@ -2,7 +2,7 @@ package com.trivialis.java.jassimp.port.include.assimp;
 
 public class defs {
 
-	public static Mode MODE = Mode.FLOAT;
+	public static Mode MODE = Mode.DOUBLE;
 
 	public static enum Mode {
 		FLOAT(new aiFloat(), Float.BYTES), DOUBLE(new aiDouble(), Double.BYTES);

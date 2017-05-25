@@ -53,21 +53,10 @@ public class TestingXFileImporting {
 				return new File(in.get().toString()).exists();
 			}
 		});
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(0).mKey.data));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(1).mKey.data));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(2).mKey.data));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(3).mKey.data));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(4).mKey.data));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(5).mKey.data));
-//		System.out.println(new String(result.get().mMaterials[0].mProperties.get(6).mKey.data));
-//                
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(0).mType.toString()));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(1).mType.toString()));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(2).mType.toString()));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(3).mType.toString()));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(4).mType.toString()));
-//                System.out.println(new String(result.get().mMaterials[0].mProperties.get(5).mType.toString()));
-//		System.out.println(new String(result.get().mMaterials[0].mProperties.get(6).mType.toString()));
+                System.out.println(xfi.parser.mScene.mRootNode.mChildren.get(0).mMeshes.get(0).mPositions.get(0));
+                System.out.println(xfi.parser.mScene.mRootNode.mChildren.get(0).mMeshes.get(0).mPositions.get(1));
+                System.out.println(xfi.parser.mScene.mRootNode.mChildren.get(0).mMeshes.get(0).mPositions.get(2));
+                
 		
 		//TODO: Change paths of texture pictures. Make it follow jme3 rules.
 

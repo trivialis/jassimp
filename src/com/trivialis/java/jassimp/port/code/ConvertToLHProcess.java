@@ -70,8 +70,9 @@ public class ConvertToLHProcess {
 		    pNode.mTransformation.d3 = pNode.mTransformation.d3.opNegate(); // useless, but anyways...
 
 		    // continue for all children
+                    aiMatrix4x4 t = (aiMatrix4x4) pParentGlobalRotation.opMultiply(pNode.mTransformation);
 		    for( int a = 0; a < pNode.mNumChildren; ++a ) {
-		        ProcessNode( pNode.mChildren[ a ], (aiMatrix4x4) pParentGlobalRotation.opMultiply(pNode.mTransformation));
+		        ProcessNode( pNode.mChildren[ a ], t);
 		    }
 		}
 

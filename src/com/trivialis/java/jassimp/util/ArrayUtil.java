@@ -25,6 +25,19 @@ public class ArrayUtil {
 		{
 			return type.newInstance();
 		}
+                
+                		public static <T> ArrayList<T> ensureSize(ArrayList<T> list, int amount) {
+			int i = list.size();
+			try {
+			while(i < amount) {
+				i++;
+				list.add(null);
+			}
+			} catch(Exception e) {
+				e.printStackTrace();
+			}
+			return list;
+		}
 		
 		public static <T> ArrayList<T> ensureSize(ArrayList<T> list, int amount, Generator<T> g) {
 			int i = list.size();

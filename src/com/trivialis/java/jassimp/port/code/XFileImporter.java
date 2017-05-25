@@ -52,6 +52,7 @@ public class XFileImporter extends BaseImporter {
 	public IPointer<byte[]> mBuffer
 	= Pointer.valueOf(new byte[0]);
 	;
+    public XFileParser parser;
 
 	public XFileImporter() {
 
@@ -76,7 +77,7 @@ public class XFileImporter extends BaseImporter {
 		file.get().Read(mBuffer.get(), 1, fileSize);
 		ConvertToUTF8(mBuffer);
 
-		XFileParser parser = new XFileParser(StringUtil.toCharacterArray(mBuffer.get()));
+		parser = new XFileParser(StringUtil.toCharacterArray(mBuffer.get()));
 
 		CreateDataRepresentationFromImport(pScene.get(), parser.GetImportedData()); //I ignore scopeguard for now.
 
@@ -90,7 +91,6 @@ public class XFileImporter extends BaseImporter {
 	private void CreateDataRepresentationFromImport(aiScene pScene, Scene pData)
 	{
 		ConvertMaterials(pScene, pData.mGlobalMaterials);
-
 		pScene.mRootNode = CreateNodes(pScene, null, pData.mRootNode);
 
 		CreateAnimations(pScene, pData);
