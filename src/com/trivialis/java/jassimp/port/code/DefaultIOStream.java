@@ -1,14 +1,10 @@
 package com.trivialis.java.jassimp.port.code;
 
-import java.io.ByteArrayInputStream;
+import com.trivialis.java.jassimp.port.include.assimp.IOStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.nio.file.Paths;
-
-import com.sun.xml.internal.messaging.saaj.util.ByteInputStream;
-import com.trivialis.java.jassimp.port.include.assimp.IOStream;
 
 public class DefaultIOStream extends IOStream {
 

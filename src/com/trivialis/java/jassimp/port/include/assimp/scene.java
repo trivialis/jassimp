@@ -1,13 +1,10 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiAnimation;
-import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.mesh.aiMesh;
-import com.trivialis.java.jassimp.port.include.assimp.mesh.aiVertexWeight;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
-import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 
 public class scene {
 	

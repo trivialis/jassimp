@@ -1,9 +1,5 @@
 package com.trivialis.java.jassimp.port.code;
 
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import com.trivialis.java.jassimp.port.code.ConvertToLHProcess.FlipWindingOrderProcess;
 import com.trivialis.java.jassimp.port.code.ConvertToLHProcess.MakeLeftHandedProcess;
 import com.trivialis.java.jassimp.port.code.XFileHelper.AnimBone;
@@ -46,6 +42,8 @@ import com.trivialis.java.jassimp.util.StringUtil;
 import com.trivialis.java.jassimp.util.ctype;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
+import java.util.ArrayList;
+import java.util.logging.Logger;
 
 public class XFileImporter extends BaseImporter {
 

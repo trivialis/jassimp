@@ -1,7 +1,5 @@
 package com.trivialis.java.jassimp.port.code;
 
-import java.util.ArrayList;
-
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiQuatKey;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiVectorKey;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
@@ -12,6 +10,7 @@ import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.util.ArrayUtil;
+import java.util.ArrayList;
 
 public class XFileHelper {
 

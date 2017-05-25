@@ -1,11 +1,5 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import java.nio.ByteBuffer;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
-
 import com.trivialis.java.jassimp.port.code.MaterialSystem;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
@@ -15,8 +9,12 @@ import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.util.AiRealUtil;
 import com.trivialis.java.jassimp.util.ArrayUtil;
 import com.trivialis.java.jassimp.util.Tuples.Tuple;
-import com.trivialis.java.jassimp.util.string;
 import com.trivialis.java.jassimp.util.serialization.Bytes;
+import com.trivialis.java.jassimp.util.string;
+import java.nio.ByteBuffer;
+import java.nio.charset.StandardCharsets;
+import java.util.ArrayList;
+import java.util.List;
 
 public class material {
 

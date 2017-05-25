@@ -1,8 +1,5 @@
 package com.trivialis.java.jassimp.port.code;
 
-import java.util.ArrayList;
-import java.util.logging.Logger;
-
 import com.trivialis.java.jassimp.port.code.Exceptional.DeadlyImportError;
 import com.trivialis.java.jassimp.port.code.XFileHelper.AnimBone;
 import com.trivialis.java.jassimp.port.code.XFileHelper.Animation;
@@ -28,11 +25,11 @@ import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
-import com.trivialis.java.jassimp.util.StringUtil;
 import com.trivialis.java.jassimp.util.ctype;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
-
+import java.util.ArrayList;
+import java.util.logging.Logger;
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class XFileParser {

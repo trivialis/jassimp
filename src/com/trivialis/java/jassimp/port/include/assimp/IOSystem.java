@@ -1,8 +1,7 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import java.util.ArrayList;
-
 import com.trivialis.java.jassimp.util.IPointer;
+import java.util.ArrayList;
 
 public abstract class IOSystem {
 

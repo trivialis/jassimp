@@ -1,11 +1,10 @@
 package com.trivialis.java.jassimp.util.serialization;
 
-import java.nio.ByteBuffer;
-
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
+import java.nio.ByteBuffer;
 
 public class Bytes {
 

@@ -1,11 +1,10 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
-
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
+import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 public class types {
 

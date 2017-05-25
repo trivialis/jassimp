@@ -1,8 +1,7 @@
 package com.trivialis.java.jassimp.util;
 
-import java.nio.ByteBuffer;
-
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
+import java.nio.ByteBuffer;
 import java.util.Objects;
 
 public class string {

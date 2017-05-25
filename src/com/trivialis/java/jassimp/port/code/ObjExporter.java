@@ -1,10 +1,5 @@
 package com.trivialis.java.jassimp.port.code;
 
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeMap;
-
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.material;
@@ -22,6 +17,10 @@ import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.util.ArrayUtil;
 import com.trivialis.java.jassimp.util.IPointer;
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
 
 public class ObjExporter {
 

@@ -1,9 +1,7 @@
 package com.trivialis.java.jassimp.util;
 
-import java.util.ArrayList;
-import java.util.List;
-
 import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
+import java.util.ArrayList;
 
 public class std {
 

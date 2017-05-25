@@ -1,24 +1,15 @@
 package com.trivialis.java.jassimp.port.code;
 
-import java.nio.ByteBuffer;
-import java.nio.ByteOrder;
-import java.nio.IntBuffer;
-import java.nio.charset.Charset;
-import java.nio.charset.StandardCharsets;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.logging.Level;
-import java.util.logging.Logger;
-
-import com.sun.xml.internal.bind.api.impl.NameConverter.Standard;
-import com.trivialis.java.jassimp.port.contrib.ConvertUTF.ConvertUTF;
-import com.trivialis.java.jassimp.port.contrib.ConvertUTF.ConvertUTF.ConversionResult;
 import com.trivialis.java.jassimp.port.include.assimp.IOSystem;
 import com.trivialis.java.jassimp.port.include.assimp.ProgressHandler;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
-import com.trivialis.java.jassimp.util.std;
+import java.nio.ByteBuffer;
+import java.nio.charset.Charset;
+import java.util.Arrays;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 public abstract class BaseImporter {
 
