@@ -19,9 +19,9 @@ public class std {
 	{
 		return new ai_real(sqrt((Double) t.getValue()));
 	}
-	public static <T> T swap(T... args) {
-		return args[0];
-	}
+//	public static <T> T swap(T... args) {
+//		return args[0];
+//	}
 	public static double pow(Double a, Double b) {
 		return Math.pow(a, b);
 	}
