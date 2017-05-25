@@ -142,7 +142,7 @@ public class ConvertToLHProcess {
 		        pAnim.mRotationKeys[a].mValue = rotquat;
 		        */
 		        pAnim.mRotationKeys[a].mValue.x =pAnim.mRotationKeys[a].mValue.x.opMultiply(new ai_real(-1.0f));
-		        pAnim.mRotationKeys[a].mValue.y =pAnim.mRotationKeys[a].mValue.y.opMultiply(new ai_real(-1.0f));;
+		        pAnim.mRotationKeys[a].mValue.y =pAnim.mRotationKeys[a].mValue.y.opMultiply(new ai_real(-1.0f));
 		    }
 		}
 

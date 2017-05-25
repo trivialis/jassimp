@@ -63,7 +63,7 @@ public class vector3 {
 			return (x.opMultiply(x)).opAdd(y.opMultiply(y)).opAdd(z.opMultiply(z));
 		}
 		public ai_real Length() {
-			return x.forValue(std.sqrt((double) SquareLength().getValue()));
+			return new ai_real(std.sqrt((double) SquareLength().getValue()));
 		}
 		public aiVector3t Normalize() {
 			ai_real length = Length();
@@ -72,7 +72,7 @@ public class vector3 {
 		}
 		public aiVector3t NormalizeSafe() {
 			ai_real len = Length();
-			if(len.opBigger(len.forValue(0))) {
+			if(len.opBigger(new ai_real(0))) {
 				return Normalize();
 			}
 			return this;

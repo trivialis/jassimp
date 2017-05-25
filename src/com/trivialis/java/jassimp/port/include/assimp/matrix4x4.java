@@ -33,66 +33,66 @@ public class matrix4x4 {
 	    	d4=new ai_real(1.0f);
 		}
 
-	    public aiMatrix4x4t (  ai_real _a1, ai_real _a2, ai_real _a3, ai_real _a4,
-                ai_real _b1, ai_real _b2, ai_real _b3, ai_real _b4,
-                ai_real _c1, ai_real _c2, ai_real _c3, ai_real _c4,
-                ai_real _d1, ai_real _d2, ai_real _d3, ai_real _d4) {
-	    	a1=_a1;
-	    	a2=_a2;
-	    	a3=_a3;
-	    	a4=_a4;
-	    	b1=_b1;
-	    	b2=_b2;
-	    	b3=_b3;
-	    	b4=_b4;
-	    	c1=_c1;
-	    	c2=_c2;
-	    	c3=_c3;
-	    	c4=_c4;
-	    	d1=_d1;
-	    	d2=_d2;
-	    	d3=_d3;
-	    	d4=_d4;
-	    }
+//	    public aiMatrix4x4t (  ai_real _a1, ai_real _a2, ai_real _a3, ai_real _a4,
+//                ai_real _b1, ai_real _b2, ai_real _b3, ai_real _b4,
+//                ai_real _c1, ai_real _c2, ai_real _c3, ai_real _c4,
+//                ai_real _d1, ai_real _d2, ai_real _d3, ai_real _d4) {
+//	    	a1=_a1;
+//	    	a2=_a2;
+//	    	a3=_a3;
+//	    	a4=_a4;
+//	    	b1=_b1;
+//	    	b2=_b2;
+//	    	b3=_b3;
+//	    	b4=_b4;
+//	    	c1=_c1;
+//	    	c2=_c2;
+//	    	c3=_c3;
+//	    	c4=_c4;
+//	    	d1=_d1;
+//	    	d2=_d2;
+//	    	d3=_d3;
+//	    	d4=_d4;
+//	    }
 
 	    //Todo cast function.
 
-	    public aiMatrix4x4t(aiMatrix3x3t m) {
-	    	a1=m.a1;a2=m.a2;a3=m.a3;a4=m.a3.forValue(0.0);
-	    	b1=m.b1;b2=m.b2;b3=m.b3;b4=m.b3.forValue(0.0);
-	    	c1=m.c1;c2=m.c2;c3=m.c3;c4=m.c3.forValue(0.0);
-	    	d1=m.c1.forValue(0.0);d2=m.c2.forValue(0.0);d3=m.c3.forValue(0.0);d4=m.c3.forValue(0.0);
-	    }
+//	    public aiMatrix4x4t(aiMatrix3x3t m) {
+//	    	a1=m.a1;a2=m.a2;a3=m.a3;a4=new ai_real(0.0);
+//	    	b1=m.b1;b2=m.b2;b3=m.b3;b4=new ai_real(0.0);
+//	    	c1=m.c1;c2=m.c2;c3=m.c3;c4=new ai_real(0.0);
+//	    	d1=new ai_real(0.0);d2=new ai_real(0.0);d3=new ai_real(0.0);d4=new ai_real(1.0);
+//	    }
 
-	    public aiMatrix4x4t(aiVector3t scaling, aiQuaterniont rotation, aiVector3t position) {
-	    	aiMatrix3x3t m = new aiMatrix3x3t();rotation.GetMatrix(m);
-
-	    	a1 = m.a1.opMultiply(scaling.z);
-	    	a2 = m.a2.opMultiply(scaling.z);
-	    	a3 = m.a3.opMultiply(scaling.z);
-	    	a4 = position.z;
-
-	    	b1 = m.b1.opMultiply(scaling.y);
-	    	b2 = m.b2.opMultiply(scaling.y);
-	    	b3 = m.b3.opMultiply(scaling.y);
-	    	b4 = position.y;
-
-	    	c1 = m.c1.opMultiply(scaling.z);
-	    	c2 = m.c2.opMultiply(scaling.z);
-	    	c3 = m.c3.opMultiply(scaling.z);
-	    	c4 = position.z;
-
-	    	d1 = a1.forValue(0.0);
-	    	d2 = a1.forValue(0.0);
-	    	d3 = a1.forValue(0.0);
-	    	d4 = a1.forValue(1.0);
-
-	    }
+//	    public aiMatrix4x4t(aiVector3t scaling, aiQuaterniont rotation, aiVector3t position) {
+//	    	aiMatrix3x3t m = new aiMatrix3x3t();rotation.GetMatrix(m);
+//
+//	    	a1 = m.a1.opMultiply(scaling.z);
+//	    	a2 = m.a2.opMultiply(scaling.z);
+//	    	a3 = m.a3.opMultiply(scaling.z);
+//	    	a4 = position.z;
+//
+//	    	b1 = m.b1.opMultiply(scaling.y);
+//	    	b2 = m.b2.opMultiply(scaling.y);
+//	    	b3 = m.b3.opMultiply(scaling.y);
+//	    	b4 = position.y;
+//
+//	    	c1 = m.c1.opMultiply(scaling.z);
+//	    	c2 = m.c2.opMultiply(scaling.z);
+//	    	c3 = m.c3.opMultiply(scaling.z);
+//	    	c4 = position.z;
+//
+//	    	d1 = new ai_real(0.0);
+//	    	d2 = new ai_real(0.0);
+//	    	d3 = new ai_real(0.0);
+//	    	d4 = new ai_real(1.0);
+//
+//	    }
 	    
-	    public aiMatrix4x4t opMultiply(ai_real m) { //*this does no exist in Java. pointer?
-
-	    	return new aiMatrix4x4t(a1.opMultiply(m), a2.opMultiply(m), a3.opMultiply(m), a4.opMultiply(m), b1.opMultiply(m), b2.opMultiply(m), b3.opMultiply(m), b4.opMultiply(m), c1.opMultiply(m), c2.opMultiply(m), c3.opMultiply(m), c4.opMultiply(m), d1.opMultiply(m), d2.opMultiply(m), d3.opMultiply(m), d4.opMultiply(m));
-	    }
+//	    public aiMatrix4x4t opMultiply(ai_real m) { //*this does no exist in Java. pointer?
+//
+//	    	return new aiMatrix4x4t(a1.opMultiply(m), a2.opMultiply(m), a3.opMultiply(m), a4.opMultiply(m), b1.opMultiply(m), b2.opMultiply(m), b3.opMultiply(m), b4.opMultiply(m), c1.opMultiply(m), c2.opMultiply(m), c3.opMultiply(m), c4.opMultiply(m), d1.opMultiply(m), d2.opMultiply(m), d3.opMultiply(m), d4.opMultiply(m));
+//	    }
             
             public aiMatrix4x4t newInstance() {
                 return new aiMatrix4x4t();
@@ -116,25 +116,6 @@ public class matrix4x4 {
 	    	        ai_real _d2=(m.a2.opMultiply(d1)).opAdd(m.b2.opMultiply(d2)).opAdd(m.c2.opMultiply(d3)).opAdd(m.d2.opMultiply(d4));
 	    	        ai_real _d3=(m.a3.opMultiply(d1)).opAdd(m.b3.opMultiply(d2)).opAdd(m.c3.opMultiply(d3)).opAdd(m.d3.opMultiply(d4));
 	    	        ai_real _d4=(m.a4.opMultiply(d1)).opAdd(m.b4.opMultiply(d2)).opAdd(m.c4.opMultiply(d3)).opAdd(m.d4.opMultiply(d4));
-  //TODO: Not sure about this:
-//  aiMatrix4x4t result =  m.newInstance();
-//                result.a1 = _a1;
-//                result.a2 = _a2;
-//                result.a3 = _a3;
-//                result.a4 = _a4;
-//                result.b1 = _b1;
-//                result.b2 = _b2;
-//                result.b3 = _b3;
-//                result.b4 = _b4;
-//                result.c1 = _c1;
-//                result.c2 = _c2;
-//                result.c3 = _c3;
-//                result.c4 = _c4;
-//                result.d1 = _d1;
-//                result.d2 = _d2;
-//                result.d3 = _d3;
-//                result.d4 = _d4;
-//            return result;
 	    			a1=_a1;a2=_a2;a3=_a3;a4=_a4;
 	    			b1=_b1;b2=_b2;b3=_b3;b4=_b4;
 	    			c1=_c1;c2=_c2;c3=_c3;c4=_c4;
@@ -164,24 +145,24 @@ public class matrix4x4 {
 //	    	return result;
 //	    }
 
-	    public aiMatrix4x4t Transpose() {
-	    	a2=std.swap(b1, b1=a2);
-	    	a3=std.swap(c1, c1=a3);
-	    	b3=std.swap(c2, c2=b3);
-	    	a4=std.swap(d1, d1=a4);
-	    	b4=std.swap(d2, d2=b4);
-	    	c4=std.swap(d3, d3=c4);
-	    	return this;
-	    }
+//	    public aiMatrix4x4t Transpose() {
+//	    	a2=std.swap(b1, b1=a2);
+//	    	a3=std.swap(c1, c1=a3);
+//	    	b3=std.swap(c2, c2=b3);
+//	    	a4=std.swap(d1, d1=a4);
+//	    	b4=std.swap(d2, d2=b4);
+//	    	c4=std.swap(d3, d3=c4);
+//	    	return this;
+//	    }
 
-	    public ai_real Determinant() {
-	        return (a1.opMultiply(b2).opMultiply(c3).opMultiply(d4)).opSubtract(a1.opMultiply(b2).opMultiply(c4).opMultiply(d3)).opAdd(a1.opMultiply(b3).opMultiply(c4).opMultiply(d2)).opSubtract(a1.opMultiply(b3).opMultiply(c2).opMultiply(d4))
-	        		.opAdd(a1.opMultiply(b4).opMultiply(c2).opMultiply(d3)).opSubtract(a1.opMultiply(b4).opMultiply(c3).opMultiply(d2)).opSubtract(a2.opMultiply(b3).opMultiply(c4).opMultiply(d1)).opAdd(a2.opMultiply(b3).opMultiply(c1).opMultiply(d4))
-	        		.opSubtract(a2.opMultiply(b4).opMultiply(c1).opMultiply(d3)).opAdd(a2.opMultiply(b4).opMultiply(c3).opMultiply(d1)).opSubtract(a2.opMultiply(b1).opMultiply(c3).opMultiply(d4)).opAdd(a2.opMultiply(b1).opMultiply(c4).opMultiply(d3))
-	               .opAdd(a3.opMultiply(b4).opMultiply(c1).opMultiply(d2)).opSubtract(a3.opMultiply(b4).opMultiply(c2).opMultiply(d1)).opAdd(a3.opMultiply(b1).opMultiply(c2).opMultiply(d4)).opSubtract(a3.opMultiply(b1).opMultiply(c4).opMultiply(d2))
-	               .opAdd(a3.opMultiply(b2).opMultiply(c4).opMultiply(d1)).opSubtract(a3.opMultiply(b2).opMultiply(c1).opMultiply(d4)).opSubtract(a4.opMultiply(b1).opMultiply(c2).opMultiply(d3)).opAdd(a4.opMultiply(b1).opMultiply(c3).opMultiply(d2))
-	               .opSubtract(a4.opMultiply(b2).opMultiply(c3).opMultiply(d1)).opAdd(a4.opMultiply(b2).opMultiply(c1).opMultiply(d3)).opSubtract(a4.opMultiply(b3).opMultiply(c1).opMultiply(d2)).opAdd(a4.opMultiply(b3).opMultiply(c2).opMultiply(d1));
-	    }
+//	    public ai_real Determinant() {
+//	        return (a1.opMultiply(b2).opMultiply(c3).opMultiply(d4)).opSubtract(a1.opMultiply(b2).opMultiply(c4).opMultiply(d3)).opAdd(a1.opMultiply(b3).opMultiply(c4).opMultiply(d2)).opSubtract(a1.opMultiply(b3).opMultiply(c2).opMultiply(d4))
+//	        		.opAdd(a1.opMultiply(b4).opMultiply(c2).opMultiply(d3)).opSubtract(a1.opMultiply(b4).opMultiply(c3).opMultiply(d2)).opSubtract(a2.opMultiply(b3).opMultiply(c4).opMultiply(d1)).opAdd(a2.opMultiply(b3).opMultiply(c1).opMultiply(d4))
+//	        		.opSubtract(a2.opMultiply(b4).opMultiply(c1).opMultiply(d3)).opAdd(a2.opMultiply(b4).opMultiply(c3).opMultiply(d1)).opSubtract(a2.opMultiply(b1).opMultiply(c3).opMultiply(d4)).opAdd(a2.opMultiply(b1).opMultiply(c4).opMultiply(d3))
+//	               .opAdd(a3.opMultiply(b4).opMultiply(c1).opMultiply(d2)).opSubtract(a3.opMultiply(b4).opMultiply(c2).opMultiply(d1)).opAdd(a3.opMultiply(b1).opMultiply(c2).opMultiply(d4)).opSubtract(a3.opMultiply(b1).opMultiply(c4).opMultiply(d2))
+//	               .opAdd(a3.opMultiply(b2).opMultiply(c4).opMultiply(d1)).opSubtract(a3.opMultiply(b2).opMultiply(c1).opMultiply(d4)).opSubtract(a4.opMultiply(b1).opMultiply(c2).opMultiply(d3)).opAdd(a4.opMultiply(b1).opMultiply(c3).opMultiply(d2))
+//	               .opSubtract(a4.opMultiply(b2).opMultiply(c3).opMultiply(d1)).opAdd(a4.opMultiply(b2).opMultiply(c1).opMultiply(d3)).opSubtract(a4.opMultiply(b3).opMultiply(c1).opMultiply(d2)).opAdd(a4.opMultiply(b3).opMultiply(c2).opMultiply(d1));
+//	    }
 
 //	    public aiMatrix4x4t Inverse() {
 //	    	ai_real det = Determinant();

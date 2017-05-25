@@ -370,6 +370,23 @@ public class material {
 		{
 			return AddProperty(tex, t.x, t.y, t.z);
 		}
+                
+                public aiReturn AddProperty(int[] ints, int i, Tuple<String, Integer, Integer> t) {
+                    return AddProperty(ints, i, t.x, t.y, t.z);
+                }
+                
+                public aiReturn AddProperty(aiColor3D[] clr, int pNumValues, Tuple<String, Integer, Integer> t) {
+                    return AddProperty(clr, pNumValues, t.x, t.y, t.z);
+                }
+                
+                     public aiReturn AddProperty(aiColor4D[] aiColor4D, int i, Tuple<String, Integer, Integer> t) {
+                         return AddProperty(aiColor4D, i, t.x, t.y, t.z);
+        }
+
+        public  aiReturn AddProperty(ai_real[] ai_real, int i, Tuple<String, Integer, Integer> t) {
+            return AddProperty(ai_real, i, t.x, t.y, t.z);
+        }
+                        
 
 		public aiReturn AddProperty ( aiString pInput,
 			     String pKey,
@@ -418,6 +435,10 @@ public class material {
           public aiReturn Get(Tuple<String, Integer, Integer> a, ai_real o) {
             return MaterialSystem.aiGetMaterialFloat(this, a.x,a.y,a.z, o);
         }
+
+   
+
+     
 
 
 

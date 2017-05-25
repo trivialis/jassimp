@@ -23,7 +23,7 @@ public class defs {
 			return value.toString();
 		}
 
-		private Number value;
+		private final Number value;
 
 		public ai_real(Number n)
 		{
@@ -74,26 +74,21 @@ public class defs {
 		{
 			return MODE.math.opEquals(value, a);
 		}
-
-		public Number NaNNumber()
-		{
-			return MODE.math.NaNNumber();
-		}
-
-		public Number getInfinityNumber()
-		{
-			return MODE.math.getInfinityNumber();
-		}
-
-		public Number opNegateNumber()
-		{
-			return MODE.math.opNegateNumber(value);
-		}
-
-		public ai_real forValue(Number value)
-		{
-			return new ai_real(value);
-		}
+//
+//		public Number NaNNumber()
+//		{
+//			return MODE.math.NaNNumber();
+//		}
+//
+//		public Number getInfinityNumber()
+//		{
+//			return MODE.math.getInfinityNumber();
+//		}
+//
+//		public Number opNegateNumber()
+//		{
+//			return MODE.math.opNegateNumber(value);
+//		}
 
 		public ai_real opMultiply(ai_real a)
 		{
@@ -130,15 +125,15 @@ public class defs {
 			return opEquals(a.value);
 		}
 
-		public ai_real NaN()
-		{
-			return new ai_real(MODE.math.NaNNumber());
-		}
-
-		public ai_real getInfinity()
-		{
-			return new ai_real(MODE.math.getInfinityNumber());
-		}
+//		public ai_real NaN()
+//		{
+//			return new ai_real(MODE.math.NaNNumber());
+//		}
+//
+//		public ai_real getInfinity()
+//		{
+//			return new ai_real(MODE.math.getInfinityNumber());
+//		}
 
 		public ai_real opNegate()
 		{
@@ -822,13 +817,5 @@ public class defs {
 
 	}
 
-
-	public static void main(String[] args)
-	{
-		// ai_real_Proto<Double> a = new ai_real_Proto<Double>(1.0);
-		// ai_real_Proto<Double> b = new ai_real_Proto<Double>(5.0);
-		// System.out.println(a.opAdd(b.value));
-		// System.out.println(a.opAdd(b));
-	}
 
 }

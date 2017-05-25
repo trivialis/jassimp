@@ -26,46 +26,46 @@ public class types {
 	    	g=o.g;
 	    	b=o.b;
 	    }
-	    public boolean opEquals(aiColor3D o) {
-	    	return r.opEquals(o.r) && g.opEquals(o.g) && b.opEquals(o.b);
-	    }
-
-	    public boolean opNotEquals(aiColor3D o) {
-	    	return !r.opEquals(o.r) || !g.opEquals(o.g) || !b.opEquals(o.b);
-	    }
-
-
-	    public boolean opSmaller(aiColor3D o) {
-	    	return r.opSmaller(o.r) || ( r.opEquals(o.r) && (g.opSmaller(o.g) || (g.opEquals(o.g) && b.opSmaller(o.b))));
-	    }
-
-	    public aiColor3D add(aiColor3D c) {
-	    	return new aiColor3D(r.opAdd(c.r),g.opAdd(c.g),b.opAdd(c.b));
-	    }
-
-	    public aiColor3D subtract(aiColor3D c) {
-	    	return new aiColor3D(r.opSubtract(c.r),g.opSubtract(c.g),b.opSubtract(c.b));
-	    }
-
-	    public aiColor3D multiply(aiColor3D c) {
-	    	return new aiColor3D(r.opMultiply(c.r),g.opMultiply(c.g),b.opMultiply(c.b));
-	    }
-
-	    public aiColor3D multiply(ai_real f) {
-	    	return new aiColor3D(r.opMultiply(f),g.opMultiply(f),b.opMultiply(f));
-	    }
-
-	    public ai_real[] array() {
-	    	return (ai_real[]) Arrays.asList(r,g,b).toArray();
-	    }
-
-	    public ai_real get(int i) {
-	    	return array()[i];
-	    }
-	    public boolean IsBlack() {
-	    	ai_real epsilon = r.forValue(Math.pow(10, -3));
-	    	return r.forValue(std.abs(r.getValue().doubleValue())).opSmaller(epsilon) && g.forValue(std.abs(g.getValue().doubleValue())).opSmaller(epsilon)&& b.forValue(std.abs(b.getValue().doubleValue())).opSmaller(epsilon);
-	    }
+//	    public boolean opEquals(aiColor3D o) {
+//	    	return r.opEquals(o.r) && g.opEquals(o.g) && b.opEquals(o.b);
+//	    }
+//
+//	    public boolean opNotEquals(aiColor3D o) {
+//	    	return !r.opEquals(o.r) || !g.opEquals(o.g) || !b.opEquals(o.b);
+//	    }
+//
+//
+//	    public boolean opSmaller(aiColor3D o) {
+//	    	return r.opSmaller(o.r) || ( r.opEquals(o.r) && (g.opSmaller(o.g) || (g.opEquals(o.g) && b.opSmaller(o.b))));
+//	    }
+//
+//	    public aiColor3D add(aiColor3D c) {
+//	    	return new aiColor3D(r.opAdd(c.r),g.opAdd(c.g),b.opAdd(c.b));
+//	    }
+//
+//	    public aiColor3D subtract(aiColor3D c) {
+//	    	return new aiColor3D(r.opSubtract(c.r),g.opSubtract(c.g),b.opSubtract(c.b));
+//	    }
+//
+//	    public aiColor3D multiply(aiColor3D c) {
+//	    	return new aiColor3D(r.opMultiply(c.r),g.opMultiply(c.g),b.opMultiply(c.b));
+//	    }
+//
+//	    public aiColor3D multiply(ai_real f) {
+//	    	return new aiColor3D(r.opMultiply(f),g.opMultiply(f),b.opMultiply(f));
+//	    }
+//
+//	    public ai_real[] array() {
+//	    	return (ai_real[]) Arrays.asList(r,g,b).toArray();
+//	    }
+//
+//	    public ai_real get(int i) {
+//	    	return array()[i];
+//	    }
+//	    public boolean IsBlack() {
+//	    	ai_real epsilon = new ai_real(Math.pow(10, -3));
+//	    	return new ai_real(std.abs(r.getValue().doubleValue())).opSmaller(epsilon) && new ai_real(std.abs(g.getValue().doubleValue())).opSmaller(epsilon)&& new ai_real(std.abs(b.getValue().doubleValue())).opSmaller(epsilon);
+//	    }
 
 	}
 
@@ -83,12 +83,12 @@ public class types {
 			data[0]='\0';
 		}
 
-		public aiString(aiString rOther) {
-			length=rOther.length;
-			length=length>=MAXLEN?MAXLEN-1:length;
-			string.memcpy(data, rOther.data, length);
-			data[length]='\0';
-		}
+//		public aiString(aiString rOther) {
+//			length=rOther.length;
+//			length=length>=MAXLEN?MAXLEN-1:length;
+//			string.memcpy(data, rOther.data, length);
+//			data[length]='\0';
+//		}
 
 		public aiString(String pString) {
 			this();
@@ -114,52 +114,52 @@ public class types {
 			data[len]=0;
 		}
 
-		public aiString opIs(byte[] sz) {
-			Set(sz);
-			return this;
-		}
+//		public aiString opIs(byte[] sz) {
+//			Set(sz);
+//			return this;
+//		}
+//
+//		public aiString opIs(String pString) {
+//			Set(pString);
+//			return this;
+//		}
 
-		public aiString opIs(String pString) {
-			Set(pString);
-			return this;
-		}
+//		public boolean opEquals(aiString other) {
+//			return (length==other.length && 0 == string.memcmp(data, other.data, length));
+//		}
+//
+//		public boolean opNotEquals(aiString other) {
+//			return (length!=other.length || 0 != string.memcmp(data, other.data, length));
+//		}
 
-		public boolean opEquals(aiString other) {
-			return (length==other.length && 0 == string.memcmp(data, other.data, length));
-		}
-
-		public boolean opNotEquals(aiString other) {
-			return (length!=other.length || 0 != string.memcmp(data, other.data, length));
-		}
-
-		public void Append(byte[] app) {
-			int len = string.strlen(app);
-			if(len==0) {
-				return;
-			}
-			if(length + len >= MAXLEN) {
-				return;
-			}
-
-			string.memcpy(data, length, app, len);
-			length+=len;
-		}
-
-		public void Clear() {
-			length = 0;
-			data[0] = '\0';
-		}
-
-		public byte[] C_Str() {
-			return data;
-		}
-
-		//Jassimp
-		public void setLength(int length2)
-		{
-			length=length2;
-			this.data=new byte[length2+1];
-		}
+//		public void Append(byte[] app) {
+//			int len = string.strlen(app);
+//			if(len==0) {
+//				return;
+//			}
+//			if(length + len >= MAXLEN) {
+//				return;
+//			}
+//
+//			string.memcpy(data, length, app, len);
+//			length+=len;
+//		}
+//
+//		public void Clear() {
+//			length = 0;
+//			data[0] = '\0';
+//		}
+//
+//		public byte[] C_Str() {
+//			return data;
+//		}
+//
+//		//Jassimp
+//		public void setLength(int length2)
+//		{
+//			length=length2;
+//			this.data=new byte[length2+1];
+//		}
 	}
 
 	public enum aiReturn {

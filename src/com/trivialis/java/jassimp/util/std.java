@@ -32,12 +32,7 @@ public class std {
 
 	public static ai_real sin(ai_real a)
 	{
-		if(a.getClass().equals(Double.class)) {
-			return new ai_real(sin((double) a.getValue()));
-		} else if(a.getClass().equals(Float.class)) {
-			return new ai_real(sin((double) a.getValue()));
-		}
-		return new ai_real(sin((double) a.getValue()));
+		return new ai_real(sin(a.getValue().doubleValue()));
 	}
 
 	public static double cos(Double value) {

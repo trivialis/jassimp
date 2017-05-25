@@ -19,14 +19,14 @@ public class vector2 {
 			x=_x;y=_y;
 		}
 
-		public aiVector2t(ai_real _xyz) {
-			x=_xyz;y=_xyz;
-		}
+//		public aiVector2t(ai_real _xyz) {
+//			x=_xyz;y=_xyz;
+//		}
 
-		public aiVector2t(aiVector2t o) {
-			x=o.x;
-			y=o.y;
-		}
+//		public aiVector2t(aiVector2t o) {
+//			x=o.x;
+//			y=o.y;
+//		}
 
 		public void Set(ai_real pX, ai_real pY) {
 			x=pX;y=pY;
@@ -37,7 +37,7 @@ public class vector2 {
 		}
 
 		public ai_real Length() {
-			return x.forValue(std.sqrt(SquareLength().getValue().doubleValue()));
+			return new ai_real(std.sqrt(SquareLength().getValue().doubleValue()));
 		}
 
 		public aiVector2t Normalize() {
@@ -76,8 +76,8 @@ public class vector2 {
 			return !x.opEquals(other.x) || !y.opEquals(other.y);
 		}
 		public boolean opEqual(aiVector2t other, ai_real epsilon) {
-			return x.forValue(std.abs(x.opSubtract(other.x).getValue().doubleValue())).opSmallerOrEqual(epsilon)
-					&& x.forValue(std.abs(y.opSubtract(other.y).getValue().doubleValue())).opSmallerOrEqual(epsilon);
+			return new ai_real(std.abs((x.opSubtract(other.x)).getValue().doubleValue())).opSmallerOrEqual(epsilon)
+					&& new ai_real(std.abs((y.opSubtract(other.y)).getValue().doubleValue())).opSmallerOrEqual(epsilon);
 		}
 		public aiVector2t Set(ai_real f) {
 			x=y=f;
@@ -103,13 +103,13 @@ public class vector2 {
 			return new aiVector2t(v1.x.opMultiply(f), v1.y.opMultiply(f));
 		}
 		public static aiVector2t opDivide(aiVector2t v, ai_real f) {
-			return v.opDivide(v.x.forValue(1).opDivide(f));
+			return v.opDivide(new ai_real(1).opDivide(f));
 		}
 		public static aiVector2t opDivide(aiVector2t v1, aiVector2t v2) {
 			return new aiVector2t(v1.x.opDivide(v2.x), v1.y.opDivide(v2.y));
 		}
 		public static aiVector2t opNegate(aiVector2t v1) {
-			return new aiVector2t(v1.x.opMultiply(v1.x.forValue(-1.0)), v1.y.opMultiply(v1.y.forValue(-1.0)));
+			return new aiVector2t(v1.x.opMultiply(new ai_real(-1.0)), v1.y.opMultiply(new ai_real(-1.0)));
 		}
 
 	}

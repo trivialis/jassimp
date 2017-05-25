@@ -120,17 +120,17 @@ public class XFileImporter extends BaseImporter {
 
 			aiMaterial mat = new aiMaterial();
 			int shadeMode = (int) material.aiShadingMode.aiShadingMode_Gouraud.value;
-			mat.AddProperty(new int[]{shadeMode}, 1, material.AI_MATKEY_SHADING_MODEL.x,material.AI_MATKEY_SHADING_MODEL.y,material.AI_MATKEY_SHADING_MODEL.z);
+			mat.AddProperty(new int[]{shadeMode}, 1, material.AI_MATKEY_SHADING_MODEL);
 
 			int specExp = 1;
 
 			aiColor3D clr = new aiColor3D(new ai_real(0),new ai_real(0), new ai_real(0));
-	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_EMISSIVE.x, material.AI_MATKEY_COLOR_EMISSIVE.y, material.AI_MATKEY_COLOR_EMISSIVE.z);
-	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_SPECULAR.x, material.AI_MATKEY_COLOR_SPECULAR.y, material.AI_MATKEY_COLOR_SPECULAR.z);
+	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_EMISSIVE);
+	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_SPECULAR);
 
 	        clr = new aiColor3D(new ai_real(0.5F), new ai_real(0.5F), new ai_real(0.5F));
-	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_DIFFUSE.x, material.AI_MATKEY_COLOR_DIFFUSE.y, material.AI_MATKEY_COLOR_DIFFUSE.z);
-	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_SHININESS.x, material.AI_MATKEY_SHININESS.y, material.AI_MATKEY_SHININESS.z);
+	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_DIFFUSE);
+	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_SHININESS);
 
 	        pScene.mMaterials = new aiMaterial[1];
 	        pScene.mMaterials[0] = mat;
@@ -144,7 +144,6 @@ public class XFileImporter extends BaseImporter {
 
 	    // create node
 	    aiNode node = new aiNode();
-	    node.mName.setLength(pNode.mName.length());
 	    node.mParent = pParent;
 	    node.mName.Set(pNode.mName);//string.memcpy( node.mName.data, pNode.mName.getBytes(StandardCharsets.UTF_8), pNode.mName.length());
 	    node.mTransformation = pNode.mTrafoMatrix;
@@ -524,7 +523,7 @@ public class XFileImporter extends BaseImporter {
 	      for(int aa = 0; aa < pScene.mNumMaterials; ++aa )
 	      {
 	        aiString name = new aiString();
-	        pScene.mMaterials[a].Get(material.AI_MATKEY_NAME.x, material.AI_MATKEY_NAME.y, material.AI_MATKEY_NAME.z, name);
+	        pScene.mMaterials[a].Get(material.AI_MATKEY_NAME, name);
 	        if( string.strcmp( name, oldMat.mName) == 0 )
 	        {
 	          oldMat.sceneIndex = aa;
@@ -552,14 +551,14 @@ public class XFileImporter extends BaseImporter {
 	        int shadeMode = oldMat.mSpecularExponent.cast(new ai_real(0.0f)).opEquals(new ai_real(0.0f))
 	            ? material.aiShadingMode.aiShadingMode_Gouraud.value : material.aiShadingMode.aiShadingMode_Phong.value;
 
-	        mat.AddProperty(new int[]{shadeMode}, 1, material.AI_MATKEY_SHADING_MODEL.x, material.AI_MATKEY_SHADING_MODEL.y, material.AI_MATKEY_SHADING_MODEL.z);
+	        mat.AddProperty(new int[]{shadeMode}, 1, material.AI_MATKEY_SHADING_MODEL);
 	        // material colours
 	    // Unclear: there's no ambient colour, but emissive. What to put for ambient?
 	    // Probably nothing at all, let the user select a suitable default.
-	        mat.AddProperty(new aiColor3D[]{oldMat.mEmissive}, 1, material.AI_MATKEY_COLOR_EMISSIVE.x, material.AI_MATKEY_COLOR_EMISSIVE.y, material.AI_MATKEY_COLOR_EMISSIVE.z);
-	        mat.AddProperty(new aiColor4D[]{oldMat.mDiffuse}, 1, material.AI_MATKEY_COLOR_DIFFUSE.x, material.AI_MATKEY_COLOR_DIFFUSE.y, material.AI_MATKEY_COLOR_DIFFUSE.z);
-	        mat.AddProperty(new aiColor3D[]{oldMat.mSpecular}, 1, material.AI_MATKEY_COLOR_SPECULAR.x, material.AI_MATKEY_COLOR_SPECULAR.y, material.AI_MATKEY_COLOR_SPECULAR.z);
-	        mat.AddProperty(new ai_real[]{oldMat.mSpecularExponent}, 1, material.AI_MATKEY_SHININESS.x, material.AI_MATKEY_SHININESS.y, material.AI_MATKEY_SHININESS.z);
+	        mat.AddProperty(new aiColor3D[]{oldMat.mEmissive}, 1, material.AI_MATKEY_COLOR_EMISSIVE);
+	        mat.AddProperty(new aiColor4D[]{oldMat.mDiffuse}, 1, material.AI_MATKEY_COLOR_DIFFUSE);
+	        mat.AddProperty(new aiColor3D[]{oldMat.mSpecular}, 1, material.AI_MATKEY_COLOR_SPECULAR);
+	        mat.AddProperty(new ai_real[]{oldMat.mSpecularExponent}, 1, material.AI_MATKEY_SHININESS);
 
 
 	        // texture, if there is one
@@ -571,9 +570,9 @@ public class XFileImporter extends BaseImporter {
 	                // if there is only one texture assume it contains the diffuse color
 	                aiString tex = new aiString( otex.mName);
 	                if( otex.mIsNormalMap)
-	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_NORMALS(0).x, material.AI_MATKEY_TEXTURE_NORMALS(0).y, material.AI_MATKEY_TEXTURE_NORMALS(0).z);
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_NORMALS(0));
 	                else
-	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_DIFFUSE(0).x, material.AI_MATKEY_TEXTURE_DIFFUSE(0).y, material.AI_MATKEY_TEXTURE_DIFFUSE(0).z);
+	                    mat.AddProperty(tex, material.AI_MATKEY_TEXTURE_DIFFUSE(0));
 	            }
 	        }
 	        else

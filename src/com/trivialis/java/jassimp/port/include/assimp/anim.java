@@ -24,21 +24,21 @@ public class anim {
 			mValue = value;
 		}
 
-		public boolean opEquals(aiVectorKey o) {
-			return o.mValue.opEquals(mValue);
-		}
-
-		public boolean opNotEquals(aiVectorKey o) {
-			return false;
-		}
-
-		public boolean opSmaller(aiVectorKey o) {
-			return false;
-		}
-
-		public boolean opBigger(aiVectorKey o) {
-			return false;
-		}
+//		public boolean opEquals(aiVectorKey o) {
+//			return o.mValue.opEquals(mValue);
+//		}
+//
+//		public boolean opNotEquals(aiVectorKey o) {
+//			return !o.mValue.opEquals(mValue);
+//		}
+//
+//		public boolean opSmaller(aiVectorKey o) {
+//			return mTime < o.mTime;
+//		}
+//
+//		public boolean opBigger(aiVectorKey o) {
+//			return mTime > o.mTime;
+//		}
 	}
 
 	public static class aiQuatKey {
@@ -55,22 +55,22 @@ public class anim {
 			mTime = time;
 			mValue = value;
 		}
-
-		public boolean opEquals(aiQuatKey o) {
-			return o.mValue.opEquals(mValue);
-		}
-
-		public boolean opNotEquals(aiQuatKey o) {
-			return false;
-		}
-
-		public boolean opSmaller(aiQuatKey o) {
-			return false;
-		}
-
-		public boolean opBigger(aiQuatKey o) {
-			return false;
-		}
+//
+//		public boolean opEquals(aiVectorKey o) {
+//			return o.mValue.opEquals(mValue);
+//		}
+//
+//		public boolean opNotEquals(aiVectorKey o) {
+//			return !o.mValue.opEquals(mValue);
+//		}
+//
+//		public boolean opSmaller(aiVectorKey o) {
+//			return mTime < o.mTime;
+//		}
+//
+//		public boolean opBigger(aiVectorKey o) {
+//			return mTime > o.mTime;
+//		}
 	}
 
 	public static class aiMeshKey {
@@ -85,21 +85,21 @@ public class anim {
 			mTime=time;mValue=value;
 		}
 
-		public boolean opEquals(aiMeshKey o) {
-			return o.mValue == this.mValue;
-		}
-
-		public boolean notEquals(aiMeshKey o) {
-			return o.mValue != this.mValue;
-		}
-
-		public boolean opSmaller(aiMeshKey o) {
-			return mTime < o.mTime;
-		}
-
-		public boolean opBigger(aiMeshKey o) {
-			return mTime > o.mTime;
-		}
+//		public boolean opEquals(aiMeshKey o) {
+//			return o.mValue == this.mValue;
+//		}
+//
+//		public boolean notEquals(aiMeshKey o) {
+//			return o.mValue != this.mValue;
+//		}
+//
+//		public boolean opSmaller(aiMeshKey o) {
+//			return mTime < o.mTime;
+//		}
+//
+//		public boolean opBigger(aiMeshKey o) {
+//			return mTime > o.mTime;
+//		}
 	}
 
 	public static enum aiAnimBehaviour {
@@ -179,38 +179,38 @@ public class anim {
 	}
 
 	public abstract static class Interpolator {
-		public Number cast(Number a , Number b, ai_real d) {
-			return d.forValue(a).opAdd(d.opMultiply(d.forValue(b.doubleValue()-a.doubleValue()))).getValue();
-		}
-
-		public void cast(IPointer<aiQuaterniont> out, aiQuaterniont a, aiQuaterniont b, ai_real d) {
-			aiQuaterniont.Interpolate(out, a,b,d);
-		}
+//		public Number cast(Number a , Number b, ai_real d) {
+//			return new ai_real(a).opAdd(d.opMultiply(new ai_real(b.doubleValue()-a.doubleValue()))).getValue();
+//		}
+//
+//		public void cast(IPointer<aiQuaterniont> out, aiQuaterniont a, aiQuaterniont b, ai_real d) {
+//			aiQuaterniont.Interpolate(out, a,b,d);
+//		}
 
 //		public aiQuaternion cast(aiQuaternion a, aiQuaternion b, ai_real d) {
 //			return aiQuaternion.Interpolate(a,b,d);
 //		}
 
-		public int cast(int a, int b, ai_real d) {
-			return d.opBigger(new ai_real(0.5F))?b:a;
-		}
+//		public int cast(int a, int b, ai_real d) {
+//			return d.opBigger(new ai_real(0.5F))?b:a;
+//		}
+//
+//		public aiVector3D cast(aiVectorKey a, aiVectorKey b, ai_real d) {
+//			return cast(a.mValue, b.mValue, d);
+//		}
+//
+//		private aiVector3D cast(aiVector3D a, aiVector3D b, ai_real d)
+//		{
+//			return (aiVector3D) a.opAdd((b.opSubtract(a)).opMultiply(d));
+//		}
+//
+//		public void cast(IPointer<aiQuaterniont> out, aiQuatKey a, aiQuatKey b, ai_real d) {
+//			cast(out, a.mValue, b.mValue, d);
+//		}
 
-		public aiVector3D cast(aiVectorKey a, aiVectorKey b, ai_real d) {
-			return cast(a.mValue, b.mValue, d);
-		}
-
-		private aiVector3D cast(aiVector3D a, aiVector3D b, ai_real d)
-		{
-			return (aiVector3D) a.opAdd((b.opSubtract(a)).opMultiply(d));
-		}
-
-		public void cast(IPointer<aiQuaterniont> out, aiQuatKey a, aiQuatKey b, ai_real d) {
-			cast(out, a.mValue, b.mValue, d);
-		}
-
-		public int cast(aiMeshKey a, aiMeshKey b, ai_real d) {
-			return (new ai_real(a.mValue).opAdd(d.opMultiply(new ai_real(b.mValue-a.mValue)))).getValue().intValue();
-		}
+//		public int cast(aiMeshKey a, aiMeshKey b, ai_real d) {
+//			return (new ai_real(a.mValue).opAdd(d.opMultiply(new ai_real(b.mValue-a.mValue)))).getValue().intValue();
+//		}
 
 	}
 

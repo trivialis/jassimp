@@ -47,41 +47,6 @@ public class XFileParser {
 	private int mBinaryFloatSize;
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 	public XFileParser(Character[] pBuffer)
 	{
 		mMajorVersion = mMinorVersion = 0;
@@ -132,127 +97,6 @@ public class XFileParser {
 		if (compressed)
 		{
 			throw new NotImplementedException();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		} else
 		{
 			ReadUntilEndOfLine();
@@ -282,48 +126,7 @@ public class XFileParser {
 
 	private void ParseFile()
 	{
-//		//System.out.println(new String(new StringBuilder(new CharSequence() {
-//			
-//			@Override
-//			public CharSequence subSequence(int start, int end)
-//			{
-//				return new CharSequence() {
-//					
-//					@Override
-//					public CharSequence subSequence(int start, int end)
-//					{
-//						return null;
-//					}
-//					
-//					@Override
-//					public int length()
-//					{
-//						return end-start;
-//					}
-//					
-//					@Override
-//					public char charAt(int index)
-//					{
-//						return P.deep()[start+index];
-//					}
-//				};
-//			}
-//			
-//			@Override
-//			public int length()
-//			{
-//				// TODO Auto-generated method stub
-//				return P.deep().length;
-//			}
-//			
-//			@Override
-//			public char charAt(int index)
-//			{
-//				return P.deep()[index];
-//			}
-//		})));
-		
-		
+
 		boolean running = true;
 		while (running)
 		{
@@ -1312,22 +1115,10 @@ public class XFileParser {
 
 	private short ReadBinWord() {
 		throw new NotImplementedException();
-
-
-
-
-
-
 	}
 
 	private void ReadBinDWord() {
 		throw new NotImplementedException();
-
-
-
-
-
-
 	}
 
 
@@ -1336,24 +1127,6 @@ public class XFileParser {
 		if (mIsBinaryFormat)
 		{
 			throw new NotImplementedException();
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 
 		} else
 		{
@@ -1391,41 +1164,6 @@ public class XFileParser {
 		{
 			throw new NotImplementedException();
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
 		}
 
 		FindNextNoneWhiteSpace();
@@ -1445,7 +1183,7 @@ public class XFileParser {
 
 		CheckForSeparator();
 
-		return new ai_real(0.0F).forValue(result.get().getValue());
+		return new ai_real(result.get().getValue());
 	}
 
 
