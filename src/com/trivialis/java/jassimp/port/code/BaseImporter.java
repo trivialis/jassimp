@@ -81,7 +81,7 @@ public abstract class BaseImporter {
 	    // dispatch importing
 	    try
 	    {
-	        InternReadFile( Pointer.valueOf(new StringBuilder(pFile)), sc, Pointer.valueOf(filter));
+	        InternReadFile( Pointer.valueOf(new StringBuilder(pFile)), sc.obj, Pointer.valueOf(filter));
 
 	    } catch( Exception err)    {
 	        // extract error description
@@ -101,7 +101,7 @@ public abstract class BaseImporter {
 
 	}
 
-	public abstract void InternReadFile(IPointer<StringBuilder> pFile, ScopeGuard<aiScene> sc, IPointer<FileSystemFilter> valueOf);
+	//public abstract void InternReadFile(IPointer<StringBuilder> pFile, ScopeGuard<aiScene> sc, IPointer<FileSystemFilter> valueOf);
 
 	public void ConvertToUTF8(IPointer<byte[]> data)
 	{
@@ -183,6 +183,8 @@ public abstract class BaseImporter {
 		    }
 
 	}
+
+	public abstract void InternReadFile(IPointer<StringBuilder> pFile, aiScene pScene, IPointer<IOSystem> pIOHandler);
 
 
 }

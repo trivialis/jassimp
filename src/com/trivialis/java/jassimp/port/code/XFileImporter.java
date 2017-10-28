@@ -12,6 +12,7 @@ import com.trivialis.java.jassimp.port.code.XFileHelper.Node;
 import com.trivialis.java.jassimp.port.code.XFileHelper.Scene;
 import com.trivialis.java.jassimp.port.code.XFileHelper.TexEntry;
 import com.trivialis.java.jassimp.port.include.assimp.IOStream;
+import com.trivialis.java.jassimp.port.include.assimp.IOSystem;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiAnimation;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiNodeAnim;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiQuatKey;
@@ -52,16 +53,16 @@ public class XFileImporter extends BaseImporter {
 	;
     public XFileParser parser;
 
-	public XFileImporter() {
-
-	}
-
-	public void destroy() {
-
-	}
+    public boolean CanRead(String pFile, IOSystem pIOHandler, boolean CheckSig) {
+    	return false;
+    }
+    
+//    protected aiImporterDesc GetInfo() {
+//    	return null;
+//    }
 
 	@Override
-	public void InternReadFile(IPointer<StringBuilder> pFile, ScopeGuard<aiScene> pScene, IPointer<FileSystemFilter> pIOHandler)
+	public void InternReadFile(IPointer<StringBuilder> pFile, aiScene pScene, IPointer<IOSystem> pIOHandler)
 	{
 		IPointer<IOStream> file = Pointer.valueOf(pIOHandler.get().Open(pFile));
 		if(file.get() == null)
@@ -77,15 +78,16 @@ public class XFileImporter extends BaseImporter {
 
 		parser = new XFileParser(StringUtil.toCharacterArray(mBuffer.get()));
 
-		CreateDataRepresentationFromImport(pScene.get(), parser.GetImportedData()); //I ignore scopeguard for now.
+		CreateDataRepresentationFromImport(pScene, parser.GetImportedData()); //I ignore scopeguard for now.
 
-		if(pScene.get().mRootNode==null)
+		if(pScene.mRootNode==null)
 			throw new Exceptional.DeadlyImportError("XFile is ill-formatted - no content imported.");
 
 
 
 	}
 
+	//Line 142: code/XFileImporter.cpp
 	private void CreateDataRepresentationFromImport(aiScene pScene, Scene pData)
 	{
 		ConvertMaterials(pScene, pData.mGlobalMaterials);
@@ -124,11 +126,11 @@ public class XFileImporter extends BaseImporter {
 
 			int specExp = 1;
 
-			aiColor3D clr = new aiColor3D(new ai_real(0),new ai_real(0), new ai_real(0));
+			aiColor3D clr = new aiColor3D(0F,0F, 0F);
 	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_EMISSIVE);
 	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_SPECULAR);
 
-	        clr = new aiColor3D(new ai_real(0.5F), new ai_real(0.5F), new ai_real(0.5F));
+	        clr = new aiColor3D(0.5F, 0.5F, 0.5F);
 	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_COLOR_DIFFUSE);
 	        mat.AddProperty(new aiColor3D[]{clr}, 1, material.AI_MATKEY_SHININESS);
 
@@ -285,7 +287,7 @@ public class XFileImporter extends BaseImporter {
 	                    	if( mesh.HasTextureCoords( e))
 	                        {
 	                            aiVector2D tex = sourceMesh.mTexCoords[e].get(pf.mIndices.get(d));
-	                            mesh.mTextureCoords[e][newIndex] = new aiVector3D( tex.x, new ai_real(1.0f).opSubtract(tex.y), new ai_real(0.0f));
+	                            mesh.mTextureCoords[e][newIndex] = new aiVector3D( tex.x, 1.0F.opSubtract(tex.y), 0.0F);
 	                        }
 	                    }
 	                    // vertex color sets
@@ -307,7 +309,7 @@ public class XFileImporter extends BaseImporter {
 	            {
 	                Bone obone = bones.get(c);
 	                // set up a vertex-linear array of the weights for quick searching if a bone influences a vertex
-	                ArrayList<ai_real> oldWeights = new ArrayList<ai_real>(sourceMesh.mPositions.size());
+	                ArrayList<float> oldWeights = new ArrayList<float>(sourceMesh.mPositions.size());
 	                for(int d = 0; d < obone.mWeights.size(); d++)
 	                    oldWeights.set(obone.mWeights.get(d).mVertex, obone.mWeights.get(d).mWeight);
 
@@ -317,8 +319,8 @@ public class XFileImporter extends BaseImporter {
 	                for(int d = 0; d < orgPoints.size(); d++)
 	                {
 	                    // does the new vertex stem from an old vertex which was influenced by this bone?
-	                    ai_real w = oldWeights.get(orgPoints.get(d));
-	                    if( w.opBigger(new ai_real(0.0)))
+	                    float w = oldWeights.get(orgPoints.get(d));
+	                    if( w.opBigger(0.0F))
 	                        newWeights.add( new aiVertexWeight( d, w));
 	                }
 
@@ -463,7 +465,7 @@ public class XFileImporter extends BaseImporter {
 
 	                    nbone.mRotationKeys[c].mTime = bone.mRotKeys.get(c).mTime;
 	                    nbone.mRotationKeys[c].mValue = new aiQuaternion( rotmat);
-	                    nbone.mRotationKeys[c].mValue.w = new ai_real(-1.0f); // needs quat inversion
+	                    nbone.mRotationKeys[c].mValue.w = -1.0F; // needs quat inversion
 	                }
 
 	                // scaling
@@ -548,7 +550,7 @@ public class XFileImporter extends BaseImporter {
 	        // Shading model: hardcoded to PHONG, there is no such information in an XFile
 	        // FIX (aramis): If the specular exponent is 0, use gouraud shading. This is a bugfix
 	        // for some models in the SDK (e.g. good old tiny.x)
-	        int shadeMode = oldMat.mSpecularExponent.cast(new ai_real(0.0f)).opEquals(new ai_real(0.0f))
+	        int shadeMode = oldMat.mSpecularExponent.cast(0.0F).opEquals(0.0F)
 	            ? material.aiShadingMode.aiShadingMode_Gouraud.value : material.aiShadingMode.aiShadingMode_Phong.value;
 
 	        mat.AddProperty(new int[]{shadeMode}, 1, material.AI_MATKEY_SHADING_MODEL);
@@ -558,7 +560,7 @@ public class XFileImporter extends BaseImporter {
 	        mat.AddProperty(new aiColor3D[]{oldMat.mEmissive}, 1, material.AI_MATKEY_COLOR_EMISSIVE);
 	        mat.AddProperty(new aiColor4D[]{oldMat.mDiffuse}, 1, material.AI_MATKEY_COLOR_DIFFUSE);
 	        mat.AddProperty(new aiColor3D[]{oldMat.mSpecular}, 1, material.AI_MATKEY_COLOR_SPECULAR);
-	        mat.AddProperty(new ai_real[]{oldMat.mSpecularExponent}, 1, material.AI_MATKEY_SHININESS);
+	        mat.AddProperty(new float[]{oldMat.mSpecularExponent}, 1, material.AI_MATKEY_SHININESS);
 
 
 	        // texture, if there is one

@@ -55,17 +55,17 @@ public class ConvertToLHProcess {
 		public void ProcessNode(aiNode pNode, aiMatrix4x4 pParentGlobalRotation)
 		{
 		    // mirror all base vectors at the local Z axis
-		    pNode.mTransformation.c1 = pNode.mTransformation.c1.opNegate();
-		    pNode.mTransformation.c2 = pNode.mTransformation.c2.opNegate();
-		    pNode.mTransformation.c3 = pNode.mTransformation.c3.opNegate();
-		    pNode.mTransformation.c4 = pNode.mTransformation.c4.opNegate();
+		    pNode.mTransformation.c1 = pNode.mTransformation.c1* -1;
+		    pNode.mTransformation.c2 = pNode.mTransformation.c2* -1;
+		    pNode.mTransformation.c3 = pNode.mTransformation.c3* -1;
+		    pNode.mTransformation.c4 = pNode.mTransformation.c4* -1;
 
 		    // now invert the Z axis again to keep the matrix determinant positive.
 		    // The local meshes will be inverted accordingly so that the result should look just fine again.
-		    pNode.mTransformation.a3 = pNode.mTransformation.a3.opNegate();
-		    pNode.mTransformation.b3 = pNode.mTransformation.b3.opNegate();
-		    pNode.mTransformation.c3 = pNode.mTransformation.c3.opNegate();
-		    pNode.mTransformation.d3 = pNode.mTransformation.d3.opNegate(); // useless, but anyways...
+		    pNode.mTransformation.a3 = pNode.mTransformation.a3* -1;
+		    pNode.mTransformation.b3 = pNode.mTransformation.b3* -1;
+		    pNode.mTransformation.c3 = pNode.mTransformation.c3* -1;
+		    pNode.mTransformation.d3 = pNode.mTransformation.d3* -1; // useless, but anyways...
 
 		    // continue for all children
                     aiMatrix4x4 t = (aiMatrix4x4) pParentGlobalRotation.opMultiply(pNode.mTransformation);
@@ -79,13 +79,13 @@ public class ConvertToLHProcess {
 		    // mirror positions, normals and stuff along the Z axis
 		    for( int a = 0; a < pMesh.mNumVertices; ++a)
 		    {
-		        pMesh.mVertices[a].z = pMesh.mVertices[a].z.opMultiply(new ai_real(-1.0f));
+		        pMesh.mVertices[a].z = pMesh.mVertices[a].z * -1.0F;
 		        if( pMesh.HasNormals())
-		            pMesh.mNormals[a].z = pMesh.mNormals[a].z.opMultiply(new ai_real(-1.0f));
+		            pMesh.mNormals[a].z = pMesh.mNormals[a].z * -1.0F;
 		        if( pMesh.HasTangentsAndBitangents())
 		        {
-		            pMesh.mTangents[a].z = pMesh.mTangents[a].z.opMultiply(new ai_real(-1.0f));
-		            pMesh.mBitangents[a].z = pMesh.mBitangents[a].z.opMultiply(new ai_real(-1.0f));
+		            pMesh.mTangents[a].z = pMesh.mTangents[a].z * -1.0F;
+		            pMesh.mBitangents[a].z = pMesh.mBitangents[a].z * -1.0F;
 		        }
 		    }
 
@@ -93,19 +93,19 @@ public class ConvertToLHProcess {
 		    for( int a = 0; a < pMesh.mNumBones; ++a)
 		    {
 		        aiBone bone = pMesh.mBones[a];
-		        bone.mOffsetMatrix.a3 = bone.mOffsetMatrix.a3.opNegate();
-		        bone.mOffsetMatrix.b3 = bone.mOffsetMatrix.b3.opNegate();
-		        bone.mOffsetMatrix.d3 = bone.mOffsetMatrix.d3.opNegate();
-		        bone.mOffsetMatrix.c1 = bone.mOffsetMatrix.c1.opNegate();
-		        bone.mOffsetMatrix.c2 = bone.mOffsetMatrix.c2.opNegate();
-		        bone.mOffsetMatrix.c4 = bone.mOffsetMatrix.c4.opNegate();
+		        bone.mOffsetMatrix.a3 = bone.mOffsetMatrix.a3* -1;
+		        bone.mOffsetMatrix.b3 = bone.mOffsetMatrix.b3* -1;
+		        bone.mOffsetMatrix.d3 = bone.mOffsetMatrix.d3* -1;
+		        bone.mOffsetMatrix.c1 = bone.mOffsetMatrix.c1* -1;
+		        bone.mOffsetMatrix.c2 = bone.mOffsetMatrix.c2* -1;
+		        bone.mOffsetMatrix.c4 = bone.mOffsetMatrix.c4* -1;
 		    }
 
 		    // mirror bitangents as well as they're derived from the texture coords
 		    if( pMesh.HasTangentsAndBitangents())
 		    {
-		        for( int a = 0; a < pMesh.mNumVertices; a++){//System.out.println(pMesh.mBitangents[a].x);System.out.println(pMesh.mBitangents[a].opMultiply(new ai_real(-1.0f)));
-		            pMesh.mBitangents[a]=(aiVector3D) pMesh.mBitangents[a].opMultiply(new ai_real(-1.0f));}
+		        for( int a = 0; a < pMesh.mNumVertices; a++){//System.out.println(pMesh.mBitangents[a].x);System.out.println(pMesh.mBitangents[a] * -1.0F);
+		            pMesh.mBitangents[a]=(aiVector3D) pMesh.mBitangents[a].opMultiply(-1.0F);}
 		    }
 		}
 
@@ -117,10 +117,10 @@ public class ConvertToLHProcess {
 
 		        // Mapping axis for UV mappings?
 		        if (string.strcmp( prop.mKey.data, "$tex.mapaxis".getBytes(Charset.forName("UTF-8")))==0)    {
-		            assert( prop.mDataLength >= ai_real.getSize()*3); if(prop.mDataLength<ai_real.getSize()*3) throw new RuntimeException("Invalid datalength: " + prop.mDataLength); /* something is wrong with the validation if we end up here */
+		            assert( prop.mDataLength >= Float.BYTES*3); if(prop.mDataLength<Float.BYTES*3) throw new RuntimeException("Invalid datalength: " + prop.mDataLength); /* something is wrong with the validation if we end up here */
 		            aiVector3D pff = Bytes.deserializeTo_aiVector3D(prop.mData);
 
-		            pff.z = pff.z.opMultiply(new ai_real(-1.0f));
+		            pff.z = pff.z * -1.0F;
 		        }
 		    }
 		}
@@ -129,7 +129,7 @@ public class ConvertToLHProcess {
 		{
 		    // position keys
 		    for( int a = 0; a < pAnim.mNumPositionKeys; a++)
-		        pAnim.mPositionKeys[a].mValue.z = pAnim.mPositionKeys[a].mValue.z.opMultiply(new ai_real(-1.0f));
+		        pAnim.mPositionKeys[a].mValue.z = pAnim.mPositionKeys[a].mValue.z * -1.0F;
 
 		    // rotation keys
 		    for( int a = 0; a < pAnim.mNumRotationKeys; a++)
@@ -141,8 +141,8 @@ public class ConvertToLHProcess {
 		        aiQuaternion rotquat( rotmat);
 		        pAnim.mRotationKeys[a].mValue = rotquat;
 		        */
-		        pAnim.mRotationKeys[a].mValue.x =pAnim.mRotationKeys[a].mValue.x.opMultiply(new ai_real(-1.0f));
-		        pAnim.mRotationKeys[a].mValue.y =pAnim.mRotationKeys[a].mValue.y.opMultiply(new ai_real(-1.0f));
+		        pAnim.mRotationKeys[a].mValue.x =pAnim.mRotationKeys[a].mValue.x * -1.0F;
+		        pAnim.mRotationKeys[a].mValue.y =pAnim.mRotationKeys[a].mValue.y * -1.0F;
 		    }
 		}
 

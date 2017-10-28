@@ -1,6 +1,5 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4t;
 import com.trivialis.java.jassimp.util.std;
@@ -10,26 +9,26 @@ public class vector3 {
 
 	public static class aiVector3t {
 
-		public ai_real x;
-		public ai_real y;
-		public ai_real z;
+		public float x;
+		public float y;
+		public float z;
 
 		public aiVector3t() {
-			x=new ai_real(0.0f);
-			y=new ai_real(0.0f);
-			z=new ai_real(0.0f);
+			x=0.0F;
+			y=0.0F;
+			z=0.0F;
 		}
 
 
 
-		public aiVector3t(ai_real _x, ai_real _y, ai_real _z) {
+		public aiVector3t(float _x, float _y, float _z) {
 			x=_x;
 			y=_y;
 			z=_z;
 		}
 
 
-		public aiVector3t(ai_real _xyz) {
+		public aiVector3t(float _xyz) {
 			x=_xyz;
 			y=_xyz;
 			z=_xyz;
@@ -41,58 +40,58 @@ public class vector3 {
 		}
 		public static aiVector3t multiply(aiMatrix3x3t pMatrix, aiVector3t pVector) {
 			aiVector3t res = pVector.newInstance();
-			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z));
-			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z));
-			res.z = (pMatrix.c1.opMultiply(pVector.x)).opAdd(pMatrix.c2.opMultiply(pVector.y)).opAdd(pMatrix.c3.opMultiply(pVector.z));
+			res.x = (pMatrix.a1 * pVector.x) + (pMatrix.a2 * pVector.y) + (pMatrix.a3 * pVector.z);
+			res.y = (pMatrix.b1 * pVector.x) + (pMatrix.b2 * pVector.y) + (pMatrix.b3 * pVector.z);
+			res.z = (pMatrix.c1 * pVector.x) + (pMatrix.c2 * pVector.y) + (pMatrix.c3 * pVector.z);
 			return res;
 		}
 		public static aiVector3t multiply(aiMatrix4x4t pMatrix, aiVector3t pVector) {
 			aiVector3t res = pVector.newInstance();
-			res.x = (pMatrix.a1.opMultiply(pVector.x)).opAdd(pMatrix.a2.opMultiply(pVector.y)).opAdd(pMatrix.a3.opMultiply(pVector.z)).opAdd(pMatrix.a4);
-			res.y = (pMatrix.b1.opMultiply(pVector.x)).opAdd(pMatrix.b2.opMultiply(pVector.y)).opAdd(pMatrix.b3.opMultiply(pVector.z)).opAdd(pMatrix.b4);
-			res.z = (pMatrix.c1.opMultiply(pVector.x)).opAdd(pMatrix.c2.opMultiply(pVector.y)).opAdd(pMatrix.c3.opMultiply(pVector.z)).opAdd(pMatrix.c4);
+			res.x = (pMatrix.a1 * pVector.x) + (pMatrix.a2 * pVector.y) + (pMatrix.a3 * pVector.z) + (pMatrix.a4);
+			res.y = (pMatrix.b1 * pVector.x) + (pMatrix.b2 * pVector.y) + (pMatrix.b3 * pVector.z) + (pMatrix.b4);
+			res.z = (pMatrix.c1 * pVector.x) + (pMatrix.c2 * pVector.y) + (pMatrix.c3 * pVector.z) + (pMatrix.c4);
 			return res;
 		}
 //		public <A extends ai_real> aiVector3t<A> cast(A o) {
 //			return new aiVector3t(x.cast(o.getValue()), y.cast(o.getValue()), z.cast(o.getValue()));
 //		}
-		public void Set(ai_real pX, ai_real pY, ai_real pZ) {
+		public void Set(float pX, float pY, float pZ) {
 			x=pX; y= pY; z=pZ;
 		}
-		public ai_real SquareLength() {
-			return (x.opMultiply(x)).opAdd(y.opMultiply(y)).opAdd(z.opMultiply(z));
+		public float SquareLength() {
+			return (x * x) + (y * y) + (z * z);
 		}
-		public ai_real Length() {
-			return new ai_real(std.sqrt((double) SquareLength().getValue()));
+		public float Length() {
+			return (float) std.sqrt((double) SquareLength());
 		}
 		public aiVector3t Normalize() {
-			ai_real length = Length();
-			x=x.opDivide(length); y=y.opDivide(length); z=z.opDivide(length);
+			float length = Length();
+			x=x / (length); y=y / (length); z=z / (length);
 			return this;
 		}
 		public aiVector3t NormalizeSafe() {
-			ai_real len = Length();
-			if(len.opBigger(new ai_real(0))) {
+			float len = Length();
+			if(len > (0F)) {
 				return Normalize();
 			}
 			return this;
 		}
 		public aiVector3t opAdd(aiVector3t o) {
-			x=x.opAdd(o.x);y=y.opAdd(o.y);z=z.opAdd(o.z);
+			x=x + o.x;y=y + o.y;z=z + o.z;
 			return this;
 		}
 
 		public boolean opEquals(aiVector3t o)
 		{
-			return x.opEquals(o.x) && y.opEquals(o.y) && z.opEquals(o.z);
+			return x == o.x && y == o.y && z == o.z;
 		}
 		public aiVector3t opSubtract(aiVector3t a)
 		{
-                    return new aiVector3t(x.opSubtract(a.x), y.opSubtract(a.y), z.opSubtract(a.z));
+                    return new aiVector3t(x - a.x, y - a.y, z - a.z);
 		}
-		public aiVector3t opMultiply(ai_real d)
+		public aiVector3t opMultiply(float d)
 		{
-                    return new aiVector3t(x.opSubtract(d),y.opSubtract(d),z.opSubtract(d));
+                    return new aiVector3t(x - d,y - d,z - d);
 		}
 		
 		public <T extends aiVector3t> T newInstance() {
@@ -108,7 +107,7 @@ public class vector3 {
 
 	public static class aiVector3D extends aiVector3t {
 
-		public aiVector3D(ai_real x, ai_real y, ai_real z)
+		public aiVector3D(float x, float y, float z)
 		{
 			super(x, y, z);
 		}
@@ -127,7 +126,7 @@ public class vector3 {
 	}
 
 	public static void main(String[] args) {
-		aiVector3t a = new aiVector3t(new ai_real(1.0D), new ai_real(1.0), new ai_real(1.0));
+		aiVector3t a = new aiVector3t(1.0F, 1.0F, 1.0F);
 		System.out.println(a.Length());
 	}
 

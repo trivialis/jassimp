@@ -1,6 +1,5 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
@@ -11,17 +10,17 @@ public class quaternion {
 
 	public static class aiQuaterniont {
 
-		public ai_real w;
-		public ai_real x;
-		public ai_real y;
-		public ai_real z;
+		public float w;
+		public float x;
+		public float y;
+		public float z;
 
 //		public aiQuaterniont()
 //		{
-//			w=new ai_real(1.0);
+//			w= 1.0F;
 //		}
 //
-//		public aiQuaterniont(ai_real pw, ai_real px, ai_real py, ai_real pz)
+//		public aiQuaterniont(float pw, float px, float py, float pz)
 //		{
 //			w=pw; x=px; y=py; z=pz;
 //		}
@@ -29,88 +28,88 @@ public class quaternion {
                 //TODO : Test
 		public aiQuaterniont(  aiMatrix3x3t pRotMatrix)
 		{
-		    ai_real t = pRotMatrix.a1.opAdd(pRotMatrix.b2).opAdd(pRotMatrix.c3);
+		    float t = pRotMatrix.a1+ (pRotMatrix.b2)+ (pRotMatrix.c3);
 
-		    if( t.opBigger(new ai_real(0)))
+		    if( t > ( 0F))
 		    {
-		        ai_real s = new ai_real(std.sqrt((Double) new ai_real(1).opAdd(t).getValue())).opMultiply(new ai_real(2.0));
-		        x = (pRotMatrix.c2.opSubtract(pRotMatrix.b3)).opDivide(s);
-		        y = (pRotMatrix.a3.opSubtract(pRotMatrix.c1)).opDivide(s);
-		        z = (pRotMatrix.b1.opSubtract(pRotMatrix.a2)).opDivide(s);
-		        w = new ai_real(0.25).opMultiply(s);
+		        float s = new ai_real(std.sqrt((Double)  1F+ (t).getValue())).opMultiply( 2.0F);
+		        x = (pRotMatrix.c2 - (pRotMatrix.b3)) / (s);
+		        y = (pRotMatrix.a3 - (pRotMatrix.c1)) / (s);
+		        z = (pRotMatrix.b1 - (pRotMatrix.a2)) / (s);
+		        w =  0.25F * (s);
 		    }
-		    else if( pRotMatrix.a1.opBigger(pRotMatrix.b2) && pRotMatrix.a1.opBigger(pRotMatrix.c3))
+		    else if( pRotMatrix.a1 > (pRotMatrix.b2) && pRotMatrix.a1 > (pRotMatrix.c3))
 		    {
-		        ai_real s = new ai_real(std.sqrt((Double) (new ai_real(1.0).opAdd(pRotMatrix.a1).opSubtract(pRotMatrix.b2).opSubtract(pRotMatrix.c3).getValue()))).opMultiply(new ai_real(2.0));
-		        x = new ai_real(0.25).opMultiply(s);
-		        y = (pRotMatrix.b1.opAdd(pRotMatrix.a2)).opDivide(s);
-		        z = (pRotMatrix.a3.opAdd(pRotMatrix.c1)).opDivide(s);
-		        w = (pRotMatrix.c2.opSubtract(pRotMatrix.b3)).opDivide(s);
+		        float s = new ai_real(std.sqrt((Double) ( 1.0F+ (pRotMatrix.a1) - (pRotMatrix.b2) - (pRotMatrix.c3).getValue()))).opMultiply( 2.0F);
+		        x =  0.25F * (s);
+		        y = (pRotMatrix.b1+ (pRotMatrix.a2)) / (s);
+		        z = (pRotMatrix.a3+ (pRotMatrix.c1)) / (s);
+		        w = (pRotMatrix.c2 - (pRotMatrix.b3)) / (s);
 		    }
-		    else if( pRotMatrix.b2.opBigger(pRotMatrix.c3))
+		    else if( pRotMatrix.b2 > (pRotMatrix.c3))
 		    {
 
-		        ai_real s = new ai_real(std.sqrt((Double) ( new ai_real(1.0).opAdd(pRotMatrix.b2).opSubtract(pRotMatrix.a1).opSubtract(pRotMatrix.c3)).getValue())).opMultiply(new ai_real(2.0));
-		        x = (pRotMatrix.b1.opAdd(pRotMatrix.a2)).opDivide(s);
-		        y = new ai_real(0.25).opMultiply(s);
-		        z = (pRotMatrix.c2.opAdd(pRotMatrix.b3)).opDivide(s);
-		        w = (pRotMatrix.a3.opSubtract(pRotMatrix.c1)).opDivide(s);
+		        float s = new ai_real(std.sqrt((Double) (  1.0F+ (pRotMatrix.b2) - (pRotMatrix.a1) - (pRotMatrix.c3)).getValue())).opMultiply( 2.0F);
+		        x = (pRotMatrix.b1+ (pRotMatrix.a2)) / (s);
+		        y =  0.25F * (s);
+		        z = (pRotMatrix.c2+ (pRotMatrix.b3)) / (s);
+		        w = (pRotMatrix.a3 - (pRotMatrix.c1)) / (s);
 		    } else
 		    {
 
-		        ai_real s = new ai_real(std.sqrt((Double) ( new ai_real(1.0).opAdd(pRotMatrix.c3).opSubtract(pRotMatrix.a1).opSubtract(pRotMatrix.b2)).getValue())).opMultiply(new ai_real(2.0));
-		        x = (pRotMatrix.a3.opAdd(pRotMatrix.c1)).opDivide(s);
-		        y = (pRotMatrix.c2.opAdd(pRotMatrix.b3)).opDivide(s);
-		        z = new ai_real(0.25).opMultiply(s);
-		        w = (pRotMatrix.b1.opSubtract(pRotMatrix.a2)).opDivide(s);
+		        float s = new ai_real(std.sqrt((Double) (  1.0F+ (pRotMatrix.c3) - (pRotMatrix.a1) - (pRotMatrix.b2)).getValue())).opMultiply( 2.0F);
+		        x = (pRotMatrix.a3+ (pRotMatrix.c1)) / (s);
+		        y = (pRotMatrix.c2+ (pRotMatrix.b3)) / (s);
+		        z =  0.25F * (s);
+		        w = (pRotMatrix.b1 - (pRotMatrix.a2)) / (s);
 		    }
 		}
 
-//		public aiQuaterniont( ai_real fPitch, ai_real fYaw, ai_real fRoll )
+//		public aiQuaterniont( float fPitch, float fYaw, float fRoll )
 //		{
-//		    ai_real fSinPitch = std.sin(fPitch.opMultiply(new ai_real(0.5)));
-//		    ai_real fCosPitch = std.cos(fPitch.opMultiply(new ai_real(0.5)));
-//		    ai_real fSinYaw = std.sin(fYaw.opMultiply(new ai_real(0.5)));
-//		    ai_real fCosYaw = std.cos(fYaw.opMultiply(new ai_real(0.5)));
-//		    ai_real fSinRoll = std.sin(fRoll.opMultiply(new ai_real(0.5)));
-//		    ai_real fCosRoll = std.cos(fRoll.opMultiply(new ai_real(0.5)));
-//		    ai_real fCosPitchCosYaw = fCosPitch.opMultiply(fCosYaw);
-//		    ai_real fSinPitchSinYaw = fSinPitch.opMultiply(fSinYaw);
-//		    x = (fSinRoll.opMultiply(fCosPitchCosYaw)).opSubtract(fCosRoll.opMultiply(fSinPitchSinYaw));
-//		    y = (fCosRoll.opMultiply(fSinPitch).opMultiply(fCosYaw)).opAdd(fSinRoll.opMultiply(fCosPitch).opMultiply(fSinYaw));
-//		    z = (fCosRoll.opMultiply(fCosPitch).opMultiply(fSinYaw)).opSubtract(fSinRoll.opMultiply(fSinPitch).opMultiply(fCosYaw));
-//		    w = (fCosRoll.opMultiply(fCosPitchCosYaw)).opAdd(fSinRoll.opMultiply(fSinPitchSinYaw));
+//		    float fSinPitch = std.sin(fPitch.opMultiply( 0.5F));
+//		    float fCosPitch = std.cos(fPitch.opMultiply( 0.5F));
+//		    float fSinYaw = std.sin(fYaw.opMultiply( 0.5F));
+//		    float fCosYaw = std.cos(fYaw.opMultiply( 0.5F));
+//		    float fSinRoll = std.sin(fRoll.opMultiply( 0.5F));
+//		    float fCosRoll = std.cos(fRoll.opMultiply( 0.5F));
+//		    float fCosPitchCosYaw = fCosPitch * (fCosYaw);
+//		    float fSinPitchSinYaw = fSinPitch * (fSinYaw);
+//		    x = (fSinRoll * (fCosPitchCosYaw)).opSubtract(fCosRoll * (fSinPitchSinYaw));
+//		    y = (fCosRoll * (fSinPitch) * (fCosYaw)).opAdd(fSinRoll * (fCosPitch) * (fSinYaw));
+//		    z = (fCosRoll * (fCosPitch) * (fSinYaw)).opSubtract(fSinRoll * (fSinPitch) * (fCosYaw));
+//		    w = (fCosRoll * (fCosPitchCosYaw)).opAdd(fSinRoll * (fSinPitchSinYaw));
 //		}
 
                 //TODO: Test
 		public <Matrix extends aiMatrix3x3t> Matrix GetMatrix(Matrix resMatrix)
 		{
 
-		    resMatrix.a1 = new ai_real(1.0).opSubtract(
-                            (new ai_real(2.0)
-                                    .opMultiply(
-                                            ((y.opMultiply(y)).opAdd((z.opMultiply(z))))
+		    resMatrix.a1 =  1.0F-(
+                            ( 2.0F
+                                    *(
+                                            ((y * (y))+((z * (z))))
                                         )
                                     )
                     );
-		    resMatrix.a2 = new ai_real(2.0).opMultiply((x.opMultiply(y)).opSubtract((z.opMultiply(w))));
-		    resMatrix.a3 = new ai_real(2.0).opMultiply((x.opMultiply(z)).opAdd((y.opMultiply(w))));
-		    resMatrix.b1 = new ai_real(2.0).opMultiply((x.opMultiply(y)).opAdd((z.opMultiply(w))));
-		    resMatrix.b2 = new ai_real(1.0).opSubtract((new ai_real(2.0).opMultiply(((x.opMultiply(x)).opAdd((z.opMultiply(z)))))));
-		    resMatrix.b3 = new ai_real(2.0).opMultiply((y.opMultiply(z)).opSubtract((x.opMultiply(w))));
-		    resMatrix.c1 = new ai_real(2.0).opMultiply((x.opMultiply(z)).opSubtract((y.opMultiply(w))));
-		    resMatrix.c2 = new ai_real(2.0).opMultiply((y.opMultiply(z)).opAdd((x.opMultiply(w))));
-		    resMatrix.c3 = new ai_real(1.0).opSubtract((new ai_real(2.0).opMultiply(((x.opMultiply(x)).opAdd((y.opMultiply(y)))))));
+		    resMatrix.a2 =  2.0F.opMultiply((x * (y)).opSubtract((z * (w))));
+		    resMatrix.a3 =  2.0F.opMultiply((x * (z))+((y * (w))));
+		    resMatrix.b1 =  2.0F.opMultiply((x * (y))+((z * (w))));
+		    resMatrix.b2 =  1.0F.opSubtract(( 2.0F.opMultiply(((x * (x))+((z * (z)))))));
+		    resMatrix.b3 =  2.0F.opMultiply((y * (z)).opSubtract((x * (w))));
+		    resMatrix.c1 =  2.0F.opMultiply((x * (z)).opSubtract((y * (w))));
+		    resMatrix.c2 =  2.0F.opMultiply((y * (z))+((x * (w))));
+		    resMatrix.c3 =  1.0F.opSubtract(( 2.0F.opMultiply(((x * (x))+((y * (y)))))));
 
 		    return resMatrix;
 		}
 
-//		public aiQuaterniont( aiVector3t axis, ai_real angle)
+//		public aiQuaterniont( aiVector3t axis, float angle)
 //		{
 //		    axis.Normalize();
 //
-//		    ai_real sin_a = std.sin( angle.opDivide(new ai_real(2.0f)));
-//		    ai_real cos_a = std.cos( angle.opDivide(new ai_real(2.0f)));
+//		    float sin_a = std.sin( angle / ( 2.0fF));
+//		    float cos_a = std.cos( angle / ( 2.0fF));
 //		    x    = axis.x.opMultiply(sin_a);
 //		    y    = axis.y.opMultiply(sin_a);
 //		    z    = axis.z.opMultiply(sin_a);
@@ -123,22 +122,22 @@ public class quaternion {
 //		    y = normalized.y;
 //		    z = normalized.z;
 //
-//		    ai_real t = new ai_real(1.0).opSubtract((x.opMultiply(x))).opSubtract((y.opMultiply(y))).opSubtract((z.opMultiply(z)));
+//		    float t =  1.0F.opSubtract((x * (x))).opSubtract((y * (y))).opSubtract((z * (z)));
 //
-//		    if (t.opSmaller(new ai_real(0.0))) {
-//		        w = new ai_real(0.0);
+//		    if (t.opSmaller( 0.0F)) {
+//		        w =  0.0F;
 //		    }
 //		    else w = std.sqrt(t);
 //		}
 
-//		public static void Interpolate(IPointer<aiQuaterniont> pOut,  aiQuaterniont pStart,  aiQuaterniont pEnd, ai_real pFactor)
+//		public static void Interpolate(IPointer<aiQuaterniont> pOut,  aiQuaterniont pStart,  aiQuaterniont pEnd, float pFactor)
 //		{
 //
-//		    ai_real cosom = ((pStart.x.opMultiply(pEnd.x))).opAdd((pStart.y.opMultiply(pEnd.y))).opAdd((pStart.z.opMultiply(pEnd.z))).opAdd((pStart.w.opMultiply(pEnd.w)));
+//		    float cosom = ((pStart.x * (pEnd.x))).opAdd((pStart.y * (pEnd.y))).opAdd((pStart.z * (pEnd.z))).opAdd((pStart.w * (pEnd.w)));
 //
 //
 //		    aiQuaterniont end = pEnd;
-//		    if( cosom.opSmaller(new ai_real(0.0)))
+//		    if( cosom.opSmaller( 0.0F))
 //		    {
 //		        cosom = cosom.opNegate();
 //		        end.x = end.x.opNegate();
@@ -148,49 +147,49 @@ public class quaternion {
 //		    }
 //
 //
-//		    ai_real sclp, sclq;
-//		    if( (new ai_real(1.0).opSubtract(cosom)).opBigger(new ai_real(0.0001)))
+//		    float sclp, sclq;
+//		    if( ( 1.0F - (cosom)) > ( 0.0001F))
 //		    {
 //
-//		        ai_real omega, sinom;
+//		        float omega, sinom;
 //		        omega = std.acos( cosom);
 //		        sinom = std.sin( omega);
-//		        sclp  = std.sin( (new ai_real(1.0).opSubtract(pFactor)).opMultiply(omega)).opDivide(sinom);
-//		        sclq  = std.sin( (pFactor.opMultiply(omega))).opDivide(sinom);
+//		        sclp  = std.sin( ( 1.0F - (pFactor)) * (omega)) / (sinom);
+//		        sclq  = std.sin( (pFactor * (omega))) / (sinom);
 //		    } else
 //		    {
 //
-//		        sclp = new ai_real(1.0).opSubtract(pFactor);
+//		        sclp =  1.0F - (pFactor);
 //		        sclq = pFactor;
 //		    }
 //
-//		    pOut.get().x = ((sclp.opMultiply(pStart.x))).opAdd((sclq.opMultiply(end.x)));
-//		    pOut.get().y = ((sclp.opMultiply(pStart.y))).opAdd((sclq.opMultiply(end.y)));
-//		    pOut.get().z = ((sclp.opMultiply(pStart.z))).opAdd((sclq.opMultiply(end.z)));
-//		    pOut.get().w = ((sclp.opMultiply(pStart.w))).opAdd((sclq.opMultiply(end.w)));
+//		    pOut.get().x = ((sclp * (pStart.x))).opAdd((sclq * (end.x)));
+//		    pOut.get().y = ((sclp * (pStart.y))).opAdd((sclq * (end.y)));
+//		    pOut.get().z = ((sclp * (pStart.z))).opAdd((sclq * (end.z)));
+//		    pOut.get().w = ((sclp * (pStart.w))).opAdd((sclq * (end.w)));
 //		}
 
 //		public aiQuaterniont Normalize()
 //		{
 //
-//		    ai_real mag = std.sqrt((x.opMultiply(x)).opAdd((y.opMultiply(y)).opAdd(z.opMultiply(z)).opAdd((w.opMultiply(w)))));
-//		    if (!mag.opEquals(new ai_real(0.0)))
+//		    float mag = std.sqrt((x * (x)).opAdd((y * (y)).opAdd(z * (z)).opAdd((w * (w)))));
+//		    if (!mag.opEquals( 0.0F))
 //		    {
-//		        ai_real invMag = new ai_real(1.0).opDivide(mag);
-//		        x = x.opMultiply(invMag);
-//		        y = y.opMultiply(invMag);
-//		        z = z.opMultiply(invMag);
-//		        w = w.opMultiply(invMag);
+//		        float invMag =  1.0F / (mag);
+//		        x = x * (invMag);
+//		        y = y * (invMag);
+//		        z = z * (invMag);
+//		        w = w * (invMag);
 //		    }
 //		    return this;
 //		}
 //
 //		public aiQuaterniont opMultiply ( aiQuaterniont t)
 //		{
-//		    return new aiQuaterniont(((w.opMultiply(t.w))).opSubtract((x.opMultiply(t.x))).opSubtract((y.opMultiply(t.y))).opSubtract((z.opMultiply(t.z))),
-//		        ((w.opMultiply(t.x))).opAdd((x.opMultiply(t.w))).opAdd((y.opMultiply(t.z))).opSubtract((z.opMultiply(t.y))),
-//		        ((w.opMultiply(t.y))).opAdd((y.opMultiply(t.w))).opAdd((z.opMultiply(t.x))).opSubtract((x.opMultiply(t.z))),
-//		        ((w.opMultiply(t.z))).opAdd((z.opMultiply(t.w))).opAdd((x.opMultiply(t.y))).opSubtract((y.opMultiply(t.x))));
+//		    return new aiQuaterniont(((w * (t.w))).opSubtract((x * (t.x))).opSubtract((y * (t.y))).opSubtract((z * (t.z))),
+//		        ((w * (t.x))).opAdd((x * (t.w))).opAdd((y * (t.z))).opSubtract((z * (t.y))),
+//		        ((w * (t.y))).opAdd((y * (t.w))).opAdd((z * (t.x))).opSubtract((x * (t.z))),
+//		        ((w * (t.z))).opAdd((z * (t.w))).opAdd((x * (t.y))).opSubtract((y * (t.x))));
 //		}
 
 //		public aiQuaterniont Conjugate ()
@@ -203,12 +202,12 @@ public class quaternion {
 //
 //		public aiVector3t Rotate ( aiVector3t v)
 //		{
-//		    aiQuaterniont q2 = new aiQuaterniont(new ai_real(0.f),v.x,v.y,v.z);
+//		    aiQuaterniont q2 = new aiQuaterniont( 0.fF,v.x,v.y,v.z);
 //		    aiQuaterniont q = this;
 //		    aiQuaterniont qinv = q;
 //		    qinv.Conjugate();
 //
-//		    q = q.opMultiply(q2).opMultiply(qinv);
+//		    q = q * (q2) * (qinv);
 //		    return new aiVector3t(q.x,q.y,q.z);
 //		}
 //
@@ -222,12 +221,12 @@ public class quaternion {
 //		    return !opEquals(o);
 //		}
 
-//		public boolean Equal( aiQuaterniont o, ai_real epsilon)  {
+//		public boolean Equal( aiQuaterniont o, float epsilon)  {
 //		    return
-//		        new ai_real(std.abs((Double) x.opSubtract(o.x).getValue())).opSmallerOrEqual(epsilon) &&
-//		        new ai_real(std.abs((Double) y.opSubtract(o.y).getValue())).opSmallerOrEqual(epsilon) &&
-//				new ai_real(std.abs((Double) z.opSubtract(o.z).getValue())).opSmallerOrEqual(epsilon) &&
-//				new ai_real(std.abs((Double) w.opSubtract(o.w).getValue())).opSmallerOrEqual(epsilon);
+//		        new ai_real(std.abs((Double) x - (o.x).getValue())).opSmallerOrEqual(epsilon) &&
+//		        new ai_real(std.abs((Double) y - (o.y).getValue())).opSmallerOrEqual(epsilon) &&
+//				new ai_real(std.abs((Double) z - (o.z).getValue())).opSmallerOrEqual(epsilon) &&
+//				new ai_real(std.abs((Double) w - (o.w).getValue())).opSmallerOrEqual(epsilon);
 //		}
 
 
