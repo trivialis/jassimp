@@ -1,15 +1,16 @@
 package com.trivialis.java.jassimp.port.code;
 
-import com.trivialis.java.jassimp.port.include.assimp.IOSystem;
-import com.trivialis.java.jassimp.port.include.assimp.ProgressHandler;
-import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
-import com.trivialis.java.jassimp.util.IPointer;
-import com.trivialis.java.jassimp.util.Pointer;
 import java.nio.ByteBuffer;
 import java.nio.charset.Charset;
 import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+
+import com.trivialis.java.jassimp.port.include.assimp.IOSystem;
+import com.trivialis.java.jassimp.port.include.assimp.ProgressHandler;
+import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
+import com.trivialis.java.jassimp.util.IPointer;
+import com.trivialis.java.jassimp.util.Pointer;
 
 public abstract class BaseImporter {
 

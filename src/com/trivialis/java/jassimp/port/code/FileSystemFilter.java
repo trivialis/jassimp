@@ -1,13 +1,14 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.trivialis.java.jassimp.port.include.assimp.IOStream;
 import com.trivialis.java.jassimp.port.include.assimp.IOSystem;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class FileSystemFilter extends IOSystem {
 

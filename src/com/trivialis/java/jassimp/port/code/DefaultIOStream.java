@@ -1,10 +1,11 @@
 package com.trivialis.java.jassimp.port.code;
 
-import com.trivialis.java.jassimp.port.include.assimp.IOStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.IOException;
+
+import com.trivialis.java.jassimp.port.include.assimp.IOStream;
 
 public class DefaultIOStream extends IOStream {
 

@@ -1,6 +1,5 @@
 package com.trivialis.java.jassimp.util;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import java.util.ArrayList;
 
 public class std {
@@ -15,9 +14,9 @@ public class std {
 	public static double sqrt(Double value) {
 		return Math.sqrt(value);
 	}
-	public static ai_real sqrt(ai_real t)
+	public static float sqrt(float t)
 	{
-		return new ai_real(sqrt((Double) t.getValue()));
+		return (float) sqrt((double) t);
 	}
 //	public static <T> T swap(T... args) {
 //		return args[0];
@@ -30,31 +29,26 @@ public class std {
 		return Math.sin(value);
 	}
 
-	public static ai_real sin(ai_real a)
+	public static float sin(float a)
 	{
-		return new ai_real(sin(a.getValue().doubleValue()));
+		return (float) sin((double) a);
 	}
 
 	public static double cos(Double value) {
 		return Math.cos(value);
 	}
 
-	public static ai_real cos(ai_real a)
+	public static float cos(float a)
 	{
-		if(a.getClass().equals(Double.class)) {
-			return new ai_real(cos((double) a.getValue()));
-		} else if(a.getClass().equals(Float.class)) {
-			return new ai_real(cos((double) a.getValue()));
-		}
-		return new ai_real(cos((double) a.getValue()));
+		return (float) cos((double) a);
 	}
 	public static double acos(double value)
 	{
 		return Math.acos(value);
 	}
-	public static ai_real acos(ai_real a)
+	public static float acos(float a)
 	{
-		return new ai_real(acos((double) a.getValue()));
+		return (float) acos((double) a);
 	}
 	public static <T extends Object> void copy(ArrayList<T> newBones, T aiBone, T aiBone2, T[] mBones)
 	{

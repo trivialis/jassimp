@@ -1,7 +1,5 @@
 package com.trivialis.java.jassimp.port.code;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.Real;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
 import com.trivialis.java.jassimp.util.std;
@@ -29,13 +27,13 @@ public class fast_atof {
 				    0.000000000000001
 	};
 
-	public static IPointer<Character> fast_atoreal_move(IPointer<Character> c, IPointer<Real> out) {
+	public static IPointer<Character> fast_atoreal_move(IPointer<Character> c, IPointer<Float> out) {
 		return fast_atoreal_move(c, out, true);
 	}
 
-	public static IPointer<Character> fast_atoreal_move(IPointer<Character> c, IPointer<Real> out, boolean check_comma) {
+	public static IPointer<Character> fast_atoreal_move(IPointer<Character> c, IPointer<Float> out, boolean check_comma) {
 		c=c.pointerCopy();
-		Real f = out.get().forValue(0); //if(true) throw new RuntimeException(f.getValue().getClass().toString());
+		Float f = out.get(); //if(true) throw new RuntimeException(f.getValue().getClass().toString());
 
 		boolean inv = (c.get()=='-');
 		if(inv || c.get()=='+') {
@@ -44,16 +42,16 @@ public class fast_atof {
 
 		if((c.pointerOffset(0).get()=='N'|| c.pointerOffset(0).get() =='n') && StringComparison.ASSIMP_strincmp(c, "nan", 3) ==0 )
 		{
-			out.set(out.get().getNaN());
+			out.set(out.get().NaN);
 			c.pointerAdjust(3);
 			return c;
 		}
 
 		if ((c.pointerOffset(0).get() == 'I' || c.pointerOffset(0).get() == 'i') && StringComparison.ASSIMP_strincmp(c, "inf", 3) == 0)
 		{
-			out.set(out.get().getInfinity());
+			out.set(out.get().POSITIVE_INFINITY);
 			if (inv) {
-				out.set(out.get().opNegate());
+				out.set(out.get()*-1.0F);
 			}
 			c.pointerAdjust(3);
 			if ((c.pointerOffset(0).get() == 'I' || c.pointerOffset(0).get() == 'i') && StringComparison.ASSIMP_strincmp(c, "inity", 5) == 0)
@@ -73,7 +71,7 @@ public class fast_atof {
 
 		if (c.get() != '.' && (! check_comma || c.pointerOffset(0).get() != ','))
 		{
-			f = new Real( strtoul10_64( c, c.pointerAddressOf()));
+			f = (float) strtoul10_64( c, c.pointerAddressOf());
 		}
 
 		if ((c.get() == '.' || (check_comma && c.pointerOffset(0).get() == ',')) && c.pointerOffset(1).get() >= '0' && c.pointerOffset(1).get() <= '9')
@@ -84,7 +82,7 @@ public class fast_atof {
 			double pl = (double)( strtoul10_64 ( c, c.pointerAddressOf(), diff));
 
 			pl = pl * fast_atof_table[diff.get()];
-			f = f.opAdd(new Real( pl ));
+			f = (float) (f+(pl));
 		}
 
 		else if (c.get() == '.') {
@@ -99,15 +97,15 @@ public class fast_atof {
 				c.postInc();
 			}
 
-			ai_real exp = new ai_real( strtoul10_64(c, c.pointerAddressOf()) );
+			float exp = strtoul10_64(c, c.pointerAddressOf());
 			if (einv) {
-				exp = exp.opNegate();
+				exp = exp*-1.0F;
 			}
-			f = f.opMultiply(new Real(std.pow((Double)new ai_real(10.0D).getValue(), (Double)exp.getValue())));
+			f = (float) (f * (std.pow((Double)10.0D, (double)exp)));
 		}
 
 		if (inv) {
-			f = f.opNegate();
+			f = f*-1;
 		}
 		out.set(f);
 		return c;

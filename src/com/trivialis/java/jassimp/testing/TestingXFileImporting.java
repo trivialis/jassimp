@@ -1,5 +1,9 @@
 package com.trivialis.java.jassimp.testing;
 
+import java.io.File;
+import java.io.IOException;
+import java.nio.file.Files;
+
 import com.trivialis.java.jassimp.port.code.BaseImporter.ScopeGuard;
 import com.trivialis.java.jassimp.port.code.DefaultIOStream;
 import com.trivialis.java.jassimp.port.code.Importer;
@@ -13,9 +17,6 @@ import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.util.IPointer;
 import com.trivialis.java.jassimp.util.Pointer;
-import java.io.File;
-import java.io.IOException;
-import java.nio.file.Files;
 
 public class TestingXFileImporting {
 

@@ -1,7 +1,11 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.Map;
+import java.util.TreeMap;
+
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.material;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3;
@@ -17,10 +21,6 @@ import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.util.ArrayUtil;
 import com.trivialis.java.jassimp.util.IPointer;
-import java.util.ArrayList;
-import java.util.Comparator;
-import java.util.Map;
-import java.util.TreeMap;
 
 public class ObjExporter {
 
@@ -97,7 +97,7 @@ public class ObjExporter {
                 mOutputMat.append("Tf ").append(c.r).append(" ").append(c.g).append(" ").append(c.b).append(endl);
             }
 
-            ai_real o = new ai_real(0F); //Implicit float creation!
+            float o = 0.0F; //Implicit float creation!
             if (aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_OPACITY, o)) {
                 mOutputMat.append("d ").append(o).append(endl);
             }
@@ -105,7 +105,7 @@ public class ObjExporter {
                 mOutputMat.append("Ni ").append(o).append(endl);
             }
 
-            if (aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_SHININESS, o) && o.opBigger(new ai_real(0.0f))) {
+            if (aiReturn.SUCCESS == mat.Get(material.AI_MATKEY_SHININESS, o) && o > (0.0F)) {
                 mOutputMat.append("Ns ").append(o).append(endl);
                 illum = 2;
             }
@@ -305,22 +305,22 @@ public class ObjExporter {
         //isLess
 
         public static boolean isLess(aiVector3D a, aiVector3D b) {
-            if (a.x.opSmaller(b.x)) {
+            if (a.x < (b.x)) {
                 return true;
             }
-            if (a.x.opBigger(b.x)) {
+            if (a.x > (b.x)) {
                 return false;
             }
-            if (a.y.opSmaller(b.y)) {
+            if (a.y < (b.y)) {
                 return true;
             }
-            if (a.y.opBigger(b.y)) {
+            if (a.y > (b.y)) {
                 return false;
             }
-            if (a.z.opSmaller(b.z)) {
+            if (a.z < (b.z)) {
                 return true;
             }
-            if (a.z.opBigger(b.z)) {
+            if (a.z > (b.z)) {
                 return false;
             }
             return false;
@@ -340,28 +340,28 @@ public class ObjExporter {
     public static class aiColor4Compare implements Comparator<aiColor4D> {
 
         public static boolean isLess(aiColor4D a, aiColor4D b) {
-            if (a.r.opSmaller(b.r)) {
+            if (a.r < (b.r)) {
                 return true;
             }
-            if (a.r.opBigger(b.r)) {
+            if (a.r > (b.r)) {
                 return false;
             }
-            if (a.g.opSmaller(b.g)) {
+            if (a.g < (b.g)) {
                 return true;
             }
-            if (a.g.opBigger(b.g)) {
+            if (a.g > (b.g)) {
                 return false;
             }
-            if (a.b.opSmaller(b.b)) {
+            if (a.b < (b.b)) {
                 return true;
             }
-            if (a.b.opBigger(b.b)) {
+            if (a.b > (b.b)) {
                 return false;
             }
-            if (a.a.opSmaller(b.a)) {
+            if (a.a < (b.a)) {
                 return true;
             }
-            if (a.a.opBigger(b.a)) {
+            if (a.a > (b.a)) {
                 return false;
             }
             return false;

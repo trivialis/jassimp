@@ -1,25 +1,24 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.util.std;
 
 public class vector2 {
 
 	public static class aiVector2t {
 
-		public ai_real x;
-		public ai_real y;
+		public float x;
+		public float y;
 
 		public aiVector2t()
 		{
 
 		}
 
-		public aiVector2t(ai_real _x, ai_real _y) {
+		public aiVector2t(float _x, float _y) {
 			x=_x;y=_y;
 		}
 
-//		public aiVector2t(ai_real _xyz) {
+//		public aiVector2t(float _xyz) {
 //			x=_xyz;y=_xyz;
 //		}
 
@@ -28,88 +27,88 @@ public class vector2 {
 //			y=o.y;
 //		}
 
-		public void Set(ai_real pX, ai_real pY) {
+		public void Set(float pX, float pY) {
 			x=pX;y=pY;
 		}
 
-		public ai_real SquareLength() {
-			return (x.opMultiply(x)).opAdd((y.opMultiply(y)));
+		public float SquareLength() {
+			return (x * (x)) +  ((y * (y)));
 		}
 
-		public ai_real Length() {
-			return new ai_real(std.sqrt(SquareLength().getValue().doubleValue()));
+		public float Length() {
+			return std.sqrt(SquareLength());
 		}
 
 		public aiVector2t Normalize() {
-			ai_real len = Length();
-			x=x.opDivide(len);
-			y=y.opDivide(len);
+			float len = Length();
+			x=x /  (len);
+			y=y /  (len);
 			return this;
 		}
 
 		public aiVector2t opAdd(aiVector2t o) {
-			x=x.opAdd(o.x);y=y.opAdd(o.y);
+			x=x +  (o.x);y=y +  (o.y);
 			return this;
 		}
 		public aiVector2t opSubtract(aiVector2t o) {
-			x=x.opSubtract(o.x);y=y.opSubtract(o.y);
+			x=x - (o.x);y=y - (o.y);
 			return this;
 		}
-		public aiVector2t opMultiply(ai_real f) {
-			x=x.opMultiply(f);y=y.opMultiply(f);
+		public aiVector2t opMultiply(float f) {
+			x=x * (f);y=y * (f);
 			return this;
 		}
-		public aiVector2t opDivide(ai_real f) {
-			x=x.opDivide(f);y=y.opDivide(f);
+		public aiVector2t opDivide(float f) {
+			x=x /  (f);y=y /  (f);
 			return this;
 		}
-		public ai_real[] array() {
-			return new ai_real[]{x,y};
+		public float[] array() {
+			return new float[]{x,y};
 		}
-		public ai_real get(int i) {
+		public float get(int i) {
 			return array()[i];
 		}
 		public boolean opEquals(aiVector2t other) {
-			return x.opEquals(other.x) && y.opEquals(other.y);
+			return x == (other.x) && y == (other.y);
 		}
 		public boolean opNotEquals(aiVector2t other) {
-			return !x.opEquals(other.x) || !y.opEquals(other.y);
+			return x != (other.x) || y != (other.y);
 		}
-		public boolean opEqual(aiVector2t other, ai_real epsilon) {
-			return new ai_real(std.abs((x.opSubtract(other.x)).getValue().doubleValue())).opSmallerOrEqual(epsilon)
-					&& new ai_real(std.abs((y.opSubtract(other.y)).getValue().doubleValue())).opSmallerOrEqual(epsilon);
+		public boolean opEqual(aiVector2t other, float epsilon) {
+			return std.abs((double)(x - (other.x))) <= (epsilon)
+					&& std.abs((double)(y - (other.y))) <= (epsilon);
 		}
-		public aiVector2t Set(ai_real f) {
+		public aiVector2t Set(float f) {
 			x=y=f;
 			return this;
 		}
 		public aiVector2t SymMul(aiVector2t o) {
-			return new aiVector2t(x.opMultiply(o.x), y.opMultiply(o.y));
+			return new aiVector2t(x * (o.x), y * (o.y));
 		}
 
 		public static aiVector2t opAdd(aiVector2t v1, aiVector2t v2) {
-			return new aiVector2t(v1.x.opAdd(v2.x), v1.y.opAdd(v2.y));
+			return new aiVector2t(v1.x +  (v2.x), v1.y +  (v2.y));
 		}
 
 		public static aiVector2t opSubtract(aiVector2t v1, aiVector2t v2) {
-			return new aiVector2t(v1.x.opSubtract(v2.x), v1.y.opSubtract(v2.y));
+			return new aiVector2t(v1.x - (v2.x), v1.y - (v2.y));
 		}
 
 		public static aiVector2t opMultiply(aiVector2t v1, aiVector2t v2) {
-			return new aiVector2t(v1.x.opMultiply(v2.x), v1.y.opMultiply(v2.y));
+			return new aiVector2t(v1.x * (v2.x), v1.y * (v2.y));
 		}
 
-		public static aiVector2t opMultiply(aiVector2t v1, ai_real f) {
-			return new aiVector2t(v1.x.opMultiply(f), v1.y.opMultiply(f));
+		public static aiVector2t opMultiply(aiVector2t v1, float f) {
+			return new aiVector2t(v1.x * (f), v1.y * (f));
 		}
-		public static aiVector2t opDivide(aiVector2t v, ai_real f) {
-			return v.opDivide(new ai_real(1).opDivide(f));
+		public static aiVector2t opDivide(aiVector2t v, float f) {
+			return v.opDivide(1.0F /  (f));
 		}
 		public static aiVector2t opDivide(aiVector2t v1, aiVector2t v2) {
-			return new aiVector2t(v1.x.opDivide(v2.x), v1.y.opDivide(v2.y));
+			return new aiVector2t(v1.x /  (v2.x), v1.y /  (v2.y));
 		}
 		public static aiVector2t opNegate(aiVector2t v1) {
-			return new aiVector2t(v1.x.opMultiply(new ai_real(-1.0)), v1.y.opMultiply(new ai_real(-1.0)));
+			return new aiVector2t(v1.x * (-1.0F), v1.y * (-1.0F));
 		}
 
 	}

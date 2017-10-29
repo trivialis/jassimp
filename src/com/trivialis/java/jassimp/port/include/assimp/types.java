@@ -1,22 +1,20 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-import com.trivialis.java.jassimp.util.std;
-import com.trivialis.java.jassimp.util.string;
 import java.nio.charset.StandardCharsets;
-import java.util.Arrays;
+
+import com.trivialis.java.jassimp.util.string;
 
 public class types {
 
 	public static class aiColor3D
 	{
-	    public ai_real r;
-	    public ai_real g;
-		public ai_real b;
+	    public float r;
+	    public float g;
+		public float b;
 		public aiColor3D () {
 
 	    }
-	    public aiColor3D(ai_real _r, ai_real _g, ai_real _b) {
+	    public aiColor3D(float _r, float _g, float _b) {
 	    	r=_r;
 	    	g=_g;
 	    	b=_b;
@@ -51,7 +49,7 @@ public class types {
 //	    	return new aiColor3D(r.opMultiply(c.r),g.opMultiply(c.g),b.opMultiply(c.b));
 //	    }
 //
-//	    public aiColor3D multiply(ai_real f) {
+//	    public aiColor3D multiply(float f) {
 //	    	return new aiColor3D(r.opMultiply(f),g.opMultiply(f),b.opMultiply(f));
 //	    }
 //
@@ -59,11 +57,11 @@ public class types {
 //	    	return (ai_real[]) Arrays.asList(r,g,b).toArray();
 //	    }
 //
-//	    public ai_real get(int i) {
+//	    public float get(int i) {
 //	    	return array()[i];
 //	    }
 //	    public boolean IsBlack() {
-//	    	ai_real epsilon = new ai_real(Math.pow(10, -3));
+//	    	float epsilon = new ai_real(Math.pow(10, -3));
 //	    	return new ai_real(std.abs(r.getValue().doubleValue())).opSmaller(epsilon) && new ai_real(std.abs(g.getValue().doubleValue())).opSmaller(epsilon)&& new ai_real(std.abs(b.getValue().doubleValue())).opSmaller(epsilon);
 //	    }
 

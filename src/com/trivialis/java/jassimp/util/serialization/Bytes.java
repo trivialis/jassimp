@@ -1,10 +1,10 @@
 package com.trivialis.java.jassimp.util.serialization;
 
+import java.nio.ByteBuffer;
+
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
-import java.nio.ByteBuffer;
 
 public class Bytes {
 
@@ -26,43 +26,14 @@ public class Bytes {
 	{
 		ByteBuffer mediator = ByteBuffer.allocate(clr.length * 4 * 3);
 		for (aiColor3D a : clr)
-			mediator.putFloat(a.r.getValue().floatValue()).putFloat(a.g.getValue().floatValue()).putFloat(a.b.getValue().floatValue());
+			mediator.putFloat(a.r).putFloat(a.g).putFloat(a.b);
 		return mediator.array();
 	}
 
 	public static byte[] serialize(aiColor4D... clr)
 	{
 		ByteBuffer mediator = ByteBuffer.allocate(clr.length*4*4);
-		for(aiColor4D a : clr) mediator.putFloat(a.r.getValue().floatValue()).putFloat(a.g.getValue().floatValue()).putFloat(a.b.getValue().floatValue()).putFloat(a.a.getValue().floatValue());
-		return mediator.array();
-	}
-
-	public static byte[] serialize(ai_real... ai_reals)
-	{
-		int totalsize = 0;
-		for(ai_real a : ai_reals) {
-			if(a.getValue() instanceof Double) {
-				totalsize+=8;
-			} else if(a.getValue() instanceof Float) {
-				totalsize+=4;
-			}  else if(a.getValue() instanceof Integer) {
-				totalsize+=4;
-			}  else if(a.getValue() instanceof Long) {
-				totalsize+=8;
-			}
-		}
-		ByteBuffer mediator = ByteBuffer.allocate(totalsize);
-		for(ai_real a : ai_reals) {
-			if(a.getValue() instanceof Double) {
-				mediator.putDouble(a.getValue().doubleValue());
-			} else if(a.getValue() instanceof Float) {
-				mediator.putFloat(a.getValue().floatValue());
-			} else if(a.getValue() instanceof Integer) {
-				mediator.putInt(a.getValue().intValue());
-			} else if(a.getValue() instanceof Long) {
-				mediator.putLong(a.getValue().longValue());
-			}
-		}
+		for(aiColor4D a : clr) mediator.putFloat(a.r).putFloat(a.g).putFloat(a.b).putFloat(a.a);
 		return mediator.array();
 	}
 
@@ -84,9 +55,9 @@ public class Bytes {
 	{
 		ByteBuffer mediator = ByteBuffer.wrap(mData);
 		if(mData.length==12) {
-			return new aiVector3D(new ai_real(mediator.getFloat()), new ai_real(mediator.getFloat()), new ai_real(mediator.getFloat()));
+			return new aiVector3D(mediator.getFloat(), mediator.getFloat(), mediator.getFloat());
 		} else if(mData.length==24) {
-			return new aiVector3D(new ai_real(mediator.getDouble()), new ai_real(mediator.getDouble()), new ai_real(mediator.getDouble()));
+			return new aiVector3D((float) mediator.getDouble(), (float) mediator.getDouble(), (float) mediator.getDouble());
 		}
 		throw new RuntimeException("Invalid length: " + mData.length);
 	}

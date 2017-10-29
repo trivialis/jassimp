@@ -1,19 +1,16 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-import com.trivialis.java.jassimp.util.std;
-
 public class color4 {
 
 	public abstract static class aiColor4t {
-		public ai_real r;
-		public ai_real g;
-		public ai_real b;
-		public ai_real a;
+		public float r;
+		public float g;
+		public float b;
+		public float a;
 		public aiColor4t() {
 
 		}
-		public aiColor4t(ai_real _r, ai_real _b, ai_real _g, ai_real _a) {
+		public aiColor4t(float _r, float _b, float _g, float _a) {
 			r=_r;
 			g=_g;
 			b=_b;
@@ -44,7 +41,7 @@ public class color4 {
 //		public ai_real[] array() {
 //			return new ai_real[]{r,g,b,a};
 //		}
-//		public ai_real get(int index) {
+//		public float get(int index) {
 //			return array()[index];
 //		}
 //		public boolean opEquals(aiColor4t o) {
@@ -70,7 +67,7 @@ public class color4 {
 //		}
 //		//Todo static functions
 //		public boolean IsBlack() {
-//			ai_real epsilon = new ai_real(Math.pow(10, -3));
+//			float epsilon = new ai_real(Math.pow(10, -3));
 //			return new ai_real(std.abs(r.getValue().doubleValue())).opSmaller(epsilon) && new ai_real(std.abs(g.getValue().doubleValue())).opSmaller(epsilon) && new ai_real(std.abs(b.getValue().doubleValue())).opSmaller(epsilon);
 //		}
 	}

@@ -1,20 +1,19 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.code.MaterialSystem;
-import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
-import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
-import com.trivialis.java.jassimp.port.include.assimp.types.aiReturn;
-import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
-import com.trivialis.java.jassimp.util.AiRealUtil;
-import com.trivialis.java.jassimp.util.ArrayUtil;
-import com.trivialis.java.jassimp.util.Tuples.Tuple;
-import com.trivialis.java.jassimp.util.serialization.Bytes;
-import com.trivialis.java.jassimp.util.string;
 import java.nio.ByteBuffer;
 import java.nio.charset.StandardCharsets;
 import java.util.ArrayList;
 import java.util.List;
+
+import com.trivialis.java.jassimp.port.code.MaterialSystem;
+import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
+import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
+import com.trivialis.java.jassimp.port.include.assimp.types.aiReturn;
+import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
+import com.trivialis.java.jassimp.util.ArrayUtil;
+import com.trivialis.java.jassimp.util.Tuples.Tuple;
+import com.trivialis.java.jassimp.util.string;
+import com.trivialis.java.jassimp.util.serialization.Bytes;
 
 public class material {
 
@@ -320,16 +319,16 @@ public class material {
 			    return aiReturn.SUCCESS;
 			}
 
-		public aiReturn AddProperty(ai_real[] ai_reals, int pNumValues, String pKey, Integer type, Integer index)
-		{
-			if(ai_reals[0].getValue() instanceof Double) {
-				return AddProperty(AiRealUtil.convertToDoubles(ai_reals), pNumValues, pKey, type, index);
-			} else if(ai_reals[0].getValue() instanceof Float) {
-				return AddProperty(AiRealUtil.convertToFloats(ai_reals), pNumValues, pKey, type, index);
-			} else {
-				throw new RuntimeException();
-			}
-		}
+//		public aiReturn AddProperty(float[] ai_reals, int pNumValues, String pKey, Integer type, Integer index)
+//		{
+//			if(ai_reals[0].getValue() instanceof Double) {
+//				return AddProperty(AiRealUtil.convertToDoubles(ai_reals), pNumValues, pKey, type, index);
+//			} else if(ai_reals[0].getValue() instanceof Float) {
+//				return AddProperty(AiRealUtil.convertToFloats(ai_reals), pNumValues, pKey, type, index);
+//			} else {
+//				throw new RuntimeException();
+//			}
+//		}
 
 		public aiReturn AddProperty(double[] doubles, int pNumValues, String pKey, Integer type, Integer index)
 		{
@@ -383,7 +382,7 @@ public class material {
                          return AddProperty(aiColor4D, i, t.x, t.y, t.z);
         }
 
-        public  aiReturn AddProperty(ai_real[] ai_real, int i, Tuple<String, Integer, Integer> t) {
+        public  aiReturn AddProperty(float[] ai_real, int i, Tuple<String, Integer, Integer> t) {
             return AddProperty(ai_real, i, t.x, t.y, t.z);
         }
                         
@@ -423,7 +422,7 @@ public class material {
 			return MaterialSystem.aiGetMaterialColor(this, pKey, type, idx, c);
 		}
 
-		public aiReturn Get(String x, Integer y, Integer z, ai_real o)
+		public aiReturn Get(String x, Integer y, Integer z, float o)
 		{
 			return MaterialSystem.aiGetMaterialFloat(this, x, y, z, o);
 		}
@@ -432,7 +431,7 @@ public class material {
             return MaterialSystem.aiGetMaterialColor(this, a.x,a.y,a.z, c);
         }
         
-          public aiReturn Get(Tuple<String, Integer, Integer> a, ai_real o) {
+          public aiReturn Get(Tuple<String, Integer, Integer> a, float o) {
             return MaterialSystem.aiGetMaterialFloat(this, a.x,a.y,a.z, o);
         }
 

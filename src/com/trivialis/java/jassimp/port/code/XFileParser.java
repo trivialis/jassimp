@@ -1,5 +1,8 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
 import com.trivialis.java.jassimp.port.code.Exceptional.DeadlyImportError;
 import com.trivialis.java.jassimp.port.code.XFileHelper.AnimBone;
 import com.trivialis.java.jassimp.port.code.XFileHelper.Animation;
@@ -15,9 +18,6 @@ import com.trivialis.java.jassimp.port.code.XFileHelper.TexEntry;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiQuatKey;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiVectorKey;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
-import com.trivialis.java.jassimp.port.include.assimp.defs;
-import com.trivialis.java.jassimp.port.include.assimp.defs.Real;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.mesh;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
@@ -28,8 +28,7 @@ import com.trivialis.java.jassimp.util.Pointer;
 import com.trivialis.java.jassimp.util.ctype;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
-import java.util.ArrayList;
-import java.util.logging.Logger;
+
 import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 public class XFileParser {
@@ -1158,7 +1157,7 @@ public class XFileParser {
 	}
 
 
-	private ai_real ReadFloat()
+	private float ReadFloat()
 	{
 		if (mIsBinaryFormat)
 		{
@@ -1171,19 +1170,19 @@ public class XFileParser {
 		{
 			P.pointerAdjust(9);
 			CheckForSeparator();
-			return new ai_real(0.0F);
+			return 0.0F;
 		} else if (string.strncmp(P, "1.#QNAN0", 8) == 0)
 		{
 			P.pointerAdjust(8);
-			return new ai_real(0.0F);
+			return 0.0F;
 		}
 
-		IPointer<Real> result = Pointer.valueOf(new defs.Real(0.0F));
+		IPointer<Float> result = Pointer.valueOf(0.0F);
 		P = (fast_atof.fast_atoreal_move(P, result));
 
 		CheckForSeparator();
 
-		return new ai_real(result.get().getValue());
+		return result.get();
 	}
 
 

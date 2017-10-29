@@ -1,9 +1,7 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
-import com.trivialis.java.jassimp.port.include.assimp.mesh.aiVertexWeight;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 
@@ -11,9 +9,13 @@ public class mesh {
 
 	public static class aiVertexWeight {
 
-		public aiVertexWeight(int d, ai_real w)
+		private int mVertexId;
+		private float mWeight;
+
+		public aiVertexWeight(int d, float w)
 		{
-			// TODO Auto-generated constructor stub
+			this.mVertexId = d;
+			this.mWeight=w;
 		}
 
 	}

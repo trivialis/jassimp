@@ -1,11 +1,8 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaternion;
-import com.trivialis.java.jassimp.port.include.assimp.quaternion.aiQuaterniont;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
-import com.trivialis.java.jassimp.util.IPointer;
 
 public class anim {
 

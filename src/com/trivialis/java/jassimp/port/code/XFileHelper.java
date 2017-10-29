@@ -1,16 +1,16 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.util.ArrayList;
+
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiQuatKey;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiVectorKey;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
 import com.trivialis.java.jassimp.port.include.assimp.mesh;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 import com.trivialis.java.jassimp.util.ArrayUtil;
-import java.util.ArrayList;
 
 public class XFileHelper {
 
@@ -40,7 +40,7 @@ public class XFileHelper {
 	    String mName;
 	    boolean mIsReference;
 	    aiColor4D mDiffuse;
-	    ai_real mSpecularExponent;
+	    float mSpecularExponent;
 	    aiColor3D mSpecular;
 	    aiColor3D mEmissive;
 	    ArrayList<TexEntry> mTextures = new ArrayList<>();
@@ -49,14 +49,14 @@ public class XFileHelper {
 
 	    public Material() {
 	    	mIsReference = false;
-	    	mSpecularExponent = null;
+	    	mSpecularExponent = 0.0F; //JASSIMP
 	    	sceneIndex = Integer.MAX_VALUE;
 	    }
 	}
 
 	public static class BoneWeight {
 		public int mVertex;
-		public ai_real mWeight;
+		public float mWeight;
 	}
 
 	public static class Bone {

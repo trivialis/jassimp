@@ -1,5 +1,8 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.util.ArrayList;
+import java.util.logging.Logger;
+
 import com.trivialis.java.jassimp.port.code.ConvertToLHProcess.FlipWindingOrderProcess;
 import com.trivialis.java.jassimp.port.code.ConvertToLHProcess.MakeLeftHandedProcess;
 import com.trivialis.java.jassimp.port.code.XFileHelper.AnimBone;
@@ -18,7 +21,6 @@ import com.trivialis.java.jassimp.port.include.assimp.anim.aiNodeAnim;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiQuatKey;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiVectorKey;
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.material;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3;
@@ -43,8 +45,6 @@ import com.trivialis.java.jassimp.util.StringUtil;
 import com.trivialis.java.jassimp.util.ctype;
 import com.trivialis.java.jassimp.util.std;
 import com.trivialis.java.jassimp.util.string;
-import java.util.ArrayList;
-import java.util.logging.Logger;
 
 public class XFileImporter extends BaseImporter {
 
@@ -287,7 +287,7 @@ public class XFileImporter extends BaseImporter {
 	                    	if( mesh.HasTextureCoords( e))
 	                        {
 	                            aiVector2D tex = sourceMesh.mTexCoords[e].get(pf.mIndices.get(d));
-	                            mesh.mTextureCoords[e][newIndex] = new aiVector3D( tex.x, 1.0F.opSubtract(tex.y), 0.0F);
+	                            mesh.mTextureCoords[e][newIndex] = new aiVector3D( tex.x, 1.0F-(tex.y), 0.0F);
 	                        }
 	                    }
 	                    // vertex color sets
@@ -309,7 +309,7 @@ public class XFileImporter extends BaseImporter {
 	            {
 	                Bone obone = bones.get(c);
 	                // set up a vertex-linear array of the weights for quick searching if a bone influences a vertex
-	                ArrayList<float> oldWeights = new ArrayList<float>(sourceMesh.mPositions.size());
+	                ArrayList<Float> oldWeights = new ArrayList<Float>(sourceMesh.mPositions.size());
 	                for(int d = 0; d < obone.mWeights.size(); d++)
 	                    oldWeights.set(obone.mWeights.get(d).mVertex, obone.mWeights.get(d).mWeight);
 
@@ -320,7 +320,7 @@ public class XFileImporter extends BaseImporter {
 	                {
 	                    // does the new vertex stem from an old vertex which was influenced by this bone?
 	                    float w = oldWeights.get(orgPoints.get(d));
-	                    if( w.opBigger(0.0F))
+	                    if( w>(0.0F))
 	                        newWeights.add( new aiVertexWeight( d, w));
 	                }
 
@@ -432,9 +432,9 @@ public class XFileImporter extends BaseImporter {
 
 	                    // reconstruct rotation matrix without scaling
 	                    aiMatrix3x3 rotmat = new aiMatrix3x3(
-	                        trafo.a1.opDivide(scale.x), trafo.a2.opDivide(scale.y), trafo.a3.opDivide(scale.z),
-	                        trafo.b1.opDivide(scale.x), trafo.b2.opDivide(scale.y), trafo.b3.opDivide(scale.z),
-	                        trafo.c1.opDivide(scale.x), trafo.c2.opDivide(scale.y), trafo.c3.opDivide(scale.z));
+	                        trafo.a1 / (scale.x), trafo.a2 / (scale.y), trafo.a3 / (scale.z),
+	                        trafo.b1 / (scale.x), trafo.b2 / (scale.y), trafo.b3 / (scale.z),
+	                        trafo.c1 / (scale.x), trafo.c2 / (scale.y), trafo.c3 / (scale.z));
 
 	                    // and convert it into a quaternion
 	                    nbone.mRotationKeys[c].mTime = time;
@@ -550,7 +550,7 @@ public class XFileImporter extends BaseImporter {
 	        // Shading model: hardcoded to PHONG, there is no such information in an XFile
 	        // FIX (aramis): If the specular exponent is 0, use gouraud shading. This is a bugfix
 	        // for some models in the SDK (e.g. good old tiny.x)
-	        int shadeMode = oldMat.mSpecularExponent.cast(0.0F).opEquals(0.0F)
+	        int shadeMode = oldMat.mSpecularExponent==(0.0F)
 	            ? material.aiShadingMode.aiShadingMode_Gouraud.value : material.aiShadingMode.aiShadingMode_Phong.value;
 
 	        mat.AddProperty(new int[]{shadeMode}, 1, material.AI_MATKEY_SHADING_MODEL);

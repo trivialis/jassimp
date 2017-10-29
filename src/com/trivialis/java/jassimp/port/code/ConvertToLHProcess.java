@@ -1,8 +1,11 @@
 package com.trivialis.java.jassimp.port.code;
 
+import java.nio.charset.Charset;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiAnimation;
 import com.trivialis.java.jassimp.port.include.assimp.anim.aiNodeAnim;
-import com.trivialis.java.jassimp.port.include.assimp.defs.ai_real;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterial;
 import com.trivialis.java.jassimp.port.include.assimp.material.aiMaterialProperty;
 import com.trivialis.java.jassimp.port.include.assimp.matrix4x4.aiMatrix4x4;
@@ -12,11 +15,8 @@ import com.trivialis.java.jassimp.port.include.assimp.mesh.aiMesh;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiNode;
 import com.trivialis.java.jassimp.port.include.assimp.scene.aiScene;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
-import com.trivialis.java.jassimp.util.serialization.Bytes;
 import com.trivialis.java.jassimp.util.string;
-import java.nio.charset.Charset;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import com.trivialis.java.jassimp.util.serialization.Bytes;
 
 public class ConvertToLHProcess {
 
