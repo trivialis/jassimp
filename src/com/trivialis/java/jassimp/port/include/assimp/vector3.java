@@ -103,6 +103,39 @@ public class vector3 {
                 return new StringBuilder("aiVector3:").append(" x: ").append(x).append(" y: ").append(y).append(" z: ").append(z).toString();
             }
 
+
+
+				@Override
+				public int hashCode()
+				{
+					final int prime = 31;
+					int result = 1;
+					result = prime * result + Float.floatToIntBits(x);
+					result = prime * result + Float.floatToIntBits(y);
+					result = prime * result + Float.floatToIntBits(z);
+					return result;
+				}
+
+
+
+				@Override
+				public boolean equals(Object obj)
+				{
+					if (this == obj)
+						return true;
+					if (obj == null)
+						return false;
+					if (getClass() != obj.getClass())
+						return false;
+					aiVector3t other = (aiVector3t) obj;
+					if(!this.opEquals(other)) {
+						return false;
+					}
+					return true;
+				}
+                
+                
+
 	}
 
 	public static class aiVector3D extends aiVector3t {

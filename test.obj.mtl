@@ -3,19 +3,19 @@ Kd 1.0 1.0 1.0
 Ks 1.0 1.0 1.0
 Ke 0.0 0.0 0.0
 illum 1
-map_Kd C:\rtr\Scenes\trains\alvz02.bmp
+map_Kd alvz02.dds
 
 newmtl material11116
 Kd 1.0 1.0 1.0
 Ks 1.0 1.0 1.0
 Ke 0.0 0.0 0.0
 illum 1
-map_Kd C:\rtr\Scenes\trains\moztex02.bmp
+map_Kd moztex02.dds
 
 newmtl material11127
 Kd 1.0 1.0 1.0
 Ks 1.0 1.0 1.0
 Ke 0.0 0.0 0.0
 illum 1
-map_Kd C:\rtr\Scenes\trains\lamprefi.bmp
+map_Kd lamprefi.dds
 

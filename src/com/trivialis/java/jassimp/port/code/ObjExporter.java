@@ -328,12 +328,13 @@ public class ObjExporter {
 
         @Override
         public int compare(aiVector3D a, aiVector3D b) {
-            if (isLess(a, b)) {
-                return -1;
-            } else if (isLess(b, a)) {
-                return 1;
-            }
-            return 0;
+        	return isLess(a,b)==false?1:-1;
+//            if (isLess(a, b)) {
+//                return -1;
+//            } else if (isLess(b, a)) {
+//                return 1;
+//            }
+//            return 0;
         }
     }
 
@@ -369,12 +370,13 @@ public class ObjExporter {
 
         @Override
         public int compare(aiColor4D a, aiColor4D b) {
-            if (isLess(a, b)) {
-                return -1;
-            } else if (isLess(b, a)) {
-                return 1;
-            }
-            return 0;
+        	return isLess(a, b)==false?1:-1;
+//            if (isLess(a, b)) {
+//                return -1;
+//            } else if (isLess(b, a)) {
+//                return 1;
+//            }
+//            return 0;
         }
     };
 

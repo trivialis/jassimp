@@ -44,19 +44,19 @@ public class color4 {
 //		public float get(int index) {
 //			return array()[index];
 //		}
-//		public boolean opEquals(aiColor4t o) {
-//			return r.opEquals(o.r) && g.opEquals(o.g) && b.opEquals(o.b) && a.opEquals(o.a);
-//		}
+		public boolean opEquals(aiColor4t o) {
+			return r == (o.r) && g == (o.g) && b == (o.b) && a == (o.a);
+		}
 //		public boolean opNotEquals(aiColor4t o) {
-//			return !r.opEquals(o.r) || !g.opEquals(o.g) || !b.opEquals(o.b) || !a.opEquals(o.a);
+//			return !r == (o.r) || !g == (o.g) || !b == (o.b) || !a == (o.a);
 //		}
 //		public boolean opSmaller(aiColor4t o) {
 //		    return r.opSmaller(o.r) || (
-//		            r.opEquals(o.r) && (
+//		            r == (o.r) && (
 //		                g.opSmaller(o.g) || (
-//		                    g.opEquals(o.g) && (
+//		                    g == (o.g) && (
 //		                        b.opSmaller(o.b) || (
-//		                            b.opEquals(o.b) && (
+//		                            b == (o.b) && (
 //		                                a.opSmaller(o.a)
 //		                            )
 //		                        )
@@ -70,6 +70,33 @@ public class color4 {
 //			float epsilon = new ai_real(Math.pow(10, -3));
 //			return new ai_real(std.abs(r.getValue().doubleValue())).opSmaller(epsilon) && new ai_real(std.abs(g.getValue().doubleValue())).opSmaller(epsilon) && new ai_real(std.abs(b.getValue().doubleValue())).opSmaller(epsilon);
 //		}
+		@Override
+		public int hashCode()
+		{
+			final int prime = 31;
+			int result = 1;
+			result = prime * result + Float.floatToIntBits(a);
+			result = prime * result + Float.floatToIntBits(b);
+			result = prime * result + Float.floatToIntBits(g);
+			result = prime * result + Float.floatToIntBits(r);
+			return result;
+		}
+		@Override
+		public boolean equals(Object obj)
+		{
+			if (this == obj)
+				return true;
+			if (obj == null)
+				return false;
+			if (getClass() != obj.getClass())
+				return false;
+			aiColor4t other = (aiColor4t) obj;
+			if(!this.opEquals(other)) {
+				return false;
+			}
+			return true;
+		}
+		
 	}
 
 	public static class aiColor4D extends aiColor4t {
