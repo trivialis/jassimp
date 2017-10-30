@@ -111,7 +111,7 @@ public class XFileImporter extends BaseImporter {
 		}
 
 		MakeLeftHandedProcess convertProcess = new MakeLeftHandedProcess();
-		convertProcess.Execute(pScene);
+	//	convertProcess.Execute(pScene); //This causes issues
 
 		FlipWindingOrderProcess flipper = new FlipWindingOrderProcess();
 		flipper.Execute(pScene);

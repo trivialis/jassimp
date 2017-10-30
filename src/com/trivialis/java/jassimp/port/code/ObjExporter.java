@@ -2,6 +2,8 @@ package com.trivialis.java.jassimp.port.code;
 
 import java.util.ArrayList;
 import java.util.Comparator;
+import java.util.Iterator;
+import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -328,13 +330,13 @@ public class ObjExporter {
 
         @Override
         public int compare(aiVector3D a, aiVector3D b) {
-        	return isLess(a,b)==false?1:-1;
-//            if (isLess(a, b)) {
-//                return -1;
-//            } else if (isLess(b, a)) {
-//                return 1;
-//            }
-//            return 0;
+        	//return isLess(a,b)==false?-1:1;
+            if (isLess(a, b)) {
+                return -1;
+            } else if (isLess(b, a)) {
+                return 1;
+            }
+            return 0;
         }
     }
 
@@ -370,13 +372,13 @@ public class ObjExporter {
 
         @Override
         public int compare(aiColor4D a, aiColor4D b) {
-        	return isLess(a, b)==false?1:-1;
-//            if (isLess(a, b)) {
-//                return -1;
-//            } else if (isLess(b, a)) {
-//                return 1;
-//            }
-//            return 0;
+//        	return isLess(a, b)==false?1:-1;
+            if (isLess(a, b)) {
+                return -1;
+            } else if (isLess(b, a)) {
+                return 1;
+            }
+            return 0;
         }
     };
 
@@ -400,9 +402,16 @@ public class ObjExporter {
         }
 
         public void getVectors(ArrayList<aiVector3D> vecs) {
+        	aiVector3D[] result = new aiVector3D[_vecMap.size()];
             ArrayUtil.Generator.ensureSize(vecs, _vecMap.size()); //System.out.println(_vecMap.keySet().size());
-            for (Map.Entry<aiVector3D, Integer> s : _vecMap.entrySet()) {
-                vecs.set(s.getValue() - 1, s.getKey());
+            Iterator<Map.Entry<aiVector3D, Integer>> it = _vecMap.entrySet().iterator();
+            while(it.hasNext()) {
+            	Map.Entry<aiVector3D, Integer> s = it.next();
+                //vecs.set(s.getValue() - 1, s.getKey());
+            	result[s.getValue()-1] = s.getKey();
+            }
+            for(int i = 0; i < result.length; i++) {
+            	vecs.set(i, result[i]);
             }
         }
     }
@@ -426,10 +435,17 @@ public class ObjExporter {
         }
 
         public void getColors(ArrayList<aiColor4D> colors) {
+        	aiColor4D[] result = new aiColor4D[_colMap.size()];
             ArrayUtil.Generator.ensureSize(colors, _colMap.size());
-            for (Map.Entry<aiColor4D, Integer> s : _colMap.entrySet()) {
-                colors.set(s.getValue() - 1, s.getKey());
+            Iterator<Map.Entry<aiColor4D, Integer>> it = _colMap.entrySet().iterator();
+            while(it.hasNext()) {
+            	Map.Entry<aiColor4D, Integer> s = it.next();
+                //colors.set(s.getValue() - 1, s.getKey());
+            	result[s.getValue()-1]=s.getKey();
             }
+            for(int i = 0; i < result.length; i++) {
+            	colors.set(i, result[i]);
+            }           
         }
     }
 

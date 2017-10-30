@@ -22,6 +22,7 @@ public class ConvertToLHProcess {
 
 	public static class MakeLeftHandedProcess {
 
+		//Something goes wrong here!
 		public void Execute(aiScene pScene)
 		{
 		    // Check for an existent root node to proceed

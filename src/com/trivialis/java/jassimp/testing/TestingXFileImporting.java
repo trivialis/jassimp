@@ -22,11 +22,14 @@ public class TestingXFileImporting {
 
 	public static void main(String[] args) throws IOException {
                 
-		String path = (!System.getProperty("os.name").contains("Windows"))?
-				System.getProperty("user.home")+"/Projects/RTR/RTR/{app}/Scenes/xfiles/mozd02.X"
-                        :System.getProperty("user.name").toLowerCase().contains("s23")?
-                        		"X:/My Documents/Projects/RTR/{app}/Scenes/xfiles/mozd02.X":
-                        			"C:/Users/MWPuser/AppData/Local/BrainBombers/Rule the Rail!/Scenes/xfiles/mozd02.X";
+//		String path = (!System.getProperty("os.name").contains("Windows"))?
+//				System.getProperty("user.home")+"/Projects/RTR/RTR/{app}/Scenes/xfiles/mozd02.X"
+//                        :System.getProperty("user.name").toLowerCase().contains("s23")?
+//                        		"X:/My Documents/Projects/RTR/{app}/Scenes/xfiles/mozd02.X":
+//                        			System.getProperty("user.name").toLowerCase().contains("p27")?
+//                        					"C:\\Users\\p275309\\Downloads\\mozd02.X":
+//                        						"C:/Users/MWPuser/AppData/Local/BrainBombers/Rule the Rail!/Scenes/xfiles/mozd02.X";
+		String path = "mozd02.X";
                 
 		XFileImporter xfi = new XFileImporter();
 		ScopeGuard<aiScene> result = xfi.ReadFile(new Importer(), path, new IOSystem() {
