@@ -91,7 +91,7 @@ public class vector3 {
 		}
 		public aiVector3t opMultiply(float d)
 		{
-                    return new aiVector3t(x - d,y - d,z - d);
+                    return new aiVector3t(x * d,y * d,z * d);
 		}
 		
 		public <T extends aiVector3t> T newInstance() {
@@ -149,7 +149,12 @@ public class vector3 {
                 super();
             }
 
-            @Override
+            public aiVector3D(aiVector3t o)
+			{
+				x=o.x;y=o.y;z=o.z;
+			}
+
+			@Override
             public aiVector3D newInstance() {
 
                 return new aiVector3D();

@@ -10,6 +10,7 @@ import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiReturn;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
+import com.trivialis.java.jassimp.port.include.assimp.vector2.aiVector2D;
 import com.trivialis.java.jassimp.util.ArrayUtil;
 import com.trivialis.java.jassimp.util.Tuples.Tuple;
 import com.trivialis.java.jassimp.util.string;
@@ -118,6 +119,50 @@ public class material {
 	{ value=val;
 	}
 	}
+	
+	public static class aiUVTransform
+	{
+	    /** Translation on the u and v axes.
+	     *
+	     *  The default value is (0|0).
+	     */
+	    public aiVector2D mTranslation;
+
+	    /** Scaling on the u and v axes.
+	     *
+	     *  The default value is (1|1).
+	     */
+	    public aiVector2D mScaling;
+
+	    /** Rotation - in counter-clockwise direction.
+	     *
+	     *  The rotation angle is specified in radians. The
+	     *  rotation center is 0.5f|0.5f. The default value
+	     *  0.f.
+	     */
+	    public float mRotation;
+
+
+	
+	    public aiUVTransform() {
+	        mTranslation = new aiVector2D(0.0F,0.0F);
+	        mScaling   = new aiVector2D(1.0F,1.0F);
+	        mRotation  = (0.0F);
+	    }
+
+
+
+		public aiUVTransform(aiVector2D aiVector2D, aiVector2D aiVector2D2, float float1)
+		{
+			this.mTranslation=aiVector2D;
+			this.mScaling=aiVector2D2;
+			this.mRotation=float1;
+		}
+	
+
+	};
+	
+	public static final int aiUVTransform = Float.BYTES*5;
 
 	public static class aiMaterialProperty
 	{
@@ -218,6 +263,10 @@ public class material {
 	    }
 
 	}
+
+
+
+	
 
 
 

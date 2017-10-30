@@ -1257,7 +1257,7 @@ public class XFileParser {
 				child.mMeshes.clear();
 
 				// transfer the transform as well
-				pNode.mTrafoMatrix = (aiMatrix4x4) pNode.mTrafoMatrix.opMultiply(child.mTrafoMatrix);
+				pNode.mTrafoMatrix = new aiMatrix4x4(pNode.mTrafoMatrix.opMultiply(child.mTrafoMatrix));
 
 				// then kill it
 				child = null;

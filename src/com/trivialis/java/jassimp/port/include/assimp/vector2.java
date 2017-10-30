@@ -115,6 +115,17 @@ public class vector2 {
 
 	public static class aiVector2D extends aiVector2t {
 
+		public aiVector2D(float d, float e)
+		{
+			this.x=d;
+			this.y=e;
+		}
+
+		public aiVector2D()
+		{
+			// TODO Auto-generated constructor stub
+		}
+
 	}
 
 }

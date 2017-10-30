@@ -114,30 +114,36 @@ public class matrix4x4 {
 	    			b1=_b1;b2=_b2;b3=_b3;b4=_b4;
 	    			c1=_c1;c2=_c2;c3=_c3;c4=_c4;
 	    			d1=_d1;d2=_d2;d3=_d3;d4=_d4;
-	    	return this;
+	    			return this;
+//	    	aiMatrix4x4t result = new aiMatrix4x4t();
+//	    	result.a1=_a1;result.a2=_a2;result.a3=_a3;result.a4=_a4;
+//	    	result.b1=_b1;result.b2=_b2;result.b3=_b3;result.b4=_b4;
+//	    	result.c1=_c1;result.c2=_c2;result.c3=_c3;result.c4=_c4;
+//	    	result.d1=_d1;result.d2=_d2;result.d3=_d3;result.d4=_d4;
+//	    	return result;
 	    }
 
-//	    public aiMatrix4x4t opMultiply_new(aiMatrix4x4t m) { //Renamed because otherwise duplicate of function above.
-//	    	aiMatrix4x4t result = new aiMatrix4x4t(
-//	    	        (m.a1* a1)+ (m.b1* a2)+ (m.c1* a3)+ (m.d1* a4),
-//	    	        (m.a2* a1)+ (m.b2* a2)+ (m.c2* a3)+ (m.d2* a4),
-//	    	        (m.a3* a1)+ (m.b3* a2)+ (m.c3* a3)+ (m.d3* a4),
-//	    	        (m.a4* a1)+ (m.b4* a2)+ (m.c4* a3)+ (m.d4* a4),
-//	    	        (m.a1* b1)+ (m.b1* b2)+ (m.c1* b3)+ (m.d1* b4),
-//	    	        (m.a2* b1)+ (m.b2* b2)+ (m.c2* b3)+ (m.d2* b4),
-//	    	        (m.a3* b1)+ (m.b3* b2)+ (m.c3* b3)+ (m.d3* b4),
-//	    	        (m.a4* b1)+ (m.b4* b2)+ (m.c4* b3)+ (m.d4* b4),
-//	    	        (m.a1* c1)+ (m.b1* c2)+ (m.c1* c3)+ (m.d1* c4),
-//	    	        (m.a2* c1)+ (m.b2* c2)+ (m.c2* c3)+ (m.d2* c4),
-//	    	        (m.a3* c1)+ (m.b3* c2)+ (m.c3* c3)+ (m.d3* c4),
-//	    	        (m.a4* c1)+ (m.b4* c2)+ (m.c4* c3)+ (m.d4* c4),
-//	    	        (m.a1* d1)+ (m.b1* d2)+ (m.c1* d3)+ (m.d1* d4),
-//	    	        (m.a2* d1)+ (m.b2* d2)+ (m.c2* d3)+ (m.d2* d4),
-//	    	        (m.a3* d1)+ (m.b3* d2)+ (m.c3* d3)+ (m.d3* d4),
-//	    	        (m.a4* d1)+ (m.b4* d2)+ (m.c4* d3)+ (m.d4* d4)
-//	    			);
-//	    	return result;
-//	    }
+	    public aiMatrix4x4t opMultiply_new(aiMatrix4x4t m) { //Renamed because otherwise duplicate of function above.
+	    	aiMatrix4x4t result = new aiMatrix4x4(
+	    	        (m.a1* a1)+ (m.b1* a2)+ (m.c1* a3)+ (m.d1* a4),
+	    	        (m.a2* a1)+ (m.b2* a2)+ (m.c2* a3)+ (m.d2* a4),
+	    	        (m.a3* a1)+ (m.b3* a2)+ (m.c3* a3)+ (m.d3* a4),
+	    	        (m.a4* a1)+ (m.b4* a2)+ (m.c4* a3)+ (m.d4* a4),
+	    	        (m.a1* b1)+ (m.b1* b2)+ (m.c1* b3)+ (m.d1* b4),
+	    	        (m.a2* b1)+ (m.b2* b2)+ (m.c2* b3)+ (m.d2* b4),
+	    	        (m.a3* b1)+ (m.b3* b2)+ (m.c3* b3)+ (m.d3* b4),
+	    	        (m.a4* b1)+ (m.b4* b2)+ (m.c4* b3)+ (m.d4* b4),
+	    	        (m.a1* c1)+ (m.b1* c2)+ (m.c1* c3)+ (m.d1* c4),
+	    	        (m.a2* c1)+ (m.b2* c2)+ (m.c2* c3)+ (m.d2* c4),
+	    	        (m.a3* c1)+ (m.b3* c2)+ (m.c3* c3)+ (m.d3* c4),
+	    	        (m.a4* c1)+ (m.b4* c2)+ (m.c4* c3)+ (m.d4* c4),
+	    	        (m.a1* d1)+ (m.b1* d2)+ (m.c1* d3)+ (m.d1* d4),
+	    	        (m.a2* d1)+ (m.b2* d2)+ (m.c2* d3)+ (m.d2* d4),
+	    	        (m.a3* d1)+ (m.b3* d2)+ (m.c3* d3)+ (m.d3* d4),
+	    	        (m.a4* d1)+ (m.b4* d2)+ (m.c4* d3)+ (m.d4* d4)
+	    			);
+	    	return result;
+	    }
 
 //	    public aiMatrix4x4t Transpose() {
 //	    	a2=std.swap(b1, b1=a2);
@@ -201,9 +207,28 @@ public class matrix4x4 {
 	public static class aiMatrix4x4 extends aiMatrix4x4t {
 
             @Override
-              public aiMatrix4x4 newInstance() {
+            public aiMatrix4x4 newInstance() {
                 return new aiMatrix4x4();
             }
+            
+            public aiMatrix4x4() {
+            	super();
+            }
+            
+            public aiMatrix4x4(float a1,float a2,float a3,float a4,float b1,float b2,float b3,float b4,float c1,float c2,float c3,float c4,float d1,float d2,float d3,float d4) {
+            	this.a1=a1;this.a2=a2;this.a3=a3;this.a4=a4;
+            	this.b1=b1;this.b2=b2;this.b3=b3;this.b4=b4;
+            	this.c1=c1;this.c2=c2;this.c3=c3;this.c4=c4;
+            	this.d1=d1;this.d2=d2;this.d3=d3;this.d4=d4;
+            }
+
+			public aiMatrix4x4(aiMatrix4x4t o)
+			{
+            	this.a1=o.a1;this.a2=o.a2;this.a3=o.a3;this.a4=o.a4;
+            	this.b1=o.b1;this.b2=o.b2;this.b3=o.b3;this.b4=o.b4;
+            	this.c1=o.c1;this.c2=o.c2;this.c3=o.c3;this.c4=o.c4;
+            	this.d1=o.d1;this.d2=o.d2;this.d3=o.d3;this.d4=o.d4;
+			}
             
 	}
 

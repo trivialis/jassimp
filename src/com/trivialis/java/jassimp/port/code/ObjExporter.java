@@ -3,7 +3,6 @@ package com.trivialis.java.jassimp.port.code;
 import java.util.ArrayList;
 import java.util.Comparator;
 import java.util.Iterator;
-import java.util.Locale;
 import java.util.Map;
 import java.util.TreeMap;
 
@@ -283,7 +282,7 @@ public class ObjExporter {
     }
 
     public void AddNode(aiNode nd, aiMatrix4x4 mParent) {
-        aiMatrix4x4 mAbs = (aiMatrix4x4) mParent.opMultiply(nd.mTransformation);
+        aiMatrix4x4 mAbs = new aiMatrix4x4(mParent.opMultiply(nd.mTransformation));
         //System.out.println("Addnode: " + mAbs.a1);//System.out.println("Mutipl: " + nd.mTransformation.a1);
         for (int i = 0; i < nd.mNumMeshes; ++i) {
             AddMesh(nd.mName, pScene.mMeshes[nd.mMeshes[i]], mAbs);

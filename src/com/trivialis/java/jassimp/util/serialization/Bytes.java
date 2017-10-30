@@ -3,7 +3,9 @@ package com.trivialis.java.jassimp.util.serialization;
 import java.nio.ByteBuffer;
 
 import com.trivialis.java.jassimp.port.include.assimp.color4.aiColor4D;
+import com.trivialis.java.jassimp.port.include.assimp.material.aiUVTransform;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiColor3D;
+import com.trivialis.java.jassimp.port.include.assimp.vector2;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
 
 public class Bytes {
@@ -50,6 +52,14 @@ public class Bytes {
 		for(float f : floats) mediator.putFloat(f);
 		return mediator.array();
 	}
+	
+	public static byte[] serialize(aiVector3D... clr)
+	{
+		ByteBuffer mediator = ByteBuffer.allocate(clr.length * 4 * 3);
+		for (aiVector3D a : clr)
+			mediator.putFloat(a.x).putFloat(a.y).putFloat(a.z);
+		return mediator.array();
+	}
 
 	public static aiVector3D deserializeTo_aiVector3D(byte[] mData)
 	{
@@ -58,6 +68,15 @@ public class Bytes {
 			return new aiVector3D(mediator.getFloat(), mediator.getFloat(), mediator.getFloat());
 		} else if(mData.length==24) {
 			return new aiVector3D((float) mediator.getDouble(), (float) mediator.getDouble(), (float) mediator.getDouble());
+		}
+		throw new RuntimeException("Invalid length: " + mData.length);
+	}
+
+	public static aiUVTransform deserializeaiUVTransform(byte[] mData)
+	{
+		ByteBuffer mediator = ByteBuffer.wrap(mData);
+		if(mData.length==Float.BYTES*5) {
+			return new aiUVTransform(new vector2.aiVector2D(mediator.getFloat(), mediator.getFloat()), new vector2.aiVector2D(mediator.getFloat(), mediator.getFloat()), mediator.getFloat());
 		}
 		throw new RuntimeException("Invalid length: " + mData.length);
 	}
