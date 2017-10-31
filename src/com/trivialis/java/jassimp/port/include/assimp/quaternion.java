@@ -1,30 +1,29 @@
 package com.trivialis.java.jassimp.port.include.assimp;
 
 import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3;
-import com.trivialis.java.jassimp.port.include.assimp.matrix3x3.aiMatrix3x3t;
 import com.trivialis.java.jassimp.util.std;
 
 public class quaternion {
 
-	public static class aiQuaterniont {
+	public static class aiQuaternion {
 
 		public float w;
 		public float x;
 		public float y;
 		public float z;
 
-//		public aiQuaterniont()
+//		public aiQuaternion()
 //		{
 //			w= 1.0F;
 //		}
 //
-//		public aiQuaterniont(float pw, float px, float py, float pz)
+//		public aiQuaternion(float pw, float px, float py, float pz)
 //		{
 //			w=pw; x=px; y=py; z=pz;
 //		}
 
                 //TODO : Test
-		public aiQuaterniont(  aiMatrix3x3t pRotMatrix)
+		public aiQuaternion(  aiMatrix3x3 pRotMatrix)
 		{
 		    float t = pRotMatrix.a1+ (pRotMatrix.b2)+ (pRotMatrix.c3);
 
@@ -63,7 +62,7 @@ public class quaternion {
 		    }
 		}
 
-//		public aiQuaterniont( float fPitch, float fYaw, float fRoll )
+//		public aiQuaternion( float fPitch, float fYaw, float fRoll )
 //		{
 //		    float fSinPitch = std.sin(fPitch * ( 0.5F));
 //		    float fCosPitch = std.cos(fPitch * ( 0.5F));
@@ -80,7 +79,7 @@ public class quaternion {
 //		}
 
                 //TODO: Test
-		public <Matrix extends aiMatrix3x3t> Matrix GetMatrix(Matrix resMatrix)
+		public <Matrix extends aiMatrix3x3> Matrix GetMatrix(Matrix resMatrix)
 		{
 
 		    resMatrix.a1 =  1.0F-(
@@ -102,7 +101,7 @@ public class quaternion {
 		    return resMatrix;
 		}
 
-//		public aiQuaterniont( aiVector3t axis, float angle)
+//		public aiQuaternion( aiVector3t axis, float angle)
 //		{
 //		    axis.Normalize();
 //
@@ -114,7 +113,7 @@ public class quaternion {
 //		    w    = cos_a;
 //		}
 
-//		public aiQuaterniont( aiVector3t normalized)
+//		public aiQuaternion( aiVector3t normalized)
 //		{
 //		    x = normalized.x;
 //		    y = normalized.y;
@@ -128,13 +127,13 @@ public class quaternion {
 //		    else w = std.sqrt(t);
 //		}
 
-//		public static void Interpolate(IPointer<aiQuaterniont> pOut,  aiQuaterniont pStart,  aiQuaterniont pEnd, float pFactor)
+//		public static void Interpolate(IPointer<aiQuaternion> pOut,  aiQuaternion pStart,  aiQuaternion pEnd, float pFactor)
 //		{
 //
 //		    float cosom = ((pStart.x * (pEnd.x))).opAdd((pStart.y * (pEnd.y))).opAdd((pStart.z * (pEnd.z))).opAdd((pStart.w * (pEnd.w)));
 //
 //
-//		    aiQuaterniont end = pEnd;
+//		    aiQuaternion end = pEnd;
 //		    if( cosom.opSmaller( 0.0F))
 //		    {
 //		        cosom = cosom.opNegate();
@@ -167,7 +166,7 @@ public class quaternion {
 //		    pOut.get().w = ((sclp * (pStart.w))).opAdd((sclq * (end.w)));
 //		}
 
-//		public aiQuaterniont Normalize()
+//		public aiQuaternion Normalize()
 //		{
 //
 //		    float mag = std.sqrt((x * (x)).opAdd((y * (y)).opAdd(z * (z)).opAdd((w * (w)))));
@@ -182,15 +181,15 @@ public class quaternion {
 //		    return this;
 //		}
 //
-//		public aiQuaterniont opMultiply ( aiQuaterniont t)
+//		public aiQuaternion opMultiply ( aiQuaternion t)
 //		{
-//		    return new aiQuaterniont(((w * (t.w))) - ((x * (t.x))) - ((y * (t.y))) - ((z * (t.z))),
+//		    return new aiQuaternion(((w * (t.w))) - ((x * (t.x))) - ((y * (t.y))) - ((z * (t.z))),
 //		        ((w * (t.x))).opAdd((x * (t.w))).opAdd((y * (t.z))) - ((z * (t.y))),
 //		        ((w * (t.y))).opAdd((y * (t.w))).opAdd((z * (t.x))) - ((x * (t.z))),
 //		        ((w * (t.z))).opAdd((z * (t.w))).opAdd((x * (t.y))) - ((y * (t.x))));
 //		}
 
-//		public aiQuaterniont Conjugate ()
+//		public aiQuaternion Conjugate ()
 //		{
 //		    x = x.opNegate();
 //		    y = y.opNegate();
@@ -200,26 +199,26 @@ public class quaternion {
 //
 //		public aiVector3t Rotate ( aiVector3t v)
 //		{
-//		    aiQuaterniont q2 = new aiQuaterniont( 0.fF,v.x,v.y,v.z);
-//		    aiQuaterniont q = this;
-//		    aiQuaterniont qinv = q;
+//		    aiQuaternion q2 = new aiQuaternion( 0.fF,v.x,v.y,v.z);
+//		    aiQuaternion q = this;
+//		    aiQuaternion qinv = q;
 //		    qinv.Conjugate();
 //
 //		    q = q * (q2) * (qinv);
 //		    return new aiVector3t(q.x,q.y,q.z);
 //		}
 //
-//		public boolean opEquals ( aiQuaterniont o)
+//		public boolean opEquals ( aiQuaternion o)
 //		{
 //		    return x == o.x && y == o.y && z == o.z && w == o.w;
 //		}
 //
-//		public boolean opNotEquals ( aiQuaterniont o)
+//		public boolean opNotEquals ( aiQuaternion o)
 //		{
 //		    return !opEquals(o);
 //		}
 
-//		public boolean Equal( aiQuaterniont o, float epsilon)  {
+//		public boolean Equal( aiQuaternion o, float epsilon)  {
 //		    return
 //		        new ai_real(std.abs((Double) x - (o.x).getValue())).opSmallerOrEqual(epsilon) &&
 //		        new ai_real(std.abs((Double) y - (o.y).getValue())).opSmallerOrEqual(epsilon) &&
@@ -230,15 +229,5 @@ public class quaternion {
 
 	}
 
-	public static class aiQuaternion extends aiQuaterniont {
-
-		public aiQuaternion(aiMatrix3x3 m)
-		{
-			super(m);
-		}
-
-
-
-	}
 
 }

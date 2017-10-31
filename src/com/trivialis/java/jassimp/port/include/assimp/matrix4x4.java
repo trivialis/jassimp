@@ -2,13 +2,13 @@ package com.trivialis.java.jassimp.port.include.assimp;
 
 public class matrix4x4 {
 
-	public static class aiMatrix4x4t {
+	public static class aiMatrix4x4 {
 		public float a1, a2, a3, a4;
 		public float b1, b2, b3, b4;
 		public float c1, c2, c3, c4;
 		public float d1, d2, d3, d4;
 
-		public aiMatrix4x4t() {
+		public aiMatrix4x4() {
 	    	a1=1.0F;
 	    	a2=0.0F;
 	    	a3=0.0F;
@@ -25,6 +25,21 @@ public class matrix4x4 {
 	    	d2=0.0F;
 	    	d3=0.0F;
 	    	d4=1.0F;
+		}
+		
+        public aiMatrix4x4(float a1,float a2,float a3,float a4,float b1,float b2,float b3,float b4,float c1,float c2,float c3,float c4,float d1,float d2,float d3,float d4) {
+        	this.a1=a1;this.a2=a2;this.a3=a3;this.a4=a4;
+        	this.b1=b1;this.b2=b2;this.b3=b3;this.b4=b4;
+        	this.c1=c1;this.c2=c2;this.c3=c3;this.c4=c4;
+        	this.d1=d1;this.d2=d2;this.d3=d3;this.d4=d4;
+        }
+
+		public aiMatrix4x4(aiMatrix4x4 o)
+		{
+        	this.a1=o.a1;this.a2=o.a2;this.a3=o.a3;this.a4=o.a4;
+        	this.b1=o.b1;this.b2=o.b2;this.b3=o.b3;this.b4=o.b4;
+        	this.c1=o.c1;this.c2=o.c2;this.c3=o.c3;this.c4=o.c4;
+        	this.d1=o.d1;this.d2=o.d2;this.d3=o.d3;this.d4=o.d4;
 		}
 
 //	    public aiMatrix4x4t (  float _a1, float _a2, float _a3, float _a4,
@@ -88,11 +103,8 @@ public class matrix4x4 {
 //	    	return new aiMatrix4x4t(a1* m, a2* m, a3* m, a4* m, b1* m, b2* m, b3* m, b4* m, c1* m, c2* m, c3* m, c4* m, d1* m, d2* m, d3* m, d4* m);
 //	    }
             
-            public aiMatrix4x4t newInstance() {
-                return new aiMatrix4x4t();
-            }
 
-	    public aiMatrix4x4t opMultiply(aiMatrix4x4t m) { //*this does no exist in Java. pointer?
+	    public aiMatrix4x4 opMultiply(aiMatrix4x4 m) { //*this does no exist in Java. pointer?
 
 	    	        float _a1=(m.a1* a1)+ (m.b1* a2)+ (m.c1* a3)+ (m.d1* a4);
 	    	        float _a2=(m.a2* a1)+ (m.b2* a2)+ (m.c2* a3)+ (m.d2* a4);
@@ -123,8 +135,8 @@ public class matrix4x4 {
 //	    	return result;
 	    }
 
-	    public aiMatrix4x4t opMultiply_new(aiMatrix4x4t m) { //Renamed because otherwise duplicate of function above.
-	    	aiMatrix4x4t result = new aiMatrix4x4(
+	    public aiMatrix4x4 opMultiply_new(aiMatrix4x4 m) { //Renamed because otherwise duplicate of function above.
+	    	aiMatrix4x4 result = new aiMatrix4x4(
 	    	        (m.a1* a1)+ (m.b1* a2)+ (m.c1* a3)+ (m.d1* a4),
 	    	        (m.a2* a1)+ (m.b2* a2)+ (m.c2* a3)+ (m.d2* a4),
 	    	        (m.a3* a1)+ (m.b3* a2)+ (m.c3* a3)+ (m.d3* a4),
@@ -204,32 +216,5 @@ public class matrix4x4 {
 
 	}
 
-	public static class aiMatrix4x4 extends aiMatrix4x4t {
-
-            @Override
-            public aiMatrix4x4 newInstance() {
-                return new aiMatrix4x4();
-            }
-            
-            public aiMatrix4x4() {
-            	super();
-            }
-            
-            public aiMatrix4x4(float a1,float a2,float a3,float a4,float b1,float b2,float b3,float b4,float c1,float c2,float c3,float c4,float d1,float d2,float d3,float d4) {
-            	this.a1=a1;this.a2=a2;this.a3=a3;this.a4=a4;
-            	this.b1=b1;this.b2=b2;this.b3=b3;this.b4=b4;
-            	this.c1=c1;this.c2=c2;this.c3=c3;this.c4=c4;
-            	this.d1=d1;this.d2=d2;this.d3=d3;this.d4=d4;
-            }
-
-			public aiMatrix4x4(aiMatrix4x4t o)
-			{
-            	this.a1=o.a1;this.a2=o.a2;this.a3=o.a3;this.a4=o.a4;
-            	this.b1=o.b1;this.b2=o.b2;this.b3=o.b3;this.b4=o.b4;
-            	this.c1=o.c1;this.c2=o.c2;this.c3=o.c3;this.c4=o.c4;
-            	this.d1=o.d1;this.d2=o.d2;this.d3=o.d3;this.d4=o.d4;
-			}
-            
-	}
 
 }

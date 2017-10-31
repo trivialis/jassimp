@@ -19,7 +19,6 @@ import com.trivialis.java.jassimp.port.include.assimp.types;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiReturn;
 import com.trivialis.java.jassimp.port.include.assimp.types.aiString;
 import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3D;
-import com.trivialis.java.jassimp.port.include.assimp.vector3.aiVector3t;
 import com.trivialis.java.jassimp.util.ArrayUtil;
 import com.trivialis.java.jassimp.util.IPointer;
 
@@ -255,11 +254,11 @@ public class ObjExporter {
             for (int a = 0; a < f.mNumIndices; ++a) {
                 int idx = f.mIndices[a];//System.out.println(idx);
 
-                aiVector3D vert = (aiVector3D) aiVector3t.multiply(mat, m.mVertices[idx]);//System.out.println(mat.a1);//System.out.println(m.mVertices[idx].x);//System.out.println(vert.x);
+                aiVector3D vert = (aiVector3D) aiVector3D.multiply(mat, m.mVertices[idx]);//System.out.println(mat.a1);//System.out.println(m.mVertices[idx].x);//System.out.println(vert.x);
                 face.indices.get(a).vp = vpMap.getIndex(vert);//System.out.println(face.indices.get(a).vp);
 
                 if (m.mNormals.length > 0) {
-                    aiVector3D norm = (aiVector3D) aiVector3t.multiply(new matrix3x3.aiMatrix3x3(mat), m.mNormals[idx]);
+                    aiVector3D norm = (aiVector3D) aiVector3D.multiply(new matrix3x3.aiMatrix3x3(mat), m.mNormals[idx]);
                     face.indices.get(a).vn = vnMap.getIndex(norm);
                 } else {
                     face.indices.get(a).vn = 0;

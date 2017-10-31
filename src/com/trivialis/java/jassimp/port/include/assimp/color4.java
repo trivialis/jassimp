@@ -2,21 +2,22 @@ package com.trivialis.java.jassimp.port.include.assimp;
 
 public class color4 {
 
-	public abstract static class aiColor4t {
+	public static class aiColor4D {
 		public float r;
 		public float g;
 		public float b;
 		public float a;
-		public aiColor4t() {
+		
+		public aiColor4D() {
 
 		}
-		public aiColor4t(float _r, float _b, float _g, float _a) {
+		public aiColor4D(float _r, float _b, float _g, float _a) {
 			r=_r;
 			g=_g;
 			b=_b;
 			a=_a;
 		}
-		public aiColor4t(aiColor4t o) {
+		public aiColor4D(aiColor4D o) {
 			r=o.r;
 			g=o.g;
 			b=o.b;
@@ -44,7 +45,7 @@ public class color4 {
 //		public float get(int index) {
 //			return array()[index];
 //		}
-		public boolean opEquals(aiColor4t o) {
+		public boolean opEquals(aiColor4D o) {
 			return r == (o.r) && g == (o.g) && b == (o.b) && a == (o.a);
 		}
 //		public boolean opNotEquals(aiColor4t o) {
@@ -90,7 +91,7 @@ public class color4 {
 				return false;
 			if (getClass() != obj.getClass())
 				return false;
-			aiColor4t other = (aiColor4t) obj;
+			aiColor4D other = (aiColor4D) obj;
 			if(!this.opEquals(other)) {
 				return false;
 			}
@@ -98,9 +99,4 @@ public class color4 {
 		}
 		
 	}
-
-	public static class aiColor4D extends aiColor4t {
-
-	}
-
 }
